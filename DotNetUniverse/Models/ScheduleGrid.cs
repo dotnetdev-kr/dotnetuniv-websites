@@ -52,7 +52,7 @@ public record ScheduleGrid
                 {
                     return new SessionSchedule
                     {
-                        Day = Day,
+                        Day = row.Day,
                         StartTime = row.TimeSlot.StartTime,
                         EndTime = row.TimeSlot.EndTime
                     };
@@ -98,4 +98,54 @@ public record ScheduleGrid
         }
         return -1;
     }
+
+    /// <summary>
+    /// 세션 ID로 해당 세션의 Day 조회 (0이면 찾지 못함)
+    /// </summary>
+    public int GetDayFor(string sessionId)
+    {
+        foreach (var row in Rows)
+        {
+            foreach (var cell in row.Cells)
+            {
+                if (cell.HasSession && cell.Session!.Id == sessionId)
+                {
+                    return row.Day;
+                }
+            }
+        }
+        return 0;
+    }
+
+    /// <summary>
+    /// 세션을 Day별로 그룹화하여 반환
+    /// </summary>
+    public IEnumerable<IGrouping<int, Session>> SessionsByDay =>
+        Rows.SelectMany(r => r.Cells
+                .Where(c => c.HasSession)
+                .Select(c => new { Day = r.Day, Session = c.Session! }))
+            .DistinctBy(x => x.Session.Id)
+            .GroupBy(x => x.Day, x => x.Session)
+            .OrderBy(g => g.Key);
+
+    /// <summary>
+    /// 발표 세션만 Day별로 그룹화하여 반환 (휴식, 점심 등 운영 세션 제외)
+    /// </summary>
+    public IEnumerable<IGrouping<int, Session>> PresentationSessionsByDay =>
+        Rows.SelectMany(r => r.Cells
+                .Where(c => c.HasSession && c.Session!.IsPresentationSession)
+                .Select(c => new { Day = r.Day, Session = c.Session! }))
+            .DistinctBy(x => x.Session.Id)
+            .GroupBy(x => x.Day, x => x.Session)
+            .OrderBy(g => g.Key);
+
+    /// <summary>
+    /// 총 일차 수
+    /// </summary>
+    public int TotalDays => Rows.Select(r => r.Day).Distinct().Count();
+
+    /// <summary>
+    /// 다중 일차 행사인지 여부
+    /// </summary>
+    public bool IsMultiDay => TotalDays > 1;
 }

@@ -307,109 +307,49 @@
 <!-- 세션 목록 -->
 <section class="py-5" id="sessions">
     <div class="container py-4">
+        @{
+            var sessionGrid = yearData.Schedule;
+            var isMultiDay = sessionGrid?.IsMultiDay == true;
+            var presentationSessions = sessions.Where(s => s.IsPresentationSession);
+        }
         <div class="text-center mb-5">
             <h2 class="fw-bold display-5 mb-3">세션</h2>
-            <p class="text-muted lead">@(sessions.Count() + "개의") 세션이 @(evt.IsUpcoming ? "예정되어 있습니다" : "진행되었습니다")</p>
+            <p class="text-muted lead">@(presentationSessions.Count() + "개의") 세션이 @(evt.IsUpcoming ? "예정되어 있습니다" : "진행되었습니다")</p>
         </div>
-        <div class="row g-4">
-            @foreach (var session in sessions)
+        
+        @if (isMultiDay)
+        {
+            // 다중 Day 행사: Day별로 그룹화하여 표시 (발표 세션만)
+            foreach (var dayGroup in sessionGrid!.PresentationSessionsByDay)
             {
-                var trackInfo = SessionDisplay.GetFormatDisplayInfo(session.Format);
-                <div class="col-md-6 col-lg-4">
-                    <div class="card border-0 shadow-sm card-hover h-100"
-                         role="button"
-                         data-bs-toggle="modal"
-                         data-bs-target="#@session.ModalId"
-                         style="cursor: pointer;">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <span class="badge bg-@trackInfo.BadgeColor">@trackInfo.DisplayName</span>
-                                <span class="text-muted small">@(session.Duration.TotalMinutes + "분")</span>
-                            </div>
-                            @if (session.HasSchedule)
-                            {
-                                <div class="d-flex gap-3 mb-3 small text-muted">
-                                    <span><i class="bi bi-clock me-1"></i>@session.Schedule!.StartTime.ToString("HH:mm")</span>
-                                </div>
-                            }
-                            <h5 class="card-title fw-bold mb-2">@session.Title</h5>
-                            <p class="card-text text-muted small mb-3">@session.Description</p>
-                            <div class="mb-3">
-                                @if (session.Speakers.Length == 1)
-                                {
-                                    <a href="?speaker=@session.PrimarySpeaker.Id" class="d-flex align-items-center text-decoration-none speaker-link" onclick="event.stopPropagation();">
-                                        <div class="speaker-avatar-wrapper me-2" style="width: 32px; height: 32px;">
-                                            <img src="@session.PrimarySpeaker.ResolvedImageUrl" 
-                                                 alt="@session.PrimarySpeaker.Name" 
-                                                 class="speaker-avatar rounded-circle w-100 h-100 object-fit-cover"
-                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                                            <div class="avatar-placeholder bg-@themeColorClass text-white" style="display: none; width: 100%; height: 100%; font-size: 0.8rem;">
-                                                <i class="bi bi-person-fill"></i>
-                                            </div>
-                                        </div>
-                                        <small class="fw-bold text-dark">@session.PrimarySpeaker.Name</small>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <div class="d-flex align-items-center flex-wrap gap-2">
-                                        @foreach (var speaker in session.Speakers.Take(3))
-                                        {
-                                            <a href="?speaker=@speaker.Id" class="speaker-link" title="@speaker.Name" onclick="event.stopPropagation();">
-                                                <div class="speaker-avatar-wrapper" style="width: 28px; height: 28px;">
-                                                    <img src="@speaker.ResolvedImageUrl" 
-                                                         alt="@speaker.Name" 
-                                                         class="speaker-avatar rounded-circle w-100 h-100 object-fit-cover"
-                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                                                    <div class="avatar-placeholder bg-@themeColorClass text-white" style="display: none; width: 100%; height: 100%; font-size: 0.6rem;">
-                                                        <i class="bi bi-person-fill"></i>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        }
-                                        @if (session.Speakers.Length > 3)
-                                        {
-                                            <span class="badge bg-secondary">+@(session.Speakers.Length - 3)</span>
-                                        }
-                                    </div>
-                                }
-                            </div>
-                            @if (session.Tags != null)
-                            {
-                                <div class="mb-3">
-                                    @foreach (var tag in session.Tags)
-                                    {
-                                        <span class="badge bg-light text-dark me-1 mb-1">@tag</span>
-                                    }
-                                </div>
-                            }
-                            @if (!string.IsNullOrEmpty(session.VideoUrl) || !string.IsNullOrEmpty(session.SlidesUrl))
-                            {
-                                <div class="d-flex gap-2 flex-wrap">
-                                    @if (!string.IsNullOrEmpty(session.VideoUrl))
-                                    {
-                                        <a href="@session.VideoUrl" class="btn btn-sm btn-@themeColorClass session-action-btn" target="_blank" onclick="event.stopPropagation();">
-                                            <i class="bi bi-play me-1"></i>영상
-                                        </a>
-                                    }
-                                    @if (!string.IsNullOrEmpty(session.SlidesUrl))
-                                    {
-                                        <a href="@session.SlidesUrl" class="btn btn-sm btn-outline-@themeColorClass session-action-btn" target="_blank" onclick="event.stopPropagation();">
-                                            <i class="bi bi-download me-1"></i>자료
-                                        </a>
-                                    }
-                                </div>
-                            }
-                        </div>
+                <div class="mb-5">
+                    <h3 class="fw-bold mb-4 pb-2 border-bottom">
+                        <i class="bi bi-calendar-event me-2 text-@themeColorClass"></i>Day @dayGroup.Key
+                    </h3>
+                    <div class="row g-4">
+                        @foreach (var session in dayGroup)
+                        {
+                            @await Html.PartialAsync("_SessionCard", session, new ViewDataDictionary(ViewData) { { "themeColorClass", themeColorClass } })
+                        }
                     </div>
                 </div>
             }
-        </div>
+        }
+        else
+        {
+            // 단일 Day 행사: 기존 방식으로 표시 (발표 세션만)
+            <div class="row g-4">
+                @foreach (var session in presentationSessions)
+                {
+                    @await Html.PartialAsync("_SessionCard", session, new ViewDataDictionary(ViewData) { { "themeColorClass", themeColorClass } })
+                }
+            </div>
+        }
     </div>
 </section>
 
 <!-- 세션 상세 모달들 -->
-@foreach (var session in sessions)
+@foreach (var session in presentationSessions)
 {
     var trackInfo = SessionDisplay.GetFormatDisplayInfo(session.Format);
     <div class="modal fade" id="@session.ModalId" tabindex="-1" aria-labelledby="@(session.ModalId)-label" aria-hidden="true"
@@ -1227,6 +1167,67 @@
                         }
                     }, 300);
                 }
+            });
+        });
+        
+        // 세션 카드 클릭 핸들러 - 카드 영역 클릭 시 모달 열기, 링크 클릭 시 제외
+        document.querySelectorAll('.session-card').forEach(function(card) {
+            card.addEventListener('click', function(e) {
+                // 링크나 버튼 클릭인 경우 모달을 열지 않음
+                if (e.target.closest('.session-card-link')) {
+                    return;
+                }
+                
+                const modalTarget = this.getAttribute('data-modal-target');
+                if (modalTarget) {
+                    const modal = document.querySelector(modalTarget);
+                    if (modal) {
+                        const bsModal = new bootstrap.Modal(modal);
+                        bsModal.show();
+                    }
+                }
+            });
+        });
+        
+        // 인라인 비디오 플레이어 핸들러
+        document.querySelectorAll('.video-play-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const card = this.closest('.session-card');
+                const videoContainer = card.querySelector('.video-player-container');
+                const iframe = videoContainer.querySelector('.video-iframe');
+                const actionButtons = card.querySelector('.session-action-buttons');
+                
+                // iframe에 src 설정 (매번 새로 설정하여 재생 보장)
+                if (iframe.dataset.src) {
+                    iframe.src = iframe.dataset.src;
+                }
+                
+                // 비디오 컨테이너 표시, 버튼 숨기기
+                videoContainer.style.display = 'block';
+                actionButtons.style.display = 'none';
+            });
+        });
+        
+        // 비디오 닫기 버튼 핸들러
+        document.querySelectorAll('.video-close-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const card = this.closest('.session-card');
+                const videoContainer = card.querySelector('.video-player-container');
+                const iframe = videoContainer.querySelector('.video-iframe');
+                const actionButtons = card.querySelector('.session-action-buttons');
+                
+                // 비디오 정지 (src를 about:blank로 설정하여 완전히 정지)
+                iframe.src = 'about:blank';
+                
+                // 비디오 컨테이너 숨기기, 버튼 다시 표시
+                videoContainer.style.display = 'none';
+                actionButtons.style.display = 'flex';
             });
         });
     });

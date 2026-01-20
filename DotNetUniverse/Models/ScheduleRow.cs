@@ -6,6 +6,11 @@ namespace DotNetUniverse.Models;
 public record ScheduleRow
 {
     /// <summary>
+    /// 행사 일차 (Day 1, Day 2 등)
+    /// </summary>
+    public int Day { get; init; } = 1;
+
+    /// <summary>
     /// 이 행의 시간 슬롯
     /// </summary>
     public required TimeSlot TimeSlot { get; init; }

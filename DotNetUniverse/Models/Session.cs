@@ -110,6 +110,17 @@ public record Session
     /// </summary>
     public bool HasPrerequisites => !string.IsNullOrWhiteSpace(Prerequisites);
 
+    /// <summary>
+    /// 발표 세션 여부 (키노트, 브레이크아웃, 핸즈온랩 등 실제 발표가 있는 세션)
+    /// 휴식, 점심, 체크인 등 운영 세션은 제외
+    /// </summary>
+    public bool IsPresentationSession => Format is SessionFormat.Keynote 
+        or SessionFormat.Breakout 
+        or SessionFormat.HandsOnLab 
+        or SessionFormat.Workshop 
+        or SessionFormat.Lightning 
+        or SessionFormat.Panel;
+
 
     /// <summary>
     /// 모달 ID (HTML용)

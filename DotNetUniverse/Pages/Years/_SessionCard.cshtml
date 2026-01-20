@@ -1,0 +1,123 @@
+@model DotNetUniverse.Models.Session
+@using DotNetUniverse.Services
+@inject SessionDisplayService SessionDisplay
+@{
+    var session = Model;
+    var themeColorClass = ViewData["themeColorClass"]?.ToString() ?? "primary";
+    var trackInfo = SessionDisplay.GetFormatDisplayInfo(session.Format);
+}
+
+<div class="col-md-6 col-lg-4">
+    <div class="card border-0 shadow-sm card-hover h-100 session-card"
+         role="button"
+         data-modal-target="#@session.ModalId"
+         style="cursor: pointer;">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-@trackInfo.BadgeColor">@trackInfo.DisplayName</span>
+                <span class="text-muted small">@(session.Duration.TotalMinutes + "분")</span>
+            </div>
+            @if (session.HasSchedule)
+            {
+                <div class="d-flex gap-3 mb-3 small text-muted">
+                    <span><i class="bi bi-clock me-1"></i>@session.Schedule!.StartTime.ToString("HH:mm")</span>
+                </div>
+            }
+            <h5 class="card-title fw-bold mb-2">@session.Title</h5>
+            <p class="card-text text-muted small mb-3">@session.Description</p>
+            
+            @* 인라인 비디오 플레이어 영역 *@
+            @if (session.IsYouTubeVideo)
+            {
+                <div class="video-player-container mb-3" style="display: none;">
+                    <div class="ratio ratio-16x9">
+                        <iframe class="video-iframe rounded" 
+                                data-src="@session.YouTubeEmbedUrl?autoplay=1" 
+                                title="@session.Title"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mt-2 video-close-btn session-card-link">
+                        <i class="bi bi-x-lg me-1"></i>닫기
+                    </button>
+                </div>
+            }
+            
+            <div class="mb-3">
+                @if (session.Speakers.Length == 1)
+                {
+                    <a href="?speaker=@session.PrimarySpeaker.Id" class="d-flex align-items-center text-decoration-none speaker-link session-card-link">
+                        <div class="speaker-avatar-wrapper me-2" style="width: 32px; height: 32px;">
+                            <img src="@session.PrimarySpeaker.ResolvedImageUrl" 
+                                 alt="@session.PrimarySpeaker.Name" 
+                                 class="speaker-avatar rounded-circle w-100 h-100 object-fit-cover"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                            <div class="avatar-placeholder bg-@themeColorClass text-white" style="display: none; width: 100%; height: 100%; font-size: 0.8rem;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                        </div>
+                        <small class="fw-bold text-dark">@session.PrimarySpeaker.Name</small>
+                    </a>
+                }
+                else
+                {
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        @foreach (var speaker in session.Speakers.Take(3))
+                        {
+                            <a href="?speaker=@speaker.Id" class="speaker-link session-card-link" title="@speaker.Name">
+                                <div class="speaker-avatar-wrapper" style="width: 28px; height: 28px;">
+                                    <img src="@speaker.ResolvedImageUrl" 
+                                         alt="@speaker.Name" 
+                                         class="speaker-avatar rounded-circle w-100 h-100 object-fit-cover"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                    <div class="avatar-placeholder bg-@themeColorClass text-white" style="display: none; width: 100%; height: 100%; font-size: 0.6rem;">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        @if (session.Speakers.Length > 3)
+                        {
+                            <span class="badge bg-secondary">+@(session.Speakers.Length - 3)</span>
+                        }
+                    </div>
+                }
+            </div>
+            @if (session.Tags != null)
+            {
+                <div class="mb-3">
+                    @foreach (var tag in session.Tags)
+                    {
+                        <span class="badge bg-light text-dark me-1 mb-1">@tag</span>
+                    }
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(session.VideoUrl) || !string.IsNullOrEmpty(session.SlidesUrl))
+            {
+                <div class="d-flex gap-2 flex-wrap session-action-buttons">
+                    @if (!string.IsNullOrEmpty(session.VideoUrl))
+                    {
+                        @if (session.IsYouTubeVideo)
+                        {
+                            <button type="button" class="btn btn-sm btn-@themeColorClass session-action-btn video-play-btn session-card-link">
+                                <i class="bi bi-play me-1"></i>영상
+                            </button>
+                        }
+                        else
+                        {
+                            <a href="@session.VideoUrl" class="btn btn-sm btn-@themeColorClass session-action-btn session-card-link" target="_blank" rel="noopener noreferrer">
+                                <i class="bi bi-play me-1"></i>영상
+                            </a>
+                        }
+                    }
+                    @if (!string.IsNullOrEmpty(session.SlidesUrl))
+                    {
+                        <a href="@session.SlidesUrl" class="btn btn-sm btn-outline-@themeColorClass session-action-btn session-card-link" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-download me-1"></i>자료
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

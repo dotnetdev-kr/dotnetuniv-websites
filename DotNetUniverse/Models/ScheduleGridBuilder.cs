@@ -7,7 +7,7 @@ namespace DotNetUniverse.Models;
 public class ScheduleGridBuilder
 {
     private readonly List<ScheduleColumn> _columns = [];
-    private readonly List<(TimeSlot Slot, List<ScheduleEntry> Entries)> _rows = [];
+    private readonly List<(int Day, TimeSlot Slot, List<ScheduleEntry> Entries)> _rows = [];
     private int _day = 1;
 
     /// <summary>
@@ -63,7 +63,7 @@ public class ScheduleGridBuilder
         var slot = new TimeSlot { StartTime = startTime, EndTime = endTime };
         var builder = new TimeSlotBuilder(_columns.Count);
         configure(builder);
-        _rows.Add((slot, builder.Entries));
+        _rows.Add((_day, slot, builder.Entries));
         return this;
     }
 
@@ -90,7 +90,7 @@ public class ScheduleGridBuilder
         // [trackIndex] = 남은 rowspan 수
         var rowSpanTracker = new int[trackCount];
 
-        foreach (var (slot, entries) in _rows)
+        foreach (var (day, slot, entries) in _rows)
         {
             var cells = new ScheduleCell[trackCount];
             
@@ -176,6 +176,7 @@ public class ScheduleGridBuilder
 
             rows.Add(new ScheduleRow
             {
+                Day = day,
                 TimeSlot = slot,
                 Cells = cells
             });
