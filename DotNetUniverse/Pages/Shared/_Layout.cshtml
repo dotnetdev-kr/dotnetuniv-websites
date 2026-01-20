@@ -1,0 +1,134 @@
+@using Microsoft.AspNetCore.Http.Extensions
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - .NET Universe</title>
+    <meta name="description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스. .NET Dev(닷넷데브) 주최")" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="@(ViewData["OgType"] ?? "website")" />
+    <meta property="og:title" content="@(ViewData["OgTitle"] ?? ViewData["Title"]) - .NET Universe" />
+    <meta property="og:description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스")" />
+    <meta property="og:url" content="@(ViewData["OgUrl"] ?? Context.Request.GetDisplayUrl())" />
+    @if (ViewData["OgImage"] != null)
+    {
+        <meta property="og:image" content="@ViewData["OgImage"]" />
+    }
+    else
+    {
+        <meta property="og:image" content="/images/og-default.png" />
+    }
+    <meta property="og:site_name" content=".NET Universe" />
+    <meta property="og:locale" content="ko_KR" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@(ViewData["OgTitle"] ?? ViewData["Title"]) - .NET Universe" />
+    <meta name="twitter:description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스")" />
+    @if (ViewData["OgImage"] != null)
+    {
+        <meta name="twitter:image" content="@ViewData["OgImage"]" />
+    }
+    
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DotNetUniverse.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-purple fixed-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-area="" asp-page="/Index">
+                    <i class="bi bi-stars me-2"></i>.NET Universe
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Index">홈</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Archive">지난 행사</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/About">소개</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <a class="btn btn-outline-light me-2" asp-area="" asp-page="/Index" asp-fragment="register">
+                            <i class="bi bi-ticket-perforated me-1"></i>참가 신청
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="footer-dark py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-white mb-3">
+                        <i class="bi bi-stars me-2"></i>.NET Universe
+                    </h5>
+                    <p class="text-white-50">
+                        .NET Dev(닷넷데브)가 주최하는<br />
+                        대한민국 최대 규모의 .NET 개발자 컨퍼런스
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h6 class="text-white mb-3">바로가기</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/Index">홈</a></li>
+                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/Archive">지난 행사</a></li>
+                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/About">소개</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h6 class="text-white mb-3">법적 고지</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/Privacy">개인정보처리방침</a></li>
+                        <li class="mb-2"><a class="text-white-50 text-decoration-none" href="#">행동 강령</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h6 class="text-white mb-3">소셜 미디어</h6>
+                    <div class="social-links">
+                        <a href="#" class="text-white-50 me-3 fs-4"><i class="bi bi-github"></i></a>
+                        <a href="#" class="text-white-50 me-3 fs-4"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="text-white-50 me-3 fs-4"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary" />
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="text-white-50 mb-0">&copy; @DateTime.Now.Year .NET Dev(닷넷데브). All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="text-white-50 mb-0">Built with <i class="bi bi-heart-fill text-danger"></i> and ASP.NET Core</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,618 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "국내 최대 .NET 개발자 컨퍼런스";
+    ViewData["OgDescription"] = ".NET Universe - AI 시대를 선도하는 국내 최대 .NET 개발자 컨퍼런스. 2019년부터 이어온 개발자들의 축제에 함께하세요.";
+}
+
+<!-- 히어로 섹션 - 2026 행사 집중 홍보 -->
+<section class="hero-section" style="background: linear-gradient(135deg, #512BD4 0%, #7B68EE 50%, #9370DB 100%);">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative">
+        <div class="row min-vh-100 align-items-center py-5">
+            <div class="col-lg-7 text-white">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                        <i class="bi bi-stars me-1"></i>AI 시대의 .NET
+                    </span>
+                    <span class="badge bg-light text-dark fs-6 px-3 py-2">
+                        <i class="bi bi-calendar-event me-1"></i>2026년 11월
+                    </span>
+                </div>
+                <h1 class="display-1 fw-bold mb-4">
+                    .NET Universe<br />
+                    <span class="text-gradient">2026</span>
+                </h1>
+                <p class="lead mb-4 opacity-90 fs-4">
+                    <strong>국내 최대 .NET 개발자 컨퍼런스</strong><br />
+                    AI와 오픈소스로 함께 성장하는 개발자들의 축제
+                </p>
+                <div class="hero-stats d-flex flex-wrap gap-4 mb-5">
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">7년</div>
+                        <small class="opacity-75">역사</small>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">2,000+</div>
+                        <small class="opacity-75">누적 참가자</small>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">150+</div>
+                        <small class="opacity-75">누적 세션</small>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">100+</div>
+                        <small class="opacity-75">연사</small>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap gap-3" id="register">
+                    <a href="#" class="btn btn-warning btn-lg px-5 py-3 fw-bold">
+                        <i class="bi bi-bell-fill me-2"></i>2026 사전 알림 신청
+                    </a>
+                    <a href="#history" class="btn btn-outline-light btn-lg px-4 py-3">
+                        <i class="bi bi-clock-history me-2"></i>지난 행사 보기
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="hero-visual text-center">
+                    <div class="floating-cards">
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg mb-3">
+                            <i class="bi bi-robot text-primary me-2"></i>Semantic Kernel
+                        </div>
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg mb-3 ms-4">
+                            <i class="bi bi-cloud text-info me-2"></i>.NET Aspire
+                        </div>
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg mb-3">
+                            <i class="bi bi-gpu-card text-success me-2"></i>Blazor
+                        </div>
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg ms-3">
+                            <i class="bi bi-github text-dark me-2"></i>GitHub Copilot
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 카운트다운 -->
+    <div class="countdown-bar">
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap">
+                <span class="text-white-50"><i class="bi bi-hourglass-split me-2"></i>2026년 행사까지</span>
+                <div class="countdown-wrapper d-flex gap-3">
+                    <div class="countdown-item text-center">
+                        <span class="countdown-number" id="days">--</span>
+                        <span class="countdown-label">일</span>
+                    </div>
+                    <div class="countdown-item text-center">
+                        <span class="countdown-number" id="hours">--</span>
+                        <span class="countdown-label">시간</span>
+                    </div>
+                    <div class="countdown-item text-center">
+                        <span class="countdown-number" id="minutes">--</span>
+                        <span class="countdown-label">분</span>
+                    </div>
+                    <div class="countdown-item text-center">
+                        <span class="countdown-number" id="seconds">--</span>
+                        <span class="countdown-label">초</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 행사 소개 섹션 -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <span class="badge bg-purple text-white mb-3">About .NET Universe</span>
+                <h2 class="display-5 fw-bold mb-4">
+                    AI 시대를 선도하는<br />
+                    <span class="text-purple">국내 대표 .NET 개발자 행사</span>
+                </h2>
+                <p class="lead text-muted mb-4">
+                    .NET Universe는 2019년 .NET Conf @@ Seoul로 시작하여, 
+                    매년 성장해온 국내 최대 규모의 .NET 개발자 컨퍼런스입니다.
+                </p>
+                <div class="row g-4">
+                    <div class="col-6">
+                        <div class="d-flex align-items-start">
+                            <div class="icon-sm bg-primary-subtle text-primary rounded-circle me-3">
+                                <i class="bi bi-robot"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">AI First</h6>
+                                <small class="text-muted">Semantic Kernel, GitHub Copilot 등 AI 기술 선도</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-start">
+                            <div class="icon-sm bg-success-subtle text-success rounded-circle me-3">
+                                <i class="bi bi-github"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">오픈소스</h6>
+                                <small class="text-muted">.NET 오픈소스 생태계 기여 및 공유</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-start">
+                            <div class="icon-sm bg-warning-subtle text-warning rounded-circle me-3">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">커뮤니티</h6>
+                                <small class="text-muted">.NET Dev 커뮤니티가 만들어가는 행사</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-start">
+                            <div class="icon-sm bg-info-subtle text-info rounded-circle me-3">
+                                <i class="bi bi-globe"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">글로벌</h6>
+                                <small class="text-muted">국내외 .NET 전문가 네트워킹</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="bg-purple text-white rounded-circle p-3 me-3">
+                                    <i class="bi bi-trophy-fill fs-4"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-0">왜 .NET Universe인가요?</h5>
+                                    <small class="text-muted">개발자들이 선택하는 이유</small>
+                                </div>
+                            </div>
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="bi bi-check-circle-fill text-success me-3"></i>
+                                    <span>Microsoft 공식 .NET Conf 파트너 이벤트</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="bi bi-check-circle-fill text-success me-3"></i>
+                                    <span>실무에서 바로 적용 가능한 기술 세션</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="bi bi-check-circle-fill text-success me-3"></i>
+                                    <span>국내외 Microsoft MVP 및 전문가 연사진</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="bi bi-check-circle-fill text-success me-3"></i>
+                                    <span>핸즈온랩으로 직접 체험하는 기술</span>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <i class="bi bi-check-circle-fill text-success me-3"></i>
+                                    <span>개발자 네트워킹 및 커리어 성장 기회</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2026 주요 주제 미리보기 -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-warning text-dark mb-3">Coming in 2026</span>
+            <h2 class="fw-bold display-5 mb-3">.NET Universe 2026 예상 주제</h2>
+            <p class="text-muted lead">AI 시대의 .NET 개발을 이끌어갈 핵심 기술들</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm card-hover">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-box bg-primary-subtle text-primary mb-3">
+                            <i class="bi bi-robot fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">AI & Copilot</h5>
+                        <p class="card-text text-muted small">Semantic Kernel, GitHub Copilot, Azure OpenAI로 만드는 지능형 앱</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm card-hover">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-box bg-info-subtle text-info mb-3">
+                            <i class="bi bi-cloud-fill fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">.NET Aspire</h5>
+                        <p class="card-text text-muted small">클라우드 네이티브 앱 개발의 새로운 표준</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm card-hover">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-box bg-success-subtle text-success mb-3">
+                            <i class="bi bi-globe fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Blazor & Web</h5>
+                        <p class="card-text text-muted small">SSR, WASM, Hybrid 통합 웹 개발</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm card-hover">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-box bg-danger-subtle text-danger mb-3">
+                            <i class="bi bi-speedometer2 fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Performance</h5>
+                        <p class="card-text text-muted small">Native AOT, GC 최적화, 고성능 .NET</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 행사 히스토리 타임라인 -->
+<section class="py-5 bg-dark text-white" id="history">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-light text-dark mb-3">Our Journey</span>
+            <h2 class="fw-bold display-5 mb-3">.NET Universe의 발자취</h2>
+            <p class="text-white-50 lead">2019년부터 이어온 개발자들의 축제</p>
+        </div>
+        
+        <div class="timeline-horizontal">
+            <div class="row g-4">
+                <!-- 2019 -->
+                <div class="col-md-6 col-lg-4 col-xl">
+                    <a href="/2019" class="text-decoration-none">
+                        <div class="card bg-dark border border-secondary h-100 card-hover-dark">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-danger fs-6">2019</span>
+                                    <i class="bi bi-rocket-takeoff text-danger"></i>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2">시작의 해</h5>
+                                <p class="text-white-50 small mb-3">.NET Conf @@ Seoul로 시작된 커뮤니티의 씨앗</p>
+                                <div class="d-flex gap-3 text-white-50 small">
+                                    <span><i class="bi bi-people me-1"></i>50+명</span>
+                                    <span><i class="bi bi-mic me-1"></i>11세션</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 2021 -->
+                <div class="col-md-6 col-lg-4 col-xl">
+                    <a href="/2021" class="text-decoration-none">
+                        <div class="card bg-dark border border-secondary h-100 card-hover-dark">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-secondary fs-6">2021</span>
+                                    <i class="bi bi-camera-video text-secondary"></i>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2">온라인 전환</h5>
+                                <p class="text-white-50 small mb-3">팬데믹 속에서도 이어진 개발자들의 열정</p>
+                                <div class="d-flex gap-3 text-white-50 small">
+                                    <span><i class="bi bi-people me-1"></i>200+명</span>
+                                    <span><i class="bi bi-mic me-1"></i>15세션</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 2022 -->
+                <div class="col-md-6 col-lg-4 col-xl">
+                    <a href="/2022" class="text-decoration-none">
+                        <div class="card bg-dark border border-secondary h-100 card-hover-dark">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-success fs-6">2022</span>
+                                    <i class="bi bi-people text-success"></i>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2">하이브리드</h5>
+                                <p class="text-white-50 small mb-3">오프라인과 온라인의 조화</p>
+                                <div class="d-flex gap-3 text-white-50 small">
+                                    <span><i class="bi bi-people me-1"></i>300+명</span>
+                                    <span><i class="bi bi-mic me-1"></i>18세션</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 2023 -->
+                <div class="col-md-6 col-lg-4 col-xl">
+                    <a href="/2023" class="text-decoration-none">
+                        <div class="card bg-dark border border-secondary h-100 card-hover-dark">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-primary fs-6">2023</span>
+                                    <i class="bi bi-graph-up-arrow text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2">성장의 해</h5>
+                                <p class="text-white-50 small mb-3">더 많은 개발자, 더 다양한 주제</p>
+                                <div class="d-flex gap-3 text-white-50 small">
+                                    <span><i class="bi bi-people me-1"></i>350+명</span>
+                                    <span><i class="bi bi-mic me-1"></i>20세션</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 2024 -->
+                <div class="col-md-6 col-lg-4 col-xl">
+                    <a href="/2024" class="text-decoration-none">
+                        <div class="card bg-dark border border-secondary h-100 card-hover-dark">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-purple fs-6">2024</span>
+                                    <i class="bi bi-trophy text-warning"></i>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2">역대 최대</h5>
+                                <p class="text-white-50 small mb-3">2일간 진행된 역대 최대 규모</p>
+                                <div class="d-flex gap-3 text-white-50 small">
+                                    <span><i class="bi bi-people me-1"></i>400+명</span>
+                                    <span><i class="bi bi-mic me-1"></i>25세션</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 2025 -->
+                <div class="col-md-6 col-lg-4 col-xl">
+                    <a href="/2025" class="text-decoration-none">
+                        <div class="card bg-dark border border-secondary h-100 card-hover-dark">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-warning text-dark fs-6">2025</span>
+                                    <i class="bi bi-stars text-warning"></i>
+                                </div>
+                                <h5 class="fw-bold text-white mb-2">AI 시대</h5>
+                                <p class="text-white-50 small mb-3">AI와 함께하는 .NET의 미래</p>
+                                <div class="d-flex gap-3 text-white-50 small">
+                                    <span><i class="bi bi-people me-1"></i>500+명</span>
+                                    <span><i class="bi bi-mic me-1"></i>30세션</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a asp-page="/Archive" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-archive me-2"></i>전체 아카이브 보기
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 커뮤니티 섹션 -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="card border-0 bg-gradient-purple text-white shadow-lg">
+                    <div class="card-body p-5">
+                        <h3 class="fw-bold mb-4">
+                            <i class="bi bi-heart-fill text-danger me-2"></i>
+                            .NET Dev 커뮤니티
+                        </h3>
+                        <p class="lead mb-4">
+                            .NET Universe는 .NET Dev 커뮤니티가 주최하는 비영리 개발자 행사입니다.
+                            개발자들이 자발적으로 모여 지식을 나누고 함께 성장합니다.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="https://github.com/dotnetdev-kr" target="_blank" class="btn btn-light">
+                                <i class="bi bi-github me-2"></i>GitHub
+                            </a>
+                            <a href="#" class="btn btn-outline-light">
+                                <i class="bi bi-discord me-2"></i>Discord
+                            </a>
+                            <a href="#" class="btn btn-outline-light">
+                                <i class="bi bi-twitter-x me-2"></i>Twitter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="fw-bold display-6 mb-4">함께 만들어가는 행사</h2>
+                <p class="text-muted mb-4">
+                    .NET Universe는 연사, 스태프, 스폰서, 그리고 참가자 모두가 함께 만들어가는 행사입니다.
+                    여러분의 참여가 .NET 생태계를 더욱 풍요롭게 합니다.
+                </p>
+                <div class="row g-4">
+                    <div class="col-6">
+                        <div class="card border-0 bg-light h-100">
+                            <div class="card-body p-4 text-center">
+                                <i class="bi bi-mic-fill text-purple fs-2 mb-2"></i>
+                                <h6 class="fw-bold">연사 지원</h6>
+                                <small class="text-muted">경험을 나눠주세요</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card border-0 bg-light h-100">
+                            <div class="card-body p-4 text-center">
+                                <i class="bi bi-briefcase-fill text-purple fs-2 mb-2"></i>
+                                <h6 class="fw-bold">스폰서</h6>
+                                <small class="text-muted">함께 성장해요</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card border-0 bg-light h-100">
+                            <div class="card-body p-4 text-center">
+                                <i class="bi bi-hand-thumbs-up-fill text-purple fs-2 mb-2"></i>
+                                <h6 class="fw-bold">스태프</h6>
+                                <small class="text-muted">운영에 참여해요</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card border-0 bg-light h-100">
+                            <div class="card-body p-4 text-center">
+                                <i class="bi bi-code-slash text-purple fs-2 mb-2"></i>
+                                <h6 class="fw-bold">오픈소스</h6>
+                                <small class="text-muted">코드로 기여해요</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 참가자 후기 섹션 -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-purple text-white mb-3">Testimonials</span>
+            <h2 class="fw-bold display-5 mb-3">참가자들의 이야기</h2>
+            <p class="text-muted lead">지난 행사에 참가한 개발자들의 후기</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="text-muted mb-4">
+                            "실무에서 바로 적용할 수 있는 기술 세션들이 정말 좋았습니다. 
+                            특히 Blazor United 세션은 우리 팀 프로젝트에 큰 도움이 됐어요."
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-placeholder bg-primary text-white me-3" style="width: 48px; height: 48px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">김OO</h6>
+                                <small class="text-muted">백엔드 개발자</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="text-muted mb-4">
+                            "다른 .NET 개발자들과 네트워킹할 수 있어서 좋았습니다. 
+                            국내에 이런 행사가 있다는 게 정말 감사해요."
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-placeholder bg-success text-white me-3" style="width: 48px; height: 48px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">이OO</h6>
+                                <small class="text-muted">풀스택 개발자</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="text-muted mb-4">
+                            "AI와 .NET 통합 세션이 특히 인상 깊었습니다. 
+                            Semantic Kernel로 프로젝트를 시작하게 되었어요!"
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-placeholder bg-warning text-dark me-3" style="width: 48px; height: 48px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">박OO</h6>
+                                <small class="text-muted">AI 엔지니어</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA 섹션 -->
+<section class="py-5 bg-purple text-white">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-3">.NET Universe 2026</h2>
+                <p class="lead opacity-90 mb-0">
+                    AI 시대의 .NET 개발을 함께 탐험할 준비가 되셨나요?<br />
+                    2026년 11월, 국내 최대 .NET 개발자 컨퍼런스에서 만나요!
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="#register" class="btn btn-warning btn-lg px-5 py-3 fw-bold">
+                    <i class="bi bi-bell-fill me-2"></i>사전 알림 신청
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // 카운트다운 타이머 - 2026년 11월 (예상)
+        const eventDate = new Date('2026-11-14T09:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.querySelector('.countdown-bar').innerHTML = '<div class="container"><p class="text-white mb-0 py-2">🎉 행사가 진행 중입니다!</p></div>';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+}

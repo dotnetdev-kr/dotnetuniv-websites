@@ -1,0 +1,80 @@
+@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "개인정보처리방침";
+}
+
+<!-- 페이지 헤더 -->
+<section class="py-5 bg-purple text-white">
+    <div class="container py-4">
+        <h1 class="display-5 fw-bold mb-3">
+            <i class="bi bi-shield-check me-3"></i>개인정보처리방침
+        </h1>
+        <p class="lead opacity-90 mb-0">
+            .NET Universe는 참가자의 개인정보를 소중히 여깁니다.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <h4 class="fw-bold mb-4">1. 개인정보 수집 항목</h4>
+                        <p class="text-muted mb-4">
+                            .NET Universe 행사 참가 신청 시 다음의 정보를 수집합니다:
+                        </p>
+                        <ul class="text-muted mb-4">
+                            <li>이름, 이메일 주소</li>
+                            <li>소속 회사/단체 (선택)</li>
+                            <li>연락처 (선택)</li>
+                        </ul>
+
+                        <h4 class="fw-bold mb-4">2. 개인정보 이용 목적</h4>
+                        <p class="text-muted mb-4">
+                            수집된 개인정보는 다음의 목적으로 이용됩니다:
+                        </p>
+                        <ul class="text-muted mb-4">
+                            <li>행사 참가 확인 및 입장 관리</li>
+                            <li>행사 관련 공지사항 안내</li>
+                            <li>차기 행사 정보 제공 (동의 시)</li>
+                        </ul>
+
+                        <h4 class="fw-bold mb-4">3. 개인정보 보유 기간</h4>
+                        <p class="text-muted mb-4">
+                            수집된 개인정보는 행사 종료 후 1년간 보관 후 파기됩니다.
+                            단, 뉴스레터 수신에 동의한 경우 별도 요청 시까지 보관됩니다.
+                        </p>
+
+                        <h4 class="fw-bold mb-4">4. 개인정보 제3자 제공</h4>
+                        <p class="text-muted mb-4">
+                            .NET Universe는 참가자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.
+                        </p>
+
+                        <h4 class="fw-bold mb-4">5. 문의</h4>
+                        <p class="text-muted mb-0">
+                            개인정보 관련 문의사항은 이메일로 연락해주세요.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <div class="card border-0 bg-light">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">
+                            <i class="bi bi-question-circle text-primary me-2"></i>문의하기
+                        </h5>
+                        <p class="text-muted small mb-3">
+                            개인정보 처리에 대한 문의사항이 있으시면 언제든 연락주세요.
+                        </p>
+                        <a href="mailto:privacy@dotnetuniverse.kr" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-envelope me-2"></i>이메일 문의
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

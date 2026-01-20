@@ -1,0 +1,327 @@
+@page
+@model DotNetUniverse.Pages.ArchiveModel
+@{
+    ViewData["Title"] = "지난 행사";
+}
+
+<!-- 페이지 헤더 -->
+<section class="py-5 bg-purple text-white">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-archive me-3"></i>지난 행사 아카이브
+                </h1>
+                <p class="lead opacity-90">
+                    .NET Universe의 역대 행사 기록을 돌아보세요.<br />
+                    각 행사의 세션 영상, 발표 자료, 그리고 추억을 만나볼 수 있습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 아카이브 목록 -->
+<section class="py-5">
+    <div class="container py-4">
+        <!-- 2024년 행사 -->
+        <a href="/2024" class="text-decoration-none">
+            <div class="event-card card border-0 shadow-lg mb-5 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-4 bg-gradient-purple d-flex align-items-center justify-content-center p-5">
+                        <div class="text-center text-white">
+                            <span class="year-badge">2024</span>
+                            <h3 class="fw-bold mt-2">.NET Universe</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-5">
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-primary">오프라인</span>
+                                <span class="badge bg-secondary">서울</span>
+                            </div>
+                            <h4 class="fw-bold mb-3 text-dark">.NET 8의 새로운 시대</h4>
+                            <p class="text-muted mb-4">
+                                .NET 8 정식 출시를 기념하여 진행된 역대 최대 규모의 컨퍼런스.
+                                클라우드 네이티브, Blazor, MAUI 등 다양한 주제로 25개의 세션이 진행되었습니다.
+                            </p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">400+</div>
+                                        <small class="text-muted">참가자</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">25</div>
+                                        <small class="text-muted">세션</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">20+</div>
+                                        <small class="text-muted">연사</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">2일</div>
+                                        <small class="text-muted">행사 기간</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="btn btn-primary">
+                                <i class="bi bi-arrow-right me-2"></i>자세히 보기
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- 2023년 행사 -->
+        <a href="/2023" class="text-decoration-none">
+            <div class="event-card card border-0 shadow-lg mb-5 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-4 bg-gradient-blue d-flex align-items-center justify-content-center p-5">
+                        <div class="text-center text-white">
+                            <span class="year-badge text-white">2023</span>
+                            <h3 class="fw-bold mt-2">.NET Universe</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-5">
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-info">온라인</span>
+                                <span class="badge bg-secondary">전국</span>
+                            </div>
+                            <h4 class="fw-bold mb-3 text-dark">어디서나 함께하는 .NET</h4>
+                            <p class="text-muted mb-4">
+                                온라인으로 진행되어 전국 각지의 개발자들이 참여할 수 있었던 행사.
+                                실시간 Q&A와 네트워킹 세션이 큰 호응을 얻었습니다.
+                            </p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">350+</div>
+                                        <small class="text-muted">참가자</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">20</div>
+                                        <small class="text-muted">세션</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">15+</div>
+                                        <small class="text-muted">연사</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">1일</div>
+                                        <small class="text-muted">행사 기간</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="btn btn-primary">
+                                <i class="bi bi-arrow-right me-2"></i>자세히 보기
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- 2022년 행사 -->
+        <a href="/2022" class="text-decoration-none">
+            <div class="event-card card border-0 shadow-lg mb-5 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-4 bg-gradient-green d-flex align-items-center justify-content-center p-5">
+                        <div class="text-center text-white">
+                            <span class="year-badge text-white">2022</span>
+                            <h3 class="fw-bold mt-2">.NET Universe</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-5">
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-warning text-dark">하이브리드</span>
+                                <span class="badge bg-secondary">서울 + 온라인</span>
+                            </div>
+                            <h4 class="fw-bold mb-3 text-dark">새로운 시작, .NET 6</h4>
+                            <p class="text-muted mb-4">
+                                .NET 6 LTS 출시와 함께 진행된 첫 하이브리드 행사.
+                                현장과 온라인 참가자가 함께 소통하는 새로운 형태를 시도했습니다.
+                            </p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">300+</div>
+                                        <small class="text-muted">참가자</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">18</div>
+                                        <small class="text-muted">세션</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">12+</div>
+                                        <small class="text-muted">연사</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">1일</div>
+                                        <small class="text-muted">행사 기간</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="btn btn-primary">
+                                <i class="bi bi-arrow-right me-2"></i>자세히 보기
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- 2021년 행사 -->
+        <a href="/2021" class="text-decoration-none">
+            <div class="event-card card border-0 shadow mb-5 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-4 bg-secondary d-flex align-items-center justify-content-center p-5" style="background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%) !important;">
+                        <div class="text-center text-white">
+                            <span class="year-badge text-white">2021</span>
+                            <h3 class="fw-bold mt-2">.NET Universe</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-5">
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-info">온라인</span>
+                                <span class="badge bg-warning text-dark">첫 행사</span>
+                            </div>
+                            <h4 class="fw-bold mb-3 text-dark">.NET Universe의 시작</h4>
+                            <p class="text-muted mb-4">
+                                .NET Dev 커뮤니티가 주최하는 첫 번째 .NET Universe.
+                                국내 .NET 개발자들의 열정으로 성공적인 첫 행사를 마쳤습니다.
+                            </p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">200+</div>
+                                        <small class="text-muted">참가자</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">12</div>
+                                        <small class="text-muted">세션</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">10+</div>
+                                        <small class="text-muted">연사</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-primary">1일</div>
+                                        <small class="text-muted">행사 기간</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="btn btn-primary">
+                                <i class="bi bi-arrow-right me-2"></i>자세히 보기
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- 2019년 파일럿 -->
+        <a href="/2019" class="text-decoration-none">
+            <div class="event-card card border-0 shadow mb-5 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex align-items-center justify-content-center p-5" style="background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);">
+                        <div class="text-center text-white">
+                            <span class="year-badge text-white">2019</span>
+                            <h3 class="fw-bold mt-2">.NET Universe</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-5">
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-secondary">파일럿</span>
+                                <span class="badge bg-danger">시작</span>
+                            </div>
+                            <h4 class="fw-bold mb-3 text-dark">.NET Universe의 씨앗</h4>
+                            <p class="text-muted mb-4">
+                                소규모 밋업에서 시작된 .NET Universe의 기원.
+                                50명의 개발자가 모여 .NET 생태계의 미래를 논의했습니다.
+                            </p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-danger">50+</div>
+                                        <small class="text-muted">참가자</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-danger">5</div>
+                                        <small class="text-muted">발표</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-danger">밋업</div>
+                                        <small class="text-muted">형식</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3">
+                                    <div class="text-center">
+                                        <div class="fs-3 fw-bold text-danger">서울</div>
+                                        <small class="text-muted">장소</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="btn btn-danger">
+                                <i class="bi bi-arrow-right me-2"></i>스토리 보기
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- CTA 섹션 -->
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold mb-3">다음 .NET Universe에서 만나요!</h2>
+                <p class="text-muted lead mb-4">
+                    .NET Universe 2025가 곧 다가옵니다.<br />
+                    지금 바로 참가 신청하고 최신 .NET 기술을 경험하세요.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="/2025" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-ticket-perforated me-2"></i>2025 참가 신청하기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
