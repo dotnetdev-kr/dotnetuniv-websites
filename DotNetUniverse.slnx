@@ -1,5 +1,5 @@
 <Solution>
-  <Folder Name="/솔루션 항목/">
+  <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
   <Project Path="DotNetUniverse/DotNetUniverse.csproj" Id="865bfeea-2719-460b-a379-0da24871cbad" />

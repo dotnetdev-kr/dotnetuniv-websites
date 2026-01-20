@@ -22,12 +22,11 @@ public class Year2019Data : IEventData
         Title = "Principal Program Manager",
         Company = "Microsoft",
         Bio = """
-            .NET 및 개발자 도구 에반젤리스트로서 전 세계 개발자들에게 .NET의 가치를 전파하고 있습니다.
-            팟캐스트 'Hanselminutes'를 진행하며, 개발자 커뮤니티에서 활발하게 활동하고 있습니다.
+            마이크로소프트의 파트너 프로그램 매니저이자, 20년 넘게 개발 생태계의 성장을 이끌어온 베테랑 소프트웨어 엔지니어입니다. 그는 기술 블로그와 팟캐스트인 'Hanselminutes'를 통해 복잡한 기술 개념을 대중에게 쉽게 전달하는 탁월한 능력을 갖추고 있습니다. 특히 오픈 소스, 웹 개발, 그리고 접근성(Accessibility) 분야에서 목소리를 높이며 전 세계 개발자들에게 영감을 주는 교육자이자 멘토로 활동하고 있습니다.
             """,
         TwitterUrl = "https://twitter.com/shanselman",
         GitHubUrl = "https://github.com/shanselman",
-        WebsiteUrl = "https://hanselman.com"
+        WebsiteUrl = "https://hanselman.com",
     };
 
     private readonly Speaker jason_beres = new()
@@ -37,7 +36,7 @@ public class Year2019Data : IEventData
         Title = "Sr. VP of Developer Tools",
         Company = "Infragistics",
         Bio = """
-            Jason Beres는 모든 Infragistics의 제품에서 고객 중심의 혁신적인 기능을 주도적으로 개발하는 역할을 맡고 있습니다. 또한 Microsoft .NET MVP이자 INETA 스피커 국의 멤버이며 INETA의 학술위원회 위원장입니다.
+            글로벌 소프트웨어 솔루션 기업인 인프라지스틱스(Infragistics)의 개발자 도구 부문 수석 부사장(SVP)입니다. 그는 20년 이상 소프트웨어 산업에 종사하며 기업용 애플리케이션 개발, 사용자 인터페이스(UI) 디자인, 그리고 개발자 경험(DX) 혁신을 이끌어온 베테랑 전문가입니다.
             """
     };
 
@@ -47,7 +46,7 @@ public class Year2019Data : IEventData
         Name = "최영락",
         Company = "Microsoft",
         Bio = """
-            키노트 진행을 맡았으며, 국내 .NET 커뮤니티 활성화에 기여하고 있습니다.
+            글로벌 IT 기업에서의 실무 경험과 오픈소스 거버넌스에 대한 깊은 이해를 결합하여, 기술 생태계의 성장을 이끄는 개발자 경험(DX) 전문가입니다.
             """
     };
 
@@ -58,7 +57,7 @@ public class Year2019Data : IEventData
         Title = "대표",
         Company = "플라네타리움",
         Bio = """
-            키노트 진행을 맡았으며, 블록체인 기반 게임 개발에 주력하고 있습니다.
+            '영원히 멈추지 않는 게임 생태계'를 꿈꾸는 연쇄 창업가이자, 전 세계 최초로 중앙 서버가 없는 탈중앙화 RPG '나인 크로니클(Nine Chronicles)'을 선보인 웹3 게임 업계의 선구자입니다.
             """
     };
 
@@ -80,7 +79,7 @@ public class Year2019Data : IEventData
         Title = "Developer",
         Company = "JetBrains",
         Bio = """
-            JetBrains Korea
+            JetBrains에서 Regional Marketing Manager로 일하고 있습니다.
             """
     };
 
@@ -123,6 +122,7 @@ public class Year2019Data : IEventData
         Id = nameof(heungbae_choi),
         Name = "최흥배",
         Title = "Developer",
+        Company = "컴투스",
         Bio = """
             2003년부터 온라인 게임 서버 개발을 시작하여 온라인 보드 게임, 액션, MMORPG 등 다양한 장르의 게임 개발에 참여하였다.
             2016, 2017년에는 NHN Next 라는 교육 기관에서 게임 개발 과정의 겸임 교수로 일을 하였다.
@@ -160,7 +160,9 @@ public class Year2019Data : IEventData
         Name = "이종인",
         Title = "Developer",
         Bio = """
-            C# 언어 전문가로서 최신 C# 기능 및 언어 발전 방향에 대해 깊이 있는 지식을 가지고 있습니다.
+            .NET Everywhere and for Everyone. 모든 사람을 위해 모든 곳에서 돌아가고 싶은 .NET을 오래전부터 흥미로워했고 계속 사용해오고 있습니다.
+            .NET Standard에서 작성, 테스트한 코드를 ASP.NET, Azure Functions, Windows, Android, iOS에서 돌리고 이를 Azure DevOps와 자연스럽게 연결해 배포와 테스트를 하는데, 이런 좋은 개발 경험을 가질 수 있도록 해준 .NET을 좋아합니다.
+            최근에 ML 영역으로 확장하고 있는 ML.NET에도 관심이 많네요. Microsoft의 MVP로 6년째 활동 중이며 현재 Developer Technologies 분야에서 활동 중입니다.
             """
     };
 
@@ -169,8 +171,11 @@ public class Year2019Data : IEventData
         Id = nameof(hongmin_kim),
         Name = "김홍민",
         Title = "Developer",
+        Company = "필라웨어",
         Bio = """
-            ASP.NET Core 전문가로서 웹 API 및 마이크로서비스 개발에 풍부한 경험을 보유하고 있습니다.
+            Microsoft Student Partners 활동을 시작으로 닷넷의 세계에 발 담그게 되었습니다.
+            주변인들이 다른 언어나 플랫폼으로 떠날 때 홀로 닷넷을 고수 해왔는데, 요즈음에 그 보람이 느껴집니다.
+            현재 필라웨어에서 산업기능요원으로 재직하며, 여러 클라이언트, 웹 어플리케이션을 개발하고 있습니다.
             """
     };
 
@@ -178,9 +183,11 @@ public class Year2019Data : IEventData
     {
         Id = nameof(youngha_kim),
         Name = "김영하",
-        Title = "Developer",
+        Title = "연구원",
+        Company = "디플러스",
         Bio = """
-            ML.NET 전문가로서 .NET 환경에서의 머신러닝 구현에 대한 실무 경험을 가지고 있습니다.
+            디플러스 연구원으로 재직 중이며, 2019년 MS Azure Discovery Day (2월 ~ 7월) 2일차 AI 활용 강연을 진행하였습니다.
+            Korea ML.NET User Group을 운영하고 있습니다.
             """
     };
 
@@ -189,8 +196,9 @@ public class Year2019Data : IEventData
         Id = nameof(sungtae_jung),
         Name = "정성태",
         Title = "Developer",
+        Company = "제니퍼소프트",
         Bio = """
-            .NET 17년 역사를 함께한 전문가로서 .NET Framework부터 .NET Core까지 깊이 있는 경험을 보유하고 있습니다.
+            현재 제니퍼소프트에서 .NET Framework 환경을 위한 애플리케이션 성능 관리(APM) 모듈을 개발하면서 틈틈이 책을 쓰거나 .NET 관련 지식을 블로그에 공유하며 15년째 Microsoft의 MVP로 활동하고 있습니다.
             """,
         WebsiteUrl = "https://www.sysnet.pe.kr"
     };
@@ -199,9 +207,11 @@ public class Year2019Data : IEventData
     {
         Id = nameof(changhoon_kang),
         Name = "강창훈",
-        Title = "Developer",
+        Title = "대표",
+        Company = "(주)엠소프트웨어",
         Bio = """
-            Azure LUIS 및 자연어 처리 전문가로서 AI 서비스와 .NET 통합에 대한 전문 지식을 가지고 있습니다.
+            (주)엠소프트웨어 대표이며 Microsoft MVP (AI)로 활동하고 있습니다.
+            Korea ML.NET User Group을 운영하고 있습니다.
             """
     };
 
@@ -222,24 +232,22 @@ public class Year2019Data : IEventData
         Title = ".NET Core 3 및 Infragistics로 데이터 시각화 솔루션 구축",
         Abstract = """
             오늘날 우리는 종종 최종 사용자 / 최종 고객의 BI 대시 보드 및 데이터 분석과 같은 데이터 시각화 요구에 대해 듣습니다. 빅 데이터 / IoT 솔루션은 사용자에게 너무 많은 데이터를 저장하지만 이제는 실제 이점을 얻기 위해 시각화해야합니다. 데이터 시각화 수요에 대해 고객의 의견을 듣는 경우 어떻게 해결합니까?
-            이 실습에서는 .NET Core 3 및 Infragistics 도구를 사용하여 대시 보드 UI 및 피벗 분석 UI를 빠르게 구축합니다.
+            이 실습에서는 .NET Core 3 및 Infragistics 도구를 사용하여 대시 보드 UI 및 피벗 분석 UI를 빠르게 구축합니다. Infragistics를 사용하여 .NET 환경에서 스크래치 개발을 통해 데이터 시각화 솔루션을 구축하는 방법을 쉽게 배울 수 있습니다.
             """,
         Speakers = [jason_beres, dahye_lee, satoru_yamaguchi],
         Format = SessionFormat.HandsOnLab,
         Duration = TimeSpan.FromMinutes(90),
-        SlidesUrl = "https://github.com",
+        SlidesUrl = "https://github.com/gdayori/Infragistics-WPF-Core3.0-Workshop",
         Tags = [".NET Core 3", "Infragistics", "데이터 시각화"],
         Notes = ["Jason Beres님의 세션은 행사의 원활한 진행을 위하여 통역사 이다혜님께서 도움 주실 예정입니다."],
         Prerequisites = """
-            • Visual Studio 2019 (16.3 이상) 설치
-            • .NET Core 3.0 SDK 설치
-            • Infragistics Ultimate Trial 라이선스 (현장에서 제공)
+            * 노트북을 지참해야 합니다.
+            * .NET Core 3.0 설치
+            * Visual Studio 2019 16.3 이상
+            * Infragistics WPF 2019.1 (트라이얼 버전도 가능합니다.)
             """,
         LabModules = [
-            new() { Title = "Lab 1: 프로젝트 설정 및 환경 구성", Url = "https://github.com/user/lab1", Description = "Infragistics 도구 설치 및 프로젝트 생성" },
-            new() { Title = "Lab 2: 데이터 그리드 UI 구현", Url = "https://github.com/user/lab2", Description = "XamDataGrid를 활용한 데이터 표시" },
-            new() { Title = "Lab 3: 피벗 분석 UI 구현", Url = "https://github.com/user/lab3", Description = "XamPivotGrid를 활용한 데이터 분석" },
-            new() { Title = "Lab 4: 대시보드 구성", Url = "https://github.com/user/lab4", Description = "차트와 게이지를 활용한 시각화" }
+            new() { Title = "핸즈온랩 모듈: Infragistics WPF NuGet 패키지 설치", Url = "https://github.com/gdayori/How-to-get-Infragistics-WPF-Nuget-packages", Description = "Infragistics 도구 설치 및 프로젝트 생성" }
         ]
     };
 
@@ -248,15 +256,13 @@ public class Year2019Data : IEventData
         Id = nameof(crossplatform_library),
         Title = "여러 .NET 구현과 플랫폼을 두루 지원하는 라이브러리 만들기",
         Abstract = """
-            .NET Framework, .NET Core, Xamarin 등 다양한 .NET 구현체에서 
-            동작하는 크로스 플랫폼 라이브러리를 만드는 방법을 알아봅니다.
-            .NET Standard의 활용법과 플랫폼별 차이점 처리 방법을 다룹니다.
+            Mono, .NET Core, .NET Framework, Unity와 같은 여러 .NET 구현과 Linux, macOS, Windows와 같은 여러 플랫폼을 두루 지원하는 오픈 소스 라이브러리를 만들어 오며 겦었던 경험담을 공유합니다. 또, 오픈 소스 프로젝트에서 여러 사람들의 패치를 받으면서도 일정한 코드 품질을 유지할 수 있도록 돕는 .NET/C# 도구들을 소개합니다.
             """,
         Speakers = [minhui_hong],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://speakerdeck.com",
+        VideoUrl = "https://www.youtube.com/watch?v=CiejcYxz3fs",
+        SlidesUrl = "https://speakerdeck.com/minhee/yeoreo-net-guhyeongwa-peulraespomeul-duru-jiweonhaneun-raibeureori-opeun-soseuro-mandeulgi",
         Tags = [".NET Standard", "Cross-platform", "Library"]
     };
 
@@ -265,15 +271,13 @@ public class Year2019Data : IEventData
         Id = nameof(async_programming),
         Title = ".NET에서 비동기 프로그래밍 배우기",
         Abstract = """
-            async/await 키워드를 활용한 비동기 프로그래밍의 기초부터 고급 패턴까지 다룹니다.
-            Task, ValueTask, IAsyncEnumerable 등의 활용법과 
-            비동기 코드에서 발생할 수 있는 일반적인 문제들과 해결 방법을 소개합니다.
+            .NET을 처음 접한 프로그래머가 P2P 네트워킹 기능을 구현하면서 마주쳄던 문제와 해결 방법등 개발 경험 전반에 걸쳐서 이야기 해 보려 합니다. 또한 C# 8.0에 추가되는 비동기 스트림을 미리 써볼 수 있는 AsyncEnumerable과 비동기 잠금(lock) 등의 편리한 기능을 갖춘 AsyncEx등의 라이브러리들도 소개합니다.
             """,
         Speakers = [sungwon_moon],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://www.slideshare.net",
+        VideoUrl = "https://www.youtube.com/watch?v=A73UGlCG4yM",
+        SlidesUrl = "https://www.slideshare.net/seongwonmun3/net-179320414",
         Tags = ["Async", "Await", "비동기"]
     };
 
@@ -282,15 +286,16 @@ public class Year2019Data : IEventData
         Id = nameof(healthcheck),
         Title = "ASP.NET Core를 통한 HealthCheck 서비스 구현",
         Abstract = """
-            마이크로서비스 아키텍처에서 필수적인 헬스체크 서비스를 
-            ASP.NET Core의 Health Checks 기능을 활용하여 구현하는 방법을 알아봅니다.
-            데이터베이스, 외부 서비스, 캐시 등 다양한 의존성에 대한 헬스체크 구현 방법을 다룹니다.
+            ASP.NET Core를 통해 HealthCheck 서비스를 구현하고, 프로덕션에 배포한 경험을 공유합니다.
+            이와 더불어 짧은 Hands-On-Lab을 통해 Customize한 미들웨어를 개발하고, 적용하는 방법을 진행 할 예정입니다.
+            마지막으로, WebHook 등을 연계하는 과정까지 소개합니다.
             """,
         Speakers = [hongmin_kim],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        SlidesUrl = "https://www.slideshare.net",
-        Tags = ["ASP.NET Core", "HealthCheck", "Microservices"]
+        SlidesUrl = "https://www.slideshare.net/HongMinKim1/net-conf-2019-korea-aspnet-core-healthcheck",
+        Tags = ["ASP.NET Core", "HealthCheck", "Microservices"],
+        Notes = ["발표자 요청으로 세션 다시보기 영상은 제공되지 않습니다."]
     };
 
     private Session dotnet_history => new()
@@ -298,15 +303,13 @@ public class Year2019Data : IEventData
         Id = nameof(dotnet_history),
         Title = "닷넷 17년의 변화 정리 및 닷넷 코어 3.0",
         Abstract = """
-            2002년 .NET Framework 1.0 출시 이후 17년간의 .NET 역사를 돌아보고,
-            .NET Core 3.0이 가져온 변화와 앞으로의 발전 방향을 소개합니다.
-            .NET 5 통합 로드맵과 함께 .NET 생태계의 미래를 전망합니다.
+            .NET Framework는 지난 17년의 세월 동안 꾸준한 진화를 거듭해 왔고 이로 인해 근래에 시작한 개발자들은 닷넷 개발 환경의 현 위치에 혼란을 느낄 수 있습니다. 이번 세션은, 닷넷의 초기 개발 환경부터 시작해 그와 함께 발전해 온 언어 (예를 들어, C#)과의 관계를 되짚어 봄으로써 가장 최근에 릴리스된 닷넷 코어 3.0까지의 변화를 일목요연하게 정리합니다.
             """,
         Speakers = [sungtae_jung],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://www.sysnet.pe.kr",
+        VideoUrl = "https://www.youtube.com/watch?v=pTN2paCE3kc",
+        SlidesUrl = "http://www.sysnet.pe.kr/2/0/12030",
         Tags = [".NET History", ".NET Core 3.0"]
     };
 
@@ -319,24 +322,25 @@ public class Year2019Data : IEventData
         Id = nameof(hol_supersocket),
         Title = "SuperSocket을 이용하여 .NET Core 플랫폼에서 고성능 TCP Socket 서버 만들기",
         Abstract = """
-            SuperSocket 프레임워크를 활용하여 .NET Core에서 고성능 TCP 소켓 서버를 
-            구축하는 방법을 배웁니다. 실시간 통신, 게임 서버, IoT 등 
-            다양한 분야에서 활용할 수 있는 네트워크 프로그래밍 기법을 실습합니다.
+            Hands-on-Lab 세션으로 진행할 예정으로 시간은 2~3시간 정도 예상합니다.
+            오픈 소스인 SuperSocket을 사용하면 쉽고 간단하게 고성능 TCP Socket 서버를 만들 수 있습니다.
+            Socket 프로그래밍이나 SuperSocket을 잘 모르는 분들을 대상으로 하고 있습니다.
+            먼저 간단하게 SuperSocket에 대해서 설명하고, 실습으로 간단한 Echo 서버를 시작으로 채팅 서버까지 만들어갈 예정입니다.
             """,
         Speakers = [heungbae_choi],
         Format = SessionFormat.HandsOnLab,
         Duration = TimeSpan.FromMinutes(90),
-        SlidesUrl = "https://docs.google.com",
+        SlidesUrl = "https://docs.google.com/presentation/d/1m86UXCwV7DzkRn3PHjrzDk9W1y1VgD5RQOyl_2K_D-A",
         Tags = ["SuperSocket", ".NET Core", "TCP"],
+        Notes = ["세션 다시보기는 제공되지 않습니다."],
         Prerequisites = """
-            • Visual Studio 2019 또는 Visual Studio Code 설치
-            • .NET Core 3.0 SDK 설치
-            • TCP/IP 네트워크 기본 지식
+            * 기본적인 C# 프로그래밍이 가능해야 합니다.
+            * 노트북을 지참해야 합니다.
+            * .NET Core 2.2 or 3.0 설치
+            * 다음 IDE 중 하나 설치: Visual Studio 2019 16.3 이상, Visual Studio 2019 for Mac 8.3 이상, JetBrains Rider 2019.2 이상 또는 Visual Studio Code
             """,
         LabModules = [
-            new() { Title = "Lab 1: SuperSocket 기본 설정", Url = "https://github.com/user/supersocket-lab1" },
-            new() { Title = "Lab 2: 에코 서버 구현", Url = "https://github.com/user/supersocket-lab2" },
-            new() { Title = "Lab 3: 프로토콜 커스터마이징", Url = "https://github.com/user/supersocket-lab3" }
+            new() { Title = "SuperSocket GitHub 저장소", Url = "https://github.com/jacking75/SuperSocketLite", Description = "SuperSocketLite 오픈 소스 저장소" }
         ]
     };
 
@@ -345,15 +349,13 @@ public class Year2019Data : IEventData
         Id = nameof(windows_desktop),
         Title = ".NET Core 3.0과 Windows Desktop",
         Abstract = """
-            .NET Core 3.0에서 새롭게 지원되는 WPF와 Windows Forms 개발에 대해 알아봅니다.
-            기존 .NET Framework 앱을 .NET Core로 마이그레이션하는 방법과 
-            새로운 기능들을 활용한 Windows 데스크톱 앱 개발 방법을 소개합니다.
+            .NET Core 3.0에 새롭게 추가된 Windows Desktop에 관한 새로운 기능들을 살펴보고, 어떻게 실무에 적용할 수 있는지에 대해 살펴봅니다.
             """,
         Speakers = [junghyun_nam],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://1drv.ms",
+        VideoUrl = "https://www.youtube.com/watch?v=vS0DoxNhkgc",
+        SlidesUrl = "https://1drv.ms/p/s!Aj231qrFhIQxqbRoHCRQX4vc_RHTGQ",
         Tags = [".NET Core 3.0", "WPF", "WinForms"]
     };
 
@@ -362,15 +364,13 @@ public class Year2019Data : IEventData
         Id = nameof(csharp8),
         Title = "새로워진 C#: C# 8의 새로운 기능",
         Abstract = """
-            C# 8.0에서 추가된 새로운 언어 기능들을 상세히 살펴봅니다.
-            Nullable Reference Types, Pattern Matching 개선, 
-            Async Streams, Indices and Ranges 등 개발 생산성을 높여주는 기능들을 소개합니다.
+            .NET과 함께 C#은 빠르게 변하고 진화해왔습니다. 그동안 Async-await 부터 튜플, 패턴매칭과 이외의 많은 언어 기능들이 추가되며 .NET으로 복잡한 문제들을 풀어가고 있는 개발자들에게 도움을 주어왔습니다. C# 8에서는 더 나아진 패턴매칭, Nullable reference types, 비동기 스트림과 같은 많은 기능들이 추가되었는데요, 그 동안의 C#의 변화와 .NET Core 3.0 시대를 맞아 함께 출시되는 C# 8의 새로운 기능들을 알아봅니다. 새로운 언어 기능과 함께 여러분이 고민하고 있는 문제들을 어떻게 더 잘 풀어나갈 수 있을까요?
             """,
         Speakers = [jongin_lee],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://github.com",
+        VideoUrl = "https://www.youtube.com/watch?v=UJNll6rxqGo",
+        SlidesUrl = "https://github.com/lunelake/DotNetConference2019_Seoul",
         Tags = ["C# 8", "Nullable", "Pattern Matching"]
     };
 
@@ -379,15 +379,13 @@ public class Year2019Data : IEventData
         Id = nameof(automl),
         Title = ".NET Core로 해보는 AutoML",
         Abstract = """
-            ML.NET의 AutoML 기능을 활용하여 머신러닝 모델을 자동으로 생성하고 
-            최적화하는 방법을 배웁니다. 데이터 전처리부터 모델 학습, 평가까지 
-            전체 ML 파이프라인을 코드 몇 줄로 구현하는 방법을 소개합니다.
+            .NET Core로 현재 활발하게 개발되고 있는 ML.NET을 활용한 머신러닝을 시작하는 방법 및 가능성을 알아보고, ML.NET의 핵심기능중 하나인 Model Builder를 활용한 AutoML을 알아봅니다.
             """,
         Speakers = [youngha_kim],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://www.slideshare.net",
+        VideoUrl = "https://www.youtube.com/watch?v=bxYtXMAjRE8",
+        SlidesUrl = "https://www.slideshare.net/fermat39/mlnet-automl",
         Tags = ["ML.NET", "AutoML", "Machine Learning"]
     };
 
@@ -396,15 +394,13 @@ public class Year2019Data : IEventData
         Id = nameof(azure_luis),
         Title = "ML기반 자연어 처리 서비스 Azure LUIS .NET 어플리케이션으로 제어하고 통합하기",
         Abstract = """
-            Azure의 Language Understanding (LUIS) 서비스를 활용하여 
-            자연어 처리 기능을 .NET 애플리케이션에 통합하는 방법을 배웁니다.
-            챗봇, 음성 인식 앱 등에서 활용할 수 있는 인텐트 분류와 엔티티 추출 기법을 다룹니다.
+            Azure 클라우드 기반 인공지능 활용서비스인 Azure Cognitive Service의 자연어 처리 서비스를 담당하고 있는 Azure LUIS 서비스의 기초적인 사용법을 알아보고 LUIS OPEN API 서비스 와 .NET Standard 2.0 기반으로 개발된 오픈소스 라이브러리인 Cognitive.LUIS.Programmatic 팩키지를 활용한 .NET Application에서 LUIS 서비스를 제어하고 .NET Application과 LUIS를 통합하는 방법을 소개합니다.
             """,
         Speakers = [changhoon_kang],
         Format = SessionFormat.Breakout,
         Duration = TimeSpan.FromMinutes(45),
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://bit.ly",
+        VideoUrl = "https://www.youtube.com/watch?v=YoDQSZ9Dqdw",
+        SlidesUrl = "http://bit.ly/335AvCe",
         Tags = ["Azure LUIS", "NLP", "AI"]
     };
 
@@ -417,17 +413,14 @@ public class Year2019Data : IEventData
         Id = nameof(keynote),
         Title = "키노트",
         Abstract = """
-            .NET Conf 2019 @ Seoul의 오프닝 키노트 세션입니다. 
-            .NET Core 3.0의 출시와 함께 .NET 생태계의 새로운 방향성을 소개하고, 
-            국내외 .NET 전문가들이 함께 모여 .NET의 미래에 대해 이야기합니다.
-            Scott Hanselman의 특별 메시지와 함께 시작됩니다.
+            닷넷 코어 3.0 출시에 맞추어 무엇이 새로워졌는지, 왜 개발자들이 닷넷을 선택했는지, 그리고 닷넷 코어의 출시가 개발자들에게 어떤 인사이트를 가져다 줄 수 있을지 한 눈에 둘러볼 수 있는 세션을 준비하였습니다.
             """,
         Speakers = [younglak_choi, scott_hanselman, kijun_seo, jason_beres, dahye_lee, jungeun_cho, yohan_ko, junghyun_nam],
         Format = SessionFormat.Keynote,
         Duration = TimeSpan.FromMinutes(60),
         IsShared = true,
-        VideoUrl = "https://www.youtube.com",
-        SlidesUrl = "https://1drv.ms",
+        VideoUrl = "https://www.youtube.com/watch?v=8qtmRG5vQxM",
+        SlidesUrl = "https://1drv.ms/p/s!AmGH7-hAj4RKoEUKjOWgy3OBfdy1",
         Tags = [".NET Conf", "Keynote"],
         Notes = [
             "Scott Hanselman님의 세션은 동영상으로 준비되며, 자막이 추가됩니다.",
