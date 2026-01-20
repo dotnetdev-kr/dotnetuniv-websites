@@ -40,11 +40,11 @@ app.Use(async (context, next) =>
             ? context.Request.QueryString.Value + $"&slug={path}"
             : $"?slug={path}";
         
-        context.Request.Path = $"/Years/Event/{path}";
+        context.Request.Path = $"/Events/Event";
         context.Request.QueryString = new QueryString(queryString);
         
         // 디버그 로그
-        Console.WriteLine($"[Rewrite] /{path} -> /Years/Event/{path}{queryString}");
+        Console.WriteLine($"[Rewrite] /{path} -> /Events/Event{queryString}");
     }
     else
     {

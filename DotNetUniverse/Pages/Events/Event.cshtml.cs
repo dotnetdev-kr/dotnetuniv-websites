@@ -3,7 +3,7 @@ using DotNetUniverse.Services.EventData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DotNetUniverse.Pages.Years;
+namespace DotNetUniverse.Pages.Events;
 
 /// <summary>
 /// 행사 페이지 모델 (Slug 또는 연도 기반 라우팅 지원)
@@ -52,19 +52,20 @@ public class EventModel : PageModel
     /// </summary>
     public IEventData YearData => EventData;
 
-    public IActionResult OnGet(int? year, string? slug, string? session, string? speaker)
+    public IActionResult OnGet(string slug, string? session, string? speaker)
     {
         IEventData? eventData = null;
 
-        // Slug 기반 조회 우선
+        // Slug 기반 조회
         if (!string.IsNullOrEmpty(slug))
         {
             eventData = _yearDataService.GetBySlug(slug);
-        }
-        // 연도 기반 조회 (하위 호환성)
-        else if (year.HasValue)
-        {
-            eventData = _yearDataService.GetEventByYear(year.Value);
+            
+            // 연도로 해석 시도 (하위 호환성)
+            if (eventData == null && int.TryParse(slug, out var year))
+            {
+                eventData = _yearDataService.GetEventByYear(year);
+            }
         }
 
         if (eventData == null)

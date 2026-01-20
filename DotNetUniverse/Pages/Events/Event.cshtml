@@ -1,5 +1,5 @@
-@page "{slug?}"
-@model DotNetUniverse.Pages.Years.EventModel
+@page
+@model DotNetUniverse.Pages.Events.EventModel
 @using DotNetUniverse.Services
 @using DotNetUniverse.Services.EventData
 @using DotNetUniverse.Models.Collections
@@ -894,42 +894,6 @@
         </div>
     </section>
 }
-
-<!-- 타임라인 -->
-<section class="py-5">
-    <div class="container py-4">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold display-5 mb-3">.NET Universe 여정</h2>
-            <p class="text-muted lead">2019년부터 현재까지</p>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="timeline">
-                    @foreach (var item in Model.Timeline)
-                    {
-                        var isCurrentYear = item.Year == evt.Year;
-                        <div class="d-flex mb-4">
-                            <div class="flex-shrink-0">
-                                @if (isCurrentYear)
-                                {
-                                    <span class="badge bg-@item.ThemeColorClass @(item.ThemeColorClass == "warning" ? "text-dark" : "") fs-6 px-3 py-2">@item.Year</span>
-                                }
-                                else
-                                {
-                                    <a asp-page="/Years/Event" asp-route-year="@item.Year" class="badge bg-@item.ThemeColorClass @(item.ThemeColorClass == "warning" ? "text-dark" : "") fs-6 px-3 py-2 text-decoration-none">@item.Year</a>
-                                }
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h6 class="fw-bold @(isCurrentYear ? "text-" + themeColorClass : "")">@item.Title</h6>
-                                <p class="text-muted mb-0">@item.Description</p>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- CTA -->
 <section class="py-5 text-white" style="background-color: @themeColor;">
