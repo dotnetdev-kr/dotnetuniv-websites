@@ -1,5 +1,5 @@
 using DotNetUniverse.Models;
-using DotNetUniverse.Services.YearData;
+using DotNetUniverse.Services.EventData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,11 +10,11 @@ namespace DotNetUniverse.Pages.Years;
 /// </summary>
 public class EventModel : PageModel
 {
-    private readonly YearDataService _yearDataService;
+    private readonly EventDataService _yearDataService;
 
-    public EventModel(YearDataService yearDataService)
+    public EventModel(EventDataService EventDataService)
     {
-        _yearDataService = yearDataService;
+        _yearDataService = EventDataService;
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class EventModel : PageModel
     /// <summary>
     /// 타임라인 정보
     /// </summary>
-    public IEnumerable<YearTimelineItem> Timeline { get; private set; } = [];
+    public IEnumerable<EventYearTimelineItem> Timeline { get; private set; } = [];
 
     /// <summary>
     /// 세션 ID (쿼리스트링)
@@ -64,7 +64,7 @@ public class EventModel : PageModel
         // 연도 기반 조회 (하위 호환성)
         else if (year.HasValue)
         {
-            eventData = _yearDataService.GetYearData(year.Value);
+            eventData = _yearDataService.GetEventByYear(year.Value);
         }
 
         if (eventData == null)

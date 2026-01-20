@@ -1,10 +1,10 @@
 using DotNetUniverse.Services;
-using DotNetUniverse.Services.YearData;
+using DotNetUniverse.Services.EventData;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<SessionDisplayService>();
-builder.Services.AddSingleton<YearDataService>();
+builder.Services.AddSingleton<EventDataService>();
 
 using var app = builder.Build();
 
@@ -30,8 +30,8 @@ app.Use(async (context, next) =>
     }
     
     // Slug 매칭 확인 - 매칭되는 경우만 처리
-    var yearDataService = context.RequestServices.GetRequiredService<YearDataService>();
-    var eventData = yearDataService.GetBySlug(path);
+    var EventDataService = context.RequestServices.GetRequiredService<EventDataService>();
+    var eventData = EventDataService.GetBySlug(path);
     
     if (eventData != null)
     {
