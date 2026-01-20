@@ -122,6 +122,39 @@ public record Session
     public string AnchorHash => $"#session-{Id}";
 
     /// <summary>
+    /// YouTube 영상인지 여부
+    /// </summary>
+    public bool IsYouTubeVideo => !string.IsNullOrEmpty(VideoUrl) &&
+        (VideoUrl.Contains("youtube.com") || VideoUrl.Contains("youtu.be"));
+
+    /// <summary>
+    /// YouTube 임베드 URL 추출
+    /// </summary>
+    public string? YouTubeEmbedUrl
+    {
+        get
+        {
+            if (!IsYouTubeVideo) return null;
+
+            // youtube.com/watch?v=VIDEO_ID 형식
+            if (VideoUrl!.Contains("watch?v="))
+            {
+                var videoId = VideoUrl.Split("watch?v=")[1].Split('&')[0];
+                return $"https://www.youtube.com/embed/{videoId}";
+            }
+
+            // youtu.be/VIDEO_ID 형식
+            if (VideoUrl.Contains("youtu.be/"))
+            {
+                var videoId = VideoUrl.Split("youtu.be/")[1].Split('?')[0];
+                return $"https://www.youtube.com/embed/{videoId}";
+            }
+
+            return null;
+        }
+    }
+
+    /// <summary>
     /// 한 줄 설명 (Abstract에서 자동 생성, 줄바꿈 제거 후 일정 길이 이상이면 ellipsis 처리)
     /// </summary>
     public string Description

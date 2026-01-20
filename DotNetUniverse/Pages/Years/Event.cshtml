@@ -13,112 +13,6 @@
     var themeColorClass = yearData.ThemeColorClass;
 }
 
-@functions {
-    // 시간표용 헬퍼: 모든 트랙 (Venue → Track 순서대로)
-    public IEnumerable<(VenueInfo Venue, Track Track)> GetAllTracks(EventInfo evt) =>
-        evt.Venues.SelectMany(v => v.Tracks.Select(t => (v, t)));
-
-    // 시간표용 헬퍼: 일차별 시간 슬롯 목록 (중복 제거, 정렬)
-    public IEnumerable<(int Day, TimeOnly StartTime)> GetTimeSlots(IEnumerable<Session> sessions)
-    {
-        return sessions
-            .Where(s => s.HasSchedule)
-            .Select(s => (s.Schedule!.Day, s.Schedule.StartTime))
-            .Distinct()
-            .OrderBy(x => x.Day)
-            .ThenBy(x => x.StartTime);
-    }
-
-    // 시간표용 헬퍼: 특정 트랙, 특정 시간대의 세션 찾기
-    public Session? GetSessionAt(Track track, int day, TimeOnly startTime)
-    {
-        return track.Sessions.FirstOrDefault(s => 
-            s.HasSchedule && 
-            s.Schedule!.Day == day && 
-            s.Schedule.StartTime == startTime);
-    }
-
-    // 시간표용 헬퍼: 특정 시간대의 공통 세션 찾기 (모든 트랙에서)
-    public Session? GetSharedSessionAt(EventInfo evt, int day, TimeOnly startTime)
-    {
-        return evt.AllSessions.FirstOrDefault(s => 
-            s.IsShared && 
-            s.HasSchedule && 
-            s.Schedule!.Day == day && 
-            s.Schedule.StartTime == startTime);
-    }
-
-    // 시간표용 헬퍼: 해당 시간에 공통 세션이 있는지 확인
-    public bool HasSharedSessionAt(EventInfo evt, int day, TimeOnly startTime)
-    {
-        return GetSharedSessionAt(evt, day, startTime) != null;
-    }
-
-    // 시간표용 헬퍼: 세션이 여러 시간 슬롯을 차지하는지 계산 (rowspan용)
-    public int GetSessionRowSpan(Session session, IEnumerable<(int Day, TimeOnly StartTime)> timeSlots)
-    {
-        if (!session.HasSchedule) return 1;
-        
-        var sessionEnd = session.Schedule!.StartTime.Add(session.Duration);
-        var daySlots = timeSlots.Where(s => s.Day == session.Schedule.Day).ToList();
-        var startIndex = daySlots.FindIndex(s => s.StartTime == session.Schedule.StartTime);
-        
-        if (startIndex < 0) return 1;
-        
-        int span = 1;
-        for (int i = startIndex + 1; i < daySlots.Count; i++)
-        {
-            if (daySlots[i].StartTime < sessionEnd)
-                span++;
-            else
-                break;
-        }
-        return span;
-    }
-
-    // 시간표용 헬퍼: 해당 시간이 이전 세션에 의해 덮여있는지 확인
-    public bool IsSlotCoveredByPreviousSession(Track track, int day, TimeOnly startTime, IEnumerable<(int Day, TimeOnly StartTime)> timeSlots)
-    {
-        var daySlots = timeSlots.Where(s => s.Day == day).OrderBy(s => s.StartTime).ToList();
-        var currentIndex = daySlots.FindIndex(s => s.StartTime == startTime);
-        
-        if (currentIndex <= 0) return false;
-        
-        for (int i = 0; i < currentIndex; i++)
-        {
-            var prevSession = GetSessionAt(track, day, daySlots[i].StartTime);
-            if (prevSession != null && prevSession.HasSchedule)
-            {
-                var sessionEnd = prevSession.Schedule!.StartTime.Add(prevSession.Duration);
-                if (startTime < sessionEnd)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    // 시간표용 헬퍼: 해당 시간이 이전 공통 세션에 의해 덮여있는지 확인
-    public bool IsSlotCoveredByPreviousSharedSession(EventInfo evt, int day, TimeOnly startTime, IEnumerable<(int Day, TimeOnly StartTime)> timeSlots)
-    {
-        var daySlots = timeSlots.Where(s => s.Day == day).OrderBy(s => s.StartTime).ToList();
-        var currentIndex = daySlots.FindIndex(s => s.StartTime == startTime);
-        
-        if (currentIndex <= 0) return false;
-        
-        for (int i = 0; i < currentIndex; i++)
-        {
-            var prevShared = GetSharedSessionAt(evt, day, daySlots[i].StartTime);
-            if (prevShared != null && prevShared.HasSchedule)
-            {
-                var sessionEnd = prevShared.Schedule!.StartTime.Add(prevShared.Duration);
-                if (startTime < sessionEnd)
-                    return true;
-            }
-        }
-        return false;
-    }
-}
-
 <!-- 히어로 섹션 -->
 <section class="hero-section" style="@(evt.HasHeroImage ? $"background-image: url('{evt.ResolvedHeroImageUrl}'); background-size: cover; background-position: center;" : $"background: linear-gradient(135deg, {themeColor} 0%, {themeColor}cc 100%);")">
     <div class="hero-overlay" style="background: rgba(0,0,0,0.5);"></div>
@@ -172,7 +66,7 @@
                     }
                 </div>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
-                    @if (sessions.Any(s => s.HasSchedule))
+                    @if (evt.IsUpcoming && yearData.Schedule != null)
                     {
                         <a href="#timetable" class="btn btn-light btn-lg px-5 py-3">
                             <i class="bi bi-calendar3 me-2"></i>시간표
@@ -270,15 +164,14 @@
     </div>
 </section>
 
-<!-- 시간표 (스케줄이 있는 경우에만) -->
+<!-- 시간표 (예정된 행사이고 ScheduleGrid가 있는 경우에만) -->
 @{
-    var timeSlots = GetTimeSlots(sessions).ToList();
-    var hasSchedule = timeSlots.Any();
+    var scheduleGrid = yearData.Schedule;
+    var hasSchedule = scheduleGrid != null && evt.IsUpcoming;
 }
 @if (hasSchedule)
 {
-    var days = timeSlots.Select(s => s.Day).Distinct().OrderBy(d => d).ToList();
-    var tracks = GetAllTracks(evt).ToList();
+    var grid = scheduleGrid!;
 
     <section class="py-5 bg-light" id="timetable">
         <div class="container py-4">
@@ -287,80 +180,91 @@
                 <p class="text-muted lead">트랙별 세션 일정을 한눈에 확인하세요</p>
             </div>
             
-            @foreach (var day in days)
-            {
-                var daySlots = timeSlots.Where(s => s.Day == day).ToList();
-                
-                <div class="mb-5">
-                    @if (days.Count > 1)
-                    {
-                        <h4 class="fw-bold mb-4 text-center">
-                            <span class="badge bg-@themeColorClass fs-5 px-4 py-2">Day @day</span>
-                        </h4>
-                    }
-                    
-                    <div class="table-responsive">
-                        <table class="table table-bordered align-middle timetable-table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th class="text-center" style="width: 100px; min-width: 100px;">
-                                        <i class="bi bi-clock me-1"></i>시간
-                                    </th>
-                                    @foreach (var (venue, track) in tracks)
-                                    {
-                                        <th class="text-center" style="min-width: 250px;">
-                                            <div class="d-flex flex-column">
-                                                <span class="fw-bold">@track.Name</span>
-                                                @if (!string.IsNullOrEmpty(track.Description))
-                                                {
-                                                    <small class="opacity-75">@track.Description</small>
-                                                }
-                                            </div>
-                                        </th>
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var slot in daySlots)
+            <div class="mb-5">
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle timetable-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="text-center" style="width: 100px; min-width: 100px;">
+                                    <i class="bi bi-clock me-1"></i>시간
+                                </th>
+                                @foreach (var column in grid.Columns)
                                 {
-                                    // 이전 공통 세션에 의해 덮여있는 시간대는 스킵
-                                    if (IsSlotCoveredByPreviousSharedSession(evt, day, slot.StartTime, timeSlots))
+                                    <th class="text-center" style="min-width: 250px;">
+                                        <div class="d-flex flex-column">
+                                            <span class="fw-bold">@column.Name</span>
+                                            @if (!string.IsNullOrEmpty(column.Description))
+                                            {
+                                                <small class="opacity-75">@column.Description</small>
+                                            }
+                                        </div>
+                                    </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in grid.Rows)
+                            {
+                                <tr>
+                                    <td class="text-center fw-bold bg-light">
+                                        @row.TimeSlot.StartTime.ToString("HH:mm")
+                                    </td>
+                                    
+                                    @for (int i = 0; i < row.Cells.Length; i++)
                                     {
-                                        continue;
-                                    }
-                                    
-                                    var sharedSession = GetSharedSessionAt(evt, day, slot.StartTime);
-                                    
-                                    <tr>
-                                        <td class="text-center fw-bold bg-light">
-                                            @slot.StartTime.ToString("HH:mm")
-                                        </td>
+                                        var cell = row.Cells[i];
+                                        var columnColor = i < grid.Columns.Length ? grid.Columns[i].Color : null;
+                                        var trackColor = columnColor ?? themeColor;
                                         
-                                        @if (sharedSession != null)
+                                        @if (cell.IsHidden)
                                         {
-                                            // 공통 세션: 모든 트랙에 걸쳐 표시 (colspan)
-                                            var rowSpan = GetSessionRowSpan(sharedSession, timeSlots);
-                                            var formatInfo = SessionDisplay.GetFormatDisplayInfo(sharedSession.Format);
+                                            // rowspan/colspan에 의해 숨겨진 셀은 렌더링하지 않음
+                                            continue;
+                                        }
+                                        else if (!cell.HasSession)
+                                        {
+                                            <td class="text-center text-muted bg-light">
+                                                <small>-</small>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            var session = cell.Session!;
+                                            var formatInfo = SessionDisplay.GetFormatDisplayInfo(session.Format);
+                                            var isShared = cell.ColSpan > 1;
+                                            var cellColor = isShared ? themeColor : trackColor;
                                             
-                                            <td colspan="@tracks.Count" rowspan="@rowSpan" class="p-0 text-center" style="border-left: 4px solid @themeColor;">
-                                                <div class="timetable-session timetable-shared-session p-3 h-100"
-                                                     @if (sharedSession.Speakers.Length > 0)
+                                            <td colspan="@cell.ColSpan" rowspan="@cell.RowSpan" class="p-0 @(isShared ? "text-center" : "")" style="border-left: 4px solid @cellColor;">
+                                                <div class="timetable-session @(isShared ? "timetable-shared-session" : "") p-3 h-100"
+                                                     @if (session.Speakers.Length > 0 || !isShared)
                                                      {
-                                                         <text>role="button" data-bs-toggle="modal" data-bs-target="#@sharedSession.ModalId" style="cursor: pointer;"</text>
+                                                         <text>role="button" data-bs-toggle="modal" data-bs-target="#@session.ModalId" style="cursor: pointer;"</text>
                                                      }>
-                                                    <div class="d-flex justify-content-center align-items-center gap-3 mb-2">
-                                                        <span class="badge bg-@formatInfo.BadgeColor fs-6">
-                                                            <i class="bi @formatInfo.IconClass me-1"></i>@formatInfo.DisplayName
-                                                        </span>
-                                                        <span class="text-muted">@((int)sharedSession.Duration.TotalMinutes)분</span>
-                                                    </div>
-                                                    <h5 class="fw-bold mb-0">@sharedSession.Title</h5>
-                                                    @if (sharedSession.Speakers.Length > 0)
-                                                    {
-                                                        <div class="d-flex justify-content-center align-items-center flex-wrap gap-2 mt-2">
-                                                            @foreach (var speaker in sharedSession.Speakers.Take(4))
+                                                    <div class="d-flex @(isShared ? "justify-content-center" : "justify-content-between") align-items-@(isShared ? "center" : "start") @(isShared ? "gap-3" : "") mb-2">
+                                                        <span class="badge bg-@formatInfo.BadgeColor @(isShared ? "fs-6" : "")">
+                                                            @if (isShared)
                                                             {
-                                                                <div class="d-flex align-items-center">
+                                                                <i class="bi @formatInfo.IconClass me-1"></i>
+                                                            }
+                                                            @formatInfo.DisplayName
+                                                        </span>
+                                                        <span class="text-muted @(isShared ? "" : "small")">@((int)session.Duration.TotalMinutes)분</span>
+                                                    </div>
+                                                    @if (isShared)
+                                                    {
+                                                        <h5 class="fw-bold mb-0">@session.Title</h5>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h6 class="fw-bold mb-2 timetable-session-title">@session.Title</h6>
+                                                    }
+                                                    @if (session.Speakers.Length > 0)
+                                                    {
+                                                        var maxSpeakers = isShared ? 4 : 2;
+                                                        <div class="d-flex @(isShared ? "justify-content-center" : "") align-items-center flex-wrap gap-@(isShared ? "2" : "1") @(isShared ? "mt-2" : "")">
+                                                            @foreach (var speaker in session.Speakers.Take(maxSpeakers))
+                                                            {
+                                                                <div class="d-flex align-items-center @(isShared ? "" : "me-2")">
                                                                     <div class="speaker-avatar-wrapper me-1" style="width: 24px; height: 24px;">
                                                                         <img src="@speaker.ResolvedImageUrl" 
                                                                              alt="@speaker.Name" 
@@ -373,82 +277,22 @@
                                                                     <small class="text-muted">@speaker.Name</small>
                                                                 </div>
                                                             }
-                                                            @if (sharedSession.Speakers.Length > 4)
+                                                            @if (session.Speakers.Length > maxSpeakers)
                                                             {
-                                                                <small class="text-muted">외 @(sharedSession.Speakers.Length - 4)명</small>
+                                                                <small class="text-muted">외 @(session.Speakers.Length - maxSpeakers)명</small>
                                                             }
                                                         </div>
                                                     }
                                                 </div>
                                             </td>
                                         }
-                                        else
-                                        {
-                                            // 일반 세션: 각 트랙별로 표시
-                                            @foreach (var (venue, track) in tracks)
-                                            {
-                                                if (IsSlotCoveredByPreviousSession(track, day, slot.StartTime, timeSlots))
-                                                {
-                                                    continue;
-                                                }
-                                                
-                                                var session = GetSessionAt(track, day, slot.StartTime);
-                                                if (session != null && !session.IsShared)
-                                                {
-                                                    var rowSpan = GetSessionRowSpan(session, timeSlots);
-                                                    var formatInfo = SessionDisplay.GetFormatDisplayInfo(session.Format);
-                                                    var trackColor = track.Color ?? themeColor;
-                                                    
-                                                    <td rowspan="@rowSpan" class="p-0" style="border-left: 4px solid @trackColor;">
-                                                        <div class="timetable-session p-3 h-100" 
-                                                             role="button" 
-                                                             data-bs-toggle="modal" 
-                                                             data-bs-target="#@session.ModalId"
-                                                             style="cursor: pointer;">
-                                                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                                                <span class="badge bg-@formatInfo.BadgeColor">@formatInfo.DisplayName</span>
-                                                                <span class="text-muted small">@((int)session.Duration.TotalMinutes)분</span>
-                                                            </div>
-                                                            <h6 class="fw-bold mb-2 timetable-session-title">@session.Title</h6>
-                                                            <div class="d-flex align-items-center flex-wrap gap-1">
-                                                                @foreach (var speaker in session.Speakers.Take(2))
-                                                                {
-                                                                    <div class="d-flex align-items-center me-2">
-                                                                        <div class="speaker-avatar-wrapper me-1" style="width: 24px; height: 24px;">
-                                                                            <img src="@speaker.ResolvedImageUrl" 
-                                                                                 alt="@speaker.Name" 
-                                                                                 class="speaker-avatar rounded-circle w-100 h-100 object-fit-cover"
-                                                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                                                                            <div class="avatar-placeholder bg-@themeColorClass text-white" style="display: none; width: 100%; height: 100%; font-size: 0.6rem;">
-                                                                                <i class="bi bi-person-fill"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                        <small class="text-muted">@speaker.Name</small>
-                                                                    </div>
-                                                                }
-                                                                @if (session.Speakers.Length > 2)
-                                                                {
-                                                                    <small class="text-muted">외 @(session.Speakers.Length - 2)명</small>
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                }
-                                                else if (session == null)
-                                                {
-                                                    <td class="text-center text-muted bg-light">
-                                                        <small>-</small>
-                                                    </td>
-                                                }
-                                            }
-                                        }
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-            }
+            </div>
             
             <div class="text-center mt-4">
                 <p class="text-muted">
@@ -684,12 +528,24 @@
                             </ul>
                         </div>
                     }
+                    @if (session.IsYouTubeVideo)
+                    {
+                        <div class="mb-4">
+                            <h6 class="text-muted mb-2"><i class="bi bi-play-circle me-1"></i>세션 영상</h6>
+                            <div class="ratio ratio-16x9 rounded overflow-hidden">
+                                <iframe src="@session.YouTubeEmbedUrl" 
+                                        title="@session.Title"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                        allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div class="modal-footer border-0 pt-0">
                     <button type="button" class="btn btn-secondary btn-copy-link" data-session-hash="@session.AnchorHash">
                         <i class="bi bi-link-45deg me-1"></i>링크 복사
                     </button>
-                    @if (!string.IsNullOrEmpty(session.VideoUrl))
+                    @if (!string.IsNullOrEmpty(session.VideoUrl) && !session.IsYouTubeVideo)
                     {
                         <a href="@session.VideoUrl" class="btn btn-@themeColorClass" target="_blank">
                             <i class="bi bi-play me-1"></i>영상 보기
