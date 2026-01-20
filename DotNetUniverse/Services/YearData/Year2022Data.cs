@@ -186,7 +186,7 @@ public class Year2022Data : IEventData
     {
         Slug = Slug,
         Year = 2022,
-        Title = ".NET Universe 2022",
+        Title = ".NET Conf 2022 x Seoul",
         Theme = ".NET 6 LTS와 함께하는 엔터프라이즈",
         Description = ".NET 6 LTS 출시와 함께 첫 하이브리드 형태로 개최된 컨퍼런스입니다.",
         Date = new DateTime(2022, 11, 12),

@@ -269,7 +269,7 @@ public class Year2025Data : IEventData
     {
         Slug = Slug,
         Year = 2025,
-        Title = ".NET Universe 2025",
+        Title = ".NET Conf 2025 x Seoul",
         Theme = "AI 시대의 .NET 개발",
         Description = ".NET 10과 AI 통합을 주제로 500명 이상의 개발자가 함께할 닷넷 유니버스 2025입니다.",
         Date = new DateTime(2025, 11, 15),

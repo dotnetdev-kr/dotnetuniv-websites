@@ -32,15 +32,7 @@
                     </div>
                 }
                 <h1 class="display-2 fw-bold mb-4">
-                    @if (evt.Title.Contains("@"))
-                    {
-                        @Html.Raw(evt.Title.Replace("@", "<br /><span style='color: #ffc107;'>@</span>"))
-                    }
-                    else
-                    {
-                        <text>.NET Universe<br /></text>
-                        <span class="text-gradient">@evt.Year</span>
-                    }
+                    @evt.Title
                 </h1>
                 <p class="lead mb-4 opacity-90">
                     @evt.Theme

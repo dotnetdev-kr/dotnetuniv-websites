@@ -187,7 +187,7 @@ public class Year2023Data : IEventData
     {
         Slug = Slug,
         Year = 2023,
-        Title = ".NET Universe 2023",
+        Title = ".NET Conf 2023 x Seoul",
         Theme = ".NET 7 성능의 새로운 기준",
         Description = ".NET 7의 성능 개선과 Native AOT를 중심으로 350명 이상이 참여한 온라인 컨퍼런스입니다.",
         Date = new DateTime(2023, 11, 11),

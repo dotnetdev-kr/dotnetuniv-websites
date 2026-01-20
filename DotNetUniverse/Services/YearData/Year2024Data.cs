@@ -218,7 +218,7 @@ public class Year2024Data : IEventData
     {
         Slug = Slug,
         Year = 2024,
-        Title = ".NET Universe 2024",
+        Title = ".NET Conf 2024 x Seoul",
         Theme = ".NET 8의 새로운 시대",
         Description = ".NET 8의 새로운 기능들과 함께 400명 이상의 개발자가 함께한 역대 최대 규모의 컨퍼런스입니다.",
         Date = new DateTime(2024, 11, 16),
