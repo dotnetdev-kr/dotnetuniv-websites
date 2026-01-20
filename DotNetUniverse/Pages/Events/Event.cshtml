@@ -119,15 +119,18 @@
             <h2 class="fw-bold display-5 mb-3">행사 하이라이트</h2>
             <p class="text-muted lead">@evt.Title</p>
         </div>
-        <div class="row g-4 text-center">
-            <div class="col-6 col-md-3">
-                <div class="card border-0 bg-light h-100">
-                    <div class="card-body p-4">
-                        <div class="display-4 fw-bold text-@themeColorClass mb-2">@(evt.AttendeeCount)+</div>
-                        <p class="text-muted mb-0">참가자</p>
+        <div class="row g-4 text-center justify-content-center">
+            @if (evt.AttendeeCount.HasValue)
+            {
+                <div class="col-6 col-md-3">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body p-4">
+                            <div class="display-4 fw-bold text-@themeColorClass mb-2">@(evt.AttendeeCount)+</div>
+                            <p class="text-muted mb-0">참가자</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
             <div class="col-6 col-md-3">
                 <div class="card border-0 bg-light h-100">
                     <div class="card-body p-4">
