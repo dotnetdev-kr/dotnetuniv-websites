@@ -17,6 +17,7 @@ public class EventDataService
         {
             new Year2019Data(),
             new Mini2007Data(),
+            new Mini2010Data(),
             new Year2021Data(),
             new Year2022Data(),
             new Year2023Data(),
