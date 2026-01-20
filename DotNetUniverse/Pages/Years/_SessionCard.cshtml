@@ -92,32 +92,33 @@
                     }
                 </div>
             }
-            @if (!string.IsNullOrEmpty(session.VideoUrl) || !string.IsNullOrEmpty(session.SlidesUrl))
-            {
-                <div class="d-flex gap-2 flex-wrap session-action-buttons">
-                    @if (!string.IsNullOrEmpty(session.VideoUrl))
+            <div class="d-flex gap-2 flex-wrap session-action-buttons">
+                @if (!string.IsNullOrEmpty(session.VideoUrl))
+                {
+                    @if (session.IsYouTubeVideo)
                     {
-                        @if (session.IsYouTubeVideo)
-                        {
-                            <button type="button" class="btn btn-sm btn-@themeColorClass session-action-btn video-play-btn session-card-link">
-                                <i class="bi bi-play me-1"></i>영상
-                            </button>
-                        }
-                        else
-                        {
-                            <a href="@session.VideoUrl" class="btn btn-sm btn-@themeColorClass session-action-btn session-card-link" target="_blank" rel="noopener noreferrer">
-                                <i class="bi bi-play me-1"></i>영상
-                            </a>
-                        }
+                        <button type="button" class="btn btn-sm btn-@themeColorClass session-action-btn video-play-btn session-card-link">
+                            <i class="bi bi-play me-1"></i>영상
+                        </button>
                     }
-                    @if (!string.IsNullOrEmpty(session.SlidesUrl))
+                    else
                     {
-                        <a href="@session.SlidesUrl" class="btn btn-sm btn-outline-@themeColorClass session-action-btn session-card-link" target="_blank" rel="noopener noreferrer">
-                            <i class="bi bi-download me-1"></i>자료
+                        <a href="@session.VideoUrl" class="btn btn-sm btn-@themeColorClass session-action-btn session-card-link" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-play me-1"></i>영상
                         </a>
                     }
-                </div>
-            }
+                }
+                @if (!string.IsNullOrEmpty(session.SlidesUrl))
+                {
+                    <a href="@session.SlidesUrl" class="btn btn-sm btn-outline-@themeColorClass session-action-btn session-card-link" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-download me-1"></i>자료
+                    </a>
+                }
+                <button type="button" class="btn btn-sm btn-outline-secondary session-action-btn btn-web-share session-card-link" 
+                        data-session-hash="@session.AnchorHash" data-title="@session.Title" style="display: none;">
+                    <i class="bi bi-share"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>
