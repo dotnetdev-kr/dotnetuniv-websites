@@ -42,7 +42,7 @@
                         <i class="bi bi-calendar-check me-2"></i>
                         <span>@evt.Date.ToString("yyyy년 M월 d일")</span>
                     </div>
-                    @if (evt.PrimaryVenue != null)
+                    @if (evt.Type != EventType.Online && evt.IsUpcoming && evt.PrimaryVenue != null)
                     {
                         <div class="info-item">
                             <i class="bi bi-geo-alt me-2"></i>
@@ -727,7 +727,7 @@
 }
 
 <!-- 행사장 정보 -->
-@if (evt.HasVenues)
+@if (evt.Type != EventType.Online && evt.HasVenues && evt.IsUpcoming)
 {
     <section class="py-5" id="venue">
         <div class="container py-4">
