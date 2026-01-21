@@ -3,29 +3,49 @@
 @{
     ViewData["Title"] = "국내 최대 .NET 개발자 컨퍼런스";
     ViewData["OgDescription"] = ".NET Universe - AI 시대를 선도하는 국내 최대 .NET 개발자 컨퍼런스. 2019년부터 이어온 개발자들의 축제에 함께하세요.";
+    
+    var upcomingEvent = Model.UpcomingEvent?.Event;
+    var hasUpcoming = Model.HasUpcomingEvent && upcomingEvent != null;
 }
 
-<!-- 히어로 섹션 - 2026 행사 집중 홍보 -->
+@if (hasUpcoming)
+{
+<!-- 히어로 섹션 - 예정된 행사 동적 표시 -->
 <section class="hero-section" style="background: linear-gradient(135deg, #512BD4 0%, #7B68EE 50%, #9370DB 100%);">
     <div class="hero-overlay"></div>
     <div class="container position-relative">
         <div class="row min-vh-100 align-items-center py-5">
             <div class="col-lg-7 text-white">
                 <div class="d-flex flex-wrap gap-2 mb-4">
-                    <span class="badge bg-warning text-dark fs-6 px-3 py-2">
-                        <i class="bi bi-stars me-1"></i>AI 시대의 .NET
-                    </span>
+                    @if (upcomingEvent!.Status == DotNetUniverse.Models.EventStatus.Registration)
+                    {
+                        <span class="badge bg-success fs-6 px-3 py-2">
+                            <i class="bi bi-ticket-perforated me-1"></i>참가 등록 중
+                        </span>
+                    }
+                    else if (upcomingEvent.Status == DotNetUniverse.Models.EventStatus.CallForParticipation)
+                    {
+                        <span class="badge bg-info text-dark fs-6 px-3 py-2">
+                            <i class="bi bi-megaphone me-1"></i>모집 중
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                            <i class="bi bi-stars me-1"></i>Coming Soon
+                        </span>
+                    }
                     <span class="badge bg-light text-dark fs-6 px-3 py-2">
-                        <i class="bi bi-calendar-event me-1"></i>2026년 11월
+                        <i class="bi bi-calendar-event me-1"></i>@upcomingEvent.Date.ToString("yyyy년 M월 d일")
                     </span>
                 </div>
                 <h1 class="display-1 fw-bold mb-4">
-                    .NET Universe<br />
-                    <span class="text-gradient">2026</span>
+                    @upcomingEvent.Title.Replace($" {upcomingEvent.Year}", "")<br />
+                    <span class="text-gradient">@upcomingEvent.Year</span>
                 </h1>
                 <p class="lead mb-4 opacity-90 fs-4">
-                    <strong>국내 최대 .NET 개발자 컨퍼런스</strong><br />
-                    AI와 오픈소스로 함께 성장하는 개발자들의 축제
+                    <strong>@(upcomingEvent.Theme != "Coming Soon" ? upcomingEvent.Theme : "국내 최대 .NET 개발자 컨퍼런스")</strong><br />
+                    @(upcomingEvent.Description?.Split('\n').FirstOrDefault() ?? "AI와 오픈소스로 함께 성장하는 개발자들의 축제")
                 </p>
                 <div class="hero-stats d-flex flex-wrap gap-4 mb-5">
                     <div class="stat-item text-center">
@@ -46,13 +66,47 @@
                     </div>
                 </div>
                 <div class="d-flex flex-wrap gap-3" id="register">
-                    <a href="#" class="btn btn-warning btn-lg px-5 py-3 fw-bold">
-                        <i class="bi bi-bell-fill me-2"></i>2026 사전 알림 신청
-                    </a>
+                    @if (upcomingEvent.IsRegistrationOpen)
+                    {
+                        <a href="@upcomingEvent.RegistrationUrl" class="btn btn-success btn-lg px-5 py-3 fw-bold" target="_blank">
+                            <i class="bi bi-ticket-perforated-fill me-2"></i>지금 등록하기 @(upcomingEvent.IsFreeEvent ? "(무료)" : upcomingEvent.FormattedTicketPrice)
+                        </a>
+                    }
+                    else if (upcomingEvent.IsNotificationSignupOpen)
+                    {
+                        <a href="@upcomingEvent.NotificationSignupUrl" class="btn btn-warning btn-lg px-5 py-3 fw-bold" target="_blank">
+                            <i class="bi bi-bell-fill me-2"></i>사전 알림 신청
+                        </a>
+                    }
                     <a href="#history" class="btn btn-outline-light btn-lg px-4 py-3">
                         <i class="bi bi-clock-history me-2"></i>지난 행사 보기
                     </a>
                 </div>
+                
+                @* 모집 링크들 *@
+                @if (upcomingEvent.IsCallForSpeakersOpen || upcomingEvent.IsCallForSponsorsOpen || upcomingEvent.IsCallForVolunteersOpen)
+                {
+                    <div class="mt-4 d-flex flex-wrap gap-2">
+                        @if (upcomingEvent.IsCallForSpeakersOpen)
+                        {
+                            <a href="@upcomingEvent.CallForSpeakersUrl" class="btn btn-outline-warning btn-sm" target="_blank">
+                                <i class="bi bi-mic me-1"></i>스피커 지원
+                            </a>
+                        }
+                        @if (upcomingEvent.IsCallForSponsorsOpen)
+                        {
+                            <a href="@upcomingEvent.CallForSponsorsUrl" class="btn btn-outline-warning btn-sm" target="_blank">
+                                <i class="bi bi-briefcase me-1"></i>후원사 문의
+                            </a>
+                        }
+                        @if (upcomingEvent.IsCallForVolunteersOpen)
+                        {
+                            <a href="@upcomingEvent.CallForVolunteersUrl" class="btn btn-outline-warning btn-sm" target="_blank">
+                                <i class="bi bi-hand-thumbs-up me-1"></i>자원봉사 신청
+                            </a>
+                        }
+                    </div>
+                }
             </div>
             <div class="col-lg-5 d-none d-lg-block">
                 <div class="hero-visual text-center">
@@ -78,7 +132,7 @@
     <div class="countdown-bar">
         <div class="container">
             <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap">
-                <span class="text-white-50"><i class="bi bi-hourglass-split me-2"></i>2026년 행사까지</span>
+                <span class="text-white-50"><i class="bi bi-hourglass-split me-2"></i>@upcomingEvent.Title 까지</span>
                 <div class="countdown-wrapper d-flex gap-3">
                     <div class="countdown-item text-center">
                         <span class="countdown-number" id="days">--</span>
@@ -101,6 +155,73 @@
         </div>
     </div>
 </section>
+}
+else
+{
+<!-- 히어로 섹션 - 예정된 행사 없음 (기본) -->
+<section class="hero-section" style="background: linear-gradient(135deg, #512BD4 0%, #7B68EE 50%, #9370DB 100%);">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative">
+        <div class="row min-vh-100 align-items-center py-5">
+            <div class="col-lg-7 text-white">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                        <i class="bi bi-stars me-1"></i>AI 시대의 .NET
+                    </span>
+                </div>
+                <h1 class="display-1 fw-bold mb-4">
+                    .NET Universe
+                </h1>
+                <p class="lead mb-4 opacity-90 fs-4">
+                    <strong>국내 최대 .NET 개발자 컨퍼런스</strong><br />
+                    AI와 오픈소스로 함께 성장하는 개발자들의 축제
+                </p>
+                <div class="hero-stats d-flex flex-wrap gap-4 mb-5">
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">7년</div>
+                        <small class="opacity-75">역사</small>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">2,000+</div>
+                        <small class="opacity-75">누적 참가자</small>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">150+</div>
+                        <small class="opacity-75">누적 세션</small>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="display-5 fw-bold">100+</div>
+                        <small class="opacity-75">연사</small>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#history" class="btn btn-warning btn-lg px-5 py-3 fw-bold">
+                        <i class="bi bi-clock-history me-2"></i>지난 행사 보기
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="hero-visual text-center">
+                    <div class="floating-cards">
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg mb-3">
+                            <i class="bi bi-robot text-primary me-2"></i>Semantic Kernel
+                        </div>
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg mb-3 ms-4">
+                            <i class="bi bi-cloud text-info me-2"></i>.NET Aspire
+                        </div>
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg mb-3">
+                            <i class="bi bi-gpu-card text-success me-2"></i>Blazor
+                        </div>
+                        <div class="tech-badge bg-white text-dark rounded-pill px-4 py-2 shadow-lg ms-3">
+                            <i class="bi bi-github text-dark me-2"></i>GitHub Copilot
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+}
 
 <!-- 행사 소개 섹션 -->
 <section class="py-5 bg-light">
@@ -573,25 +694,53 @@
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-8 mb-4 mb-lg-0">
-                <h2 class="display-5 fw-bold mb-3">.NET Universe 2026</h2>
-                <p class="lead opacity-90 mb-0">
-                    AI 시대의 .NET 개발을 함께 탐험할 준비가 되셨나요?<br />
-                    2026년 11월, 국내 최대 .NET 개발자 컨퍼런스에서 만나요!
-                </p>
+                @if (hasUpcoming)
+                {
+                    <h2 class="display-5 fw-bold mb-3">@upcomingEvent!.Title</h2>
+                    <p class="lead opacity-90 mb-0">
+                        @(upcomingEvent.Theme != "Coming Soon" ? upcomingEvent.Theme : "AI 시대의 .NET 개발을 함께 탐험할 준비가 되셨나요?")<br />
+                        @upcomingEvent.Date.ToString("yyyy년 M월 d일"), 국내 최대 .NET 개발자 컨퍼런스에서 만나요!
+                    </p>
+                }
+                else
+                {
+                    <h2 class="display-5 fw-bold mb-3">.NET Universe</h2>
+                    <p class="lead opacity-90 mb-0">
+                        AI 시대의 .NET 개발을 함께 탐험할 준비가 되셨나요?<br />
+                        국내 최대 .NET 개발자 컨퍼런스에서 만나요!
+                    </p>
+                }
             </div>
             <div class="col-lg-4 text-lg-end">
-                <a href="#register" class="btn btn-warning btn-lg px-5 py-3 fw-bold">
-                    <i class="bi bi-bell-fill me-2"></i>사전 알림 신청
-                </a>
+                @if (hasUpcoming && upcomingEvent!.IsRegistrationOpen)
+                {
+                    <a href="@upcomingEvent.RegistrationUrl" class="btn btn-success btn-lg px-5 py-3 fw-bold" target="_blank">
+                        <i class="bi bi-ticket-perforated-fill me-2"></i>지금 등록하기
+                    </a>
+                }
+                else if (hasUpcoming && upcomingEvent!.IsNotificationSignupOpen)
+                {
+                    <a href="@upcomingEvent.NotificationSignupUrl" class="btn btn-warning btn-lg px-5 py-3 fw-bold" target="_blank">
+                        <i class="bi bi-bell-fill me-2"></i>사전 알림 신청
+                    </a>
+                }
+                else
+                {
+                    <a href="#history" class="btn btn-warning btn-lg px-5 py-3 fw-bold">
+                        <i class="bi bi-clock-history me-2"></i>지난 행사 보기
+                    </a>
+                }
             </div>
         </div>
     </div>
 </section>
 
 @section Scripts {
+    @if (hasUpcoming)
+    {
     <script>
-        // 카운트다운 타이머 - 2026년 11월 (예상)
-        const eventDate = new Date('2026-11-14T09:00:00').getTime();
+        // 카운트다운 타이머
+        const eventDate = new Date('@upcomingEvent!.Date.ToString("yyyy-MM-ddTHH:mm:ss")').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -615,4 +764,5 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
     </script>
+    }
 }

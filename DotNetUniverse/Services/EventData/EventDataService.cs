@@ -26,6 +26,7 @@ public class EventDataService
             new Year2023Data(),
             new Year2024Data(),
             new Year2025Data(),
+            new Year2026Data(),
         };
 
         _slugMap = eventDataList.ToDictionary(d => d.Slug, StringComparer.OrdinalIgnoreCase);

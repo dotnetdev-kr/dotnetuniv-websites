@@ -29,6 +29,42 @@ public enum EventScale
 }
 
 /// <summary>
+/// 행사 진행 상태
+/// </summary>
+public enum EventStatus
+{
+    /// <summary>
+    /// 준비 중 (날짜만 공개)
+    /// </summary>
+    Preparing,
+
+    /// <summary>
+    /// 스피커/후원사/자원봉사자 모집 중
+    /// </summary>
+    CallForParticipation,
+
+    /// <summary>
+    /// 참가자 모집 중 (티켓 판매)
+    /// </summary>
+    Registration,
+
+    /// <summary>
+    /// 모집 마감
+    /// </summary>
+    RegistrationClosed,
+
+    /// <summary>
+    /// 진행 중
+    /// </summary>
+    InProgress,
+
+    /// <summary>
+    /// 종료
+    /// </summary>
+    Completed
+}
+
+/// <summary>
 /// 행사 정보
 /// </summary>
 public record EventInfo
@@ -74,9 +110,58 @@ public record EventInfo
     public int? AttendeeCount { get; init; }
 
     /// <summary>
-    /// 예정된 행사 여부
+    /// 예정된 행사 여부 (Date가 미래인 경우 자동 계산)
     /// </summary>
-    public bool IsUpcoming { get; init; }
+    public bool IsUpcoming => Date > DateTime.Now;
+
+    /// <summary>
+    /// 행사 진행 상태
+    /// </summary>
+    public EventStatus Status { get; init; } = EventStatus.Completed;
+
+    #region 모집 링크
+
+    /// <summary>
+    /// 스피커 모집 링크
+    /// </summary>
+    public string? CallForSpeakersUrl { get; init; }
+
+    /// <summary>
+    /// 후원사 모집 링크
+    /// </summary>
+    public string? CallForSponsorsUrl { get; init; }
+
+    /// <summary>
+    /// 자원봉사자 모집 링크
+    /// </summary>
+    public string? CallForVolunteersUrl { get; init; }
+
+    /// <summary>
+    /// 참가 등록/티켓 구매 링크
+    /// </summary>
+    public string? RegistrationUrl { get; init; }
+
+    /// <summary>
+    /// 티켓 가격 (무료인 경우 null 또는 0)
+    /// </summary>
+    public decimal? TicketPrice { get; init; }
+
+    /// <summary>
+    /// 얼리버드 티켓 가격
+    /// </summary>
+    public decimal? EarlyBirdPrice { get; init; }
+
+    /// <summary>
+    /// 얼리버드 마감일
+    /// </summary>
+    public DateTime? EarlyBirdDeadline { get; init; }
+
+    /// <summary>
+    /// 사전 알림 신청 링크
+    /// </summary>
+    public string? NotificationSignupUrl { get; init; }
+
+    #endregion
 
     /// <summary>
     /// 트레일러 URL
@@ -113,6 +198,7 @@ public record EventInfo
     /// </summary>
     public bool HasTrailer => !string.IsNullOrEmpty(TrailerUrl);
 
+
     /// <summary>
     /// 히어로 이미지가 있는지 여부
     /// </summary>
@@ -148,6 +234,55 @@ public record EventInfo
     /// </summary>
     public VenueInfo? PrimaryVenue => Venues.Primary;
 
+    #region 모집 관련 헬퍼 속성
+
+    /// <summary>
+    /// 스피커 모집 중인지 여부
+    /// </summary>
+    public bool IsCallForSpeakersOpen => !string.IsNullOrEmpty(CallForSpeakersUrl);
+
+    /// <summary>
+    /// 후원사 모집 중인지 여부
+    /// </summary>
+    public bool IsCallForSponsorsOpen => !string.IsNullOrEmpty(CallForSponsorsUrl);
+
+    /// <summary>
+    /// 자원봉사자 모집 중인지 여부
+    /// </summary>
+    public bool IsCallForVolunteersOpen => !string.IsNullOrEmpty(CallForVolunteersUrl);
+
+    /// <summary>
+    /// 참가 등록 가능 여부
+    /// </summary>
+    public bool IsRegistrationOpen => !string.IsNullOrEmpty(RegistrationUrl) && Status == EventStatus.Registration;
+
+    /// <summary>
+    /// 사전 알림 신청 가능 여부
+    /// </summary>
+    public bool IsNotificationSignupOpen => !string.IsNullOrEmpty(NotificationSignupUrl);
+
+    /// <summary>
+    /// 무료 행사 여부
+    /// </summary>
+    public bool IsFreeEvent => TicketPrice is null or 0;
+
+    /// <summary>
+    /// 얼리버드 기간 여부
+    /// </summary>
+    public bool IsEarlyBirdPeriod => EarlyBirdDeadline.HasValue && DateTime.Now < EarlyBirdDeadline.Value;
+
+    /// <summary>
+    /// 현재 적용 티켓 가격
+    /// </summary>
+    public decimal? CurrentTicketPrice => IsEarlyBirdPeriod ? EarlyBirdPrice : TicketPrice;
+
+    /// <summary>
+    /// 포맷팅된 티켓 가격
+    /// </summary>
+    public string FormattedTicketPrice => IsFreeEvent ? "무료" : $"{CurrentTicketPrice:N0}원";
+
+    #endregion
+
     /// <summary>
     /// ID로 행사장 찾기
     /// </summary>
@@ -162,6 +297,8 @@ public record EventInfo
     /// ID로 세션 찾기 (모든 장소, 모든 트랙에서)
     /// </summary>
     public Session? GetSession(string id) => AllSessions.FirstOrDefault(s => s.Id == id);
+
+
 
     /// <summary>
     /// ID로 발표자 찾기 (모든 세션에서)
