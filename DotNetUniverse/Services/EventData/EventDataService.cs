@@ -23,6 +23,8 @@ public class EventDataService
             new Year2021Data(),
             new Mini2205Data(),
             new Year2022Data(),
+            new Live23SpringData(),
+            new Live23FallData(),
             new Year2023Data(),
             new Year2024Data(),
             new Year2025Data(),
