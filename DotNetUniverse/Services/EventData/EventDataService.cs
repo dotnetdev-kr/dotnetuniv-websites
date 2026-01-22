@@ -17,17 +17,22 @@ public class EventDataService
         {
             new Year2019Data(),
             new Mini2007Data(),
+            new TNL2020Data(),
             new Mini2010Data(),
             new Mini2104Data(),
             new Mini2108Data(),
             new Year2021Data(),
             new Mini2205Data(),
+            new Mini2209Data(),
             new Year2022Data(),
             new Live23SpringData(),
             new Live23FallData(),
             new Year2023Data(),
             new Year2024Data(),
             new Year2025Data(),
+            new Unplugged2508Data(),
+            new CloudBroEditionData(),
+            new BusanEdition2512Data(),
             new Year2026Data(),
         };
 
