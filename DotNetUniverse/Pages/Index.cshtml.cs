@@ -17,9 +17,9 @@ namespace DotNetUniverse.Pages
         }
 
         /// <summary>
-        /// 예정된 (다가오는) 행사
+        /// 현재 모집 중인 행사들 (Registration 또는 CallForParticipation 상태)
         /// </summary>
-        public IEventData? UpcomingEvent { get; private set; }
+        public IReadOnlyList<IEventData> RegistrationEvents { get; private set; } = [];
 
         /// <summary>
         /// 최근 완료된 행사들 (히스토리용)
@@ -31,16 +31,12 @@ namespace DotNetUniverse.Pages
         /// </summary>
         public IReadOnlyList<IStudyData> Studies { get; private set; } = [];
 
-        /// <summary>
-        /// 예정된 행사가 있는지 여부
-        /// </summary>
-        public bool HasUpcomingEvent => UpcomingEvent != null;
-
         public void OnGet()
         {
-            // 예정된 행사 (날짜가 미래인 행사 중 가장 가까운 것)
-            UpcomingEvent = _eventDataService.AllEvents
-                .FirstOrDefault(e => e.Event.IsUpcoming);
+            // 현재 모집 중인 행사들
+            RegistrationEvents = _eventDataService.AllEvents
+                .Where(e => e.Event.Status == EventStatus.Registration || e.Event.Status == EventStatus.CallForParticipation)
+                .ToList();
 
             // 과거 행사들 (최신순, 본 컨퍼런스만)
             PastEvents = _eventDataService.AllEvents
