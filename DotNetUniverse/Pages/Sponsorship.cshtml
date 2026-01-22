@@ -1,0 +1,258 @@
+@page
+@model DotNetUniverse.Pages.SponsorshipModel
+@{
+    ViewData["Title"] = "후원 안내";
+}
+
+<!-- 페이지 헤더 -->
+<section class="py-5 bg-purple text-white">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-heart-fill me-3"></i>.NET Universe 후원 안내
+                </h1>
+                <p class="lead opacity-90">
+                    .NET Universe와 함께 성장하는 파트너가 되어주세요.<br />
+                    여러분의 후원이 .NET 생태계를 더욱 풍요롭게 만듭니다.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 언어 선택 탭 -->
+<section class="py-5">
+    <div class="container py-4">
+        <ul class="nav nav-tabs nav-fill mb-5" id="languageTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="korean-tab" data-bs-toggle="tab" data-bs-target="#korean" type="button" role="tab" aria-controls="korean" aria-selected="true">
+                    <i class="bi bi-translate me-2"></i>한국어
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="english-tab" data-bs-toggle="tab" data-bs-target="#english" type="button" role="tab" aria-controls="english" aria-selected="false">
+                    <i class="bi bi-globe me-2"></i>English
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="languageTabContent">
+            <!-- 한국어 탭 -->
+            <div class="tab-pane fade show active" id="korean" role="tabpanel" aria-labelledby="korean-tab">
+                <!-- 소개 -->
+                <div class="row align-items-center mb-5">
+                    <div class="col-lg-8">
+                        <h2 class="fw-bold display-6 mb-4">소개</h2>
+                        <p class="text-muted mb-4">
+                            닷넷데브는 국내 닷넷 개발자들을 위한 개발자 커뮤니티입니다. 
+                            우리 커뮤니티는 주기적으로 닷넷 개발자들을 위한 미팅, 컨퍼런스, 세미나를 진행하고 있습니다. 
+                            또한, 포럼 웹 사이트를 운영하면서 닷넷 개발자들에게 소통할 수 있는 계기를 마련하고 있습니다.
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="bg-gradient-purple rounded-4 p-4 text-white text-center">
+                            <i class="bi bi-people-fill display-3 mb-3"></i>
+                            <h4 class="fw-bold">.NET Dev</h4>
+                            <p class="opacity-75 mb-0">커뮤니티</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- .NET Universe 2026 후원사 안내서 -->
+                <div class="card border-0 shadow-lg mb-5">
+                    <div class="card-header bg-primary text-white py-4">
+                        <h3 class="fw-bold mb-0">
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i>.NET Universe 2026 후원사 안내서
+                        </h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="ratio ratio-16x9">
+                            <iframe src="/docs/sponsorship/dotnet-univ-2026-sponsorship-ko.pdf" type="application/pdf" title=".NET Universe 2026 후원사 안내서"></iframe>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light py-3">
+                        <a href="/docs/sponsorship/dotnet-univ-2026-sponsorship-ko.pdf" class="btn btn-primary" download>
+                            <i class="bi bi-download me-2"></i>PDF 다운로드
+                        </a>
+                        <a href="/docs/sponsorship/dotnet-univ-2026-sponsorship-ko.pdf" class="btn btn-outline-primary ms-2" target="_blank">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>새 탭에서 열기
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 아카이브 섹션 -->
+                <div class="mb-5">
+                    <h3 class="fw-bold mb-4">
+                        <i class="bi bi-archive me-2"></i>아카이브
+                    </h3>
+                    <p class="text-muted mb-4">
+                        아래는 과거 행사의 후원사 안내서입니다. 다운로드하시면 과거 후원 기회 및 행사 상세 정보에 대해 자세히 알아보실 수 있습니다.
+                    </p>
+
+                    <div class="row g-4">
+                        <!-- .NET Conf 2025 x Seoul -->
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>.NET Conf 2025 x Seoul 후원사 안내서
+                                    </h5>
+                                    <p class="card-text text-muted small">2025년 .NET Conf x Seoul 행사 후원 안내</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="/docs/sponsorship/kor-dotnetconf-2025-sponsorship-guide.pdf" class="btn btn-sm btn-outline-primary" download>
+                                        <i class="bi bi-download me-1"></i>다운로드
+                                    </a>
+                                    <a href="/docs/sponsorship/kor-dotnetconf-2025-sponsorship-guide.pdf" class="btn btn-sm btn-outline-secondary ms-2" target="_blank">
+                                        <i class="bi bi-eye me-1"></i>미리보기
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- .NET Conf 2024 x Seoul -->
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>.NET Conf 2024 x Seoul 후원사 안내서
+                                    </h5>
+                                    <p class="card-text text-muted small">2024년 .NET Conf x Seoul 행사 후원 안내</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="/docs/sponsorship/kor-dotnetconf-2024-sponsorship-guide.pdf" class="btn btn-sm btn-outline-primary" download>
+                                        <i class="bi bi-download me-1"></i>다운로드
+                                    </a>
+                                    <a href="/docs/sponsorship/kor-dotnetconf-2024-sponsorship-guide.pdf" class="btn btn-sm btn-outline-secondary ms-2" target="_blank">
+                                        <i class="bi bi-eye me-1"></i>미리보기
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- English 탭 -->
+            <div class="tab-pane fade" id="english" role="tabpanel" aria-labelledby="english-tab">
+                <!-- About Our Community -->
+                <div class="row align-items-center mb-5">
+                    <div class="col-lg-8">
+                        <h2 class="fw-bold display-6 mb-4">About Our Community</h2>
+                        <p class="text-muted mb-4">
+                            .NET Dev is a developer community for .NET developers in Korea. 
+                            Our community regularly organizes meetings, conferences, and seminars for .NET developers. 
+                            We also operate a forum website to provide an opportunity for .NET developers to communicate.
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="bg-gradient-purple rounded-4 p-4 text-white text-center">
+                            <i class="bi bi-people-fill display-3 mb-3"></i>
+                            <h4 class="fw-bold">.NET Dev</h4>
+                            <p class="opacity-75 mb-0">Community</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- .NET Universe 2026 Sponsor Guide -->
+                <div class="card border-0 shadow-lg mb-5">
+                    <div class="card-header bg-primary text-white py-4">
+                        <h3 class="fw-bold mb-0">
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i>.NET Universe 2026 Sponsor Guide
+                        </h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="ratio ratio-16x9">
+                            <iframe src="/docs/sponsorship/dotnet-univ-2026-sponsorship-en.pdf" type="application/pdf" title=".NET Universe 2026 Sponsor Guide"></iframe>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light py-3">
+                        <a href="/docs/sponsorship/dotnet-univ-2026-sponsorship-en.pdf" class="btn btn-primary" download>
+                            <i class="bi bi-download me-2"></i>Download PDF
+                        </a>
+                        <a href="/docs/sponsorship/dotnet-univ-2026-sponsorship-en.pdf" class="btn btn-outline-primary ms-2" target="_blank">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>Open in New Tab
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Archive Section -->
+                <div class="mb-5">
+                    <h3 class="fw-bold mb-4">
+                        <i class="bi bi-archive me-2"></i>Archive
+                    </h3>
+                    <p class="text-muted mb-4">
+                        Below are the sponsor guides from our previous events. You can download them to learn more about our past sponsorship opportunities and event details.
+                    </p>
+
+                    <div class="row g-4">
+                        <!-- .NET Conf 2025 x Seoul -->
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>.NET Conf 2025 x Seoul Sponsor Guide
+                                    </h5>
+                                    <p class="card-text text-muted small">Sponsorship guide for .NET Conf x Seoul 2025</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="/docs/sponsorship/eng-dotnetconf-2025-sponsorship-guide.pdf" class="btn btn-sm btn-outline-primary" download>
+                                        <i class="bi bi-download me-1"></i>Download
+                                    </a>
+                                    <a href="/docs/sponsorship/eng-dotnetconf-2025-sponsorship-guide.pdf" class="btn btn-sm btn-outline-secondary ms-2" target="_blank">
+                                        <i class="bi bi-eye me-1"></i>Preview
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- .NET Conf 2024 x Seoul -->
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>.NET Conf 2024 x Seoul Sponsor Guide
+                                    </h5>
+                                    <p class="card-text text-muted small">Sponsorship guide for .NET Conf x Seoul 2024</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="/docs/sponsorship/eng-dotnetconf-2024-sponsorship-guide.pdf" class="btn btn-sm btn-outline-primary" download>
+                                        <i class="bi bi-download me-1"></i>Download
+                                    </a>
+                                    <a href="/docs/sponsorship/eng-dotnetconf-2024-sponsorship-guide.pdf" class="btn btn-sm btn-outline-secondary ms-2" target="_blank">
+                                        <i class="bi bi-eye me-1"></i>Preview
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 문의하기 섹션 -->
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold display-6 mb-4">
+                    <i class="bi bi-envelope-heart me-2"></i>문의하기 / Contact Us
+                </h2>
+                <p class="lead text-muted mb-4">
+                    .NET Universe 후원에 관심이 있으시거나 궁금한 점이 있으시면 언제든지 편하게 연락 주시기 바랍니다.<br />
+                    저희 팀이 귀사의 요구사항에 맞춘 상세한 정보를 신속하게 답변드리겠습니다.
+                </p>
+                <p class="text-muted mb-4">
+                    If you're interested in sponsoring .NET Universe or have any questions, please feel free to reach out to us.<br />
+                    Our team will promptly respond with detailed information tailored to your needs.
+                </p>
+                <a href="mailto:contact@dotnetdev.kr" class="btn btn-primary btn-lg">
+                    <i class="bi bi-envelope-fill me-2"></i>contact@dotnetdev.kr
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
