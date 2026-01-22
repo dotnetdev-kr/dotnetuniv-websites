@@ -1,10 +1,12 @@
 using DotNetUniverse.Services;
 using DotNetUniverse.Services.EventData;
+using DotNetUniverse.Services.StudyData;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<SessionDisplayService>();
 builder.Services.AddSingleton<EventDataService>();
+builder.Services.AddSingleton<StudyDataService>();
 
 using var app = builder.Build();
 

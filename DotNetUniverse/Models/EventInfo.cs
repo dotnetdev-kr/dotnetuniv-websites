@@ -25,7 +25,12 @@ public enum EventScale
     /// <summary>
     /// 온라인 웨비나
     /// </summary>
-    Webinar
+    Webinar,
+
+    /// <summary>
+    /// 스터디/영상 시청 모임
+    /// </summary>
+    Study
 }
 
 /// <summary>

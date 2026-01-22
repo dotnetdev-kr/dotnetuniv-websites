@@ -1,5 +1,6 @@
 using DotNetUniverse.Models;
 using DotNetUniverse.Services.EventData;
+using DotNetUniverse.Services.StudyData;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DotNetUniverse.Pages
@@ -7,10 +8,12 @@ namespace DotNetUniverse.Pages
     public class IndexModel : PageModel
     {
         private readonly EventDataService _eventDataService;
+        private readonly StudyDataService _studyDataService;
 
-        public IndexModel(EventDataService eventDataService)
+        public IndexModel(EventDataService eventDataService, StudyDataService studyDataService)
         {
             _eventDataService = eventDataService;
+            _studyDataService = studyDataService;
         }
 
         /// <summary>
@@ -22,6 +25,11 @@ namespace DotNetUniverse.Pages
         /// 최근 완료된 행사들 (히스토리용)
         /// </summary>
         public IReadOnlyList<IEventData> PastEvents { get; private set; } = [];
+
+        /// <summary>
+        /// 스터디 목록
+        /// </summary>
+        public IReadOnlyList<IStudyData> Studies { get; private set; } = [];
 
         /// <summary>
         /// 예정된 행사가 있는지 여부
@@ -39,6 +47,9 @@ namespace DotNetUniverse.Pages
                 .Where(e => !e.Event.IsUpcoming && e.Event.Scale == EventScale.Conference)
                 .Take(6)
                 .ToList();
+
+            // 스터디 목록 (최신순)
+            Studies = _studyDataService.AllStudies;
         }
     }
 }

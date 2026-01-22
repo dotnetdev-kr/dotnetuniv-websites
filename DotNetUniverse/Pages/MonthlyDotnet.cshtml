@@ -1,0 +1,289 @@
+@page "/study/monthly-dotnet"
+@model DotNetUniverse.Pages.MonthlyDotnetModel
+@{
+    ViewData["Title"] = "월간닷넷";
+    ViewData["OgDescription"] = "닷넷의 기본 클래스 라이브러리를 깊이 있게 배우고 실습하는 커뮤니티 밋업";
+}
+
+<!-- 히어로 섹션 -->
+<section class="hero-section" style="background: linear-gradient(135deg, #512BD4 0%, #7B68EE 100%);">
+    <div class="hero-overlay" style="background: rgba(0,0,0,0.3);"></div>
+    <div class="container position-relative">
+        <div class="row min-vh-75 align-items-center py-5">
+            <div class="col-lg-8 text-white">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-light text-dark fs-6 px-3 py-2">
+                        <i class="bi bi-calendar-month me-1"></i>매월 정기 밋업
+                    </span>
+                    <span class="badge bg-white bg-opacity-25 fs-6 px-3 py-2">
+                        <i class="bi bi-clock me-1"></i>3시간
+                    </span>
+                </div>
+                <h1 class="display-3 fw-bold mb-4">월간닷넷</h1>
+                <p class="lead mb-4 opacity-90">
+                    닷넷의 기본 클래스 라이브러리 범주 안에서 해볼 수 있는<br />
+                    알차고 실용적인 지식을 직접 배우고 실습하는 커뮤니티 밋업입니다.
+                </p>
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-geo-alt me-2"></i>
+                        <span>오프라인 + 온라인 (Google Meet)</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person me-2"></i>
+                        <span>진행: 남정현 (Developer Technologies MVP)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 밋업 소개 -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="fw-bold mb-4">
+                    <i class="bi bi-info-circle text-primary me-2"></i>밋업 소개
+                </h2>
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <p class="mb-3">
+                            닷넷은 여전히 매우 빠른 속도로 발전하고 있는 기술입니다. 
+                            닷넷의 최신 기술도 좋지만, 닷넷의 기본 기능도 살펴볼 만한 내용이 무척 많습니다!
+                        </p>
+                        <p class="mb-3">
+                            <strong>월간 닷넷</strong>에서는 닷넷의 기본 클래스 라이브러리 범주 안에서 해볼 수 있는 
+                            알차고 실용적인 지식을 직접 배우고 실습하는 커뮤니티 밋업입니다.
+                        </p>
+                        <p class="mb-0">
+                            월간 닷넷은 <strong>한 달에 한 번, 한 회 당 세 시간</strong>으로 구성됩니다. 
+                            이벤트가 확정되면, 참가 신청 링크가 공개되며, 링크를 통해 등록 신청을 하실 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">참가 안내</h5>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2">
+                                <i class="bi bi-currency-dollar text-primary me-2"></i>
+                                <strong>오프라인:</strong> 10,000원
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-laptop text-primary me-2"></i>
+                                <strong>온라인:</strong> 8,000원
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-person-heart text-primary me-2"></i>
+                                <strong>만 19세 미만:</strong> 5,000원
+                            </li>
+                        </ul>
+                        <div class="alert alert-info mb-0">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <small>본인 소유 노트북 지참 및 닷넷 개발 환경 사전 설치 필수</small>
+                        </div>
+                        <div class="mt-3 pt-3 border-top">
+                            <h6 class="fw-bold mb-2">문의</h6>
+                            <a href="mailto:rkttu@rkttu.com" class="text-decoration-none">
+                                <i class="bi bi-envelope me-2"></i>rkttu@rkttu.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 스피커 소개 -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="fw-bold mb-4">
+            <i class="bi bi-mic text-purple me-2"></i>스피커
+        </h2>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-start gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="bg-purple text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="bi bi-person-fill fs-1"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-1">남정현</h4>
+                                <p class="text-muted mb-3">닷넷데브 운영진 / Developer Technologies MVP</p>
+                                <p class="mb-3">
+                                    2009년부터 Microsoft MVP로 활동하면서 닷넷 기반 프로그래밍 기술을 알리고, 
+                                    개발자 커뮤니티에 기여하는 활동을 지속하고 있습니다.
+                                </p>
+                                <p class="mb-3">
+                                    최근에는 데브시스터즈에서 테크니컬 라이터로 재직하며 소프트웨어 프로젝트의 문서화, 
+                                    다국어 번역에 관련된 업무를 주로 담당하고 있습니다.
+                                </p>
+                                <p class="mb-0">
+                                    그 외에도 식탁보 프로젝트, WSL 시작 가이드 등 국내 개발자 커뮤니티에서 관심있는 주제를 
+                                    기반으로 오픈 소스 프로젝트 활동도 병행하고 있습니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 예정된 주제 -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4">
+            <i class="bi bi-calendar-check text-primary me-2"></i>예정된 주제
+        </h2>
+        <div class="table-responsive">
+            <table class="table table-hover bg-white shadow-sm rounded">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 120px;">날짜</th>
+                        <th>주제</th>
+                        <th style="width: 150px;">상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.R.IS]</strong> C 언어로 만든 DLL를 C#에서 사용하기</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.IO]</strong> 파일, 디렉터리, 그리고 경로 핸들링 101</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.R]</strong> 플러그인 아키텍처 만들어보기</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.N.S]</strong> 간단한 채팅 클라이언트/서버 만들어보기</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.N.H]</strong> 웹 서버 뼈대 만들어보기</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.IO.C]</strong> 나만의 자동 업데이트 엔진 만들어보기</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S]</strong> 기본 타입의 모든 것 101</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.S]</strong> 대칭 암호화, 비대칭 암호화, 그리고 해시</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td><strong>[S.W.F]</strong> 디자이너 없이 개발하는 Windows Forms</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">TBA</td>
+                        <td>1주년 회고 및 향후 프로그램 방향성 논의</td>
+                        <td><span class="badge bg-secondary">예정</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 지난 강의 -->
+@if (Model.PastStudies.Any())
+{
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold mb-4">
+                <i class="bi bi-collection-play text-danger me-2"></i>지난 강의
+            </h2>
+            <div class="row g-4">
+                @foreach (var studyData in Model.PastStudies)
+                {
+                    var study = studyData.Study;
+                    <div class="col-md-6 col-lg-4">
+                        <a href="@studyData.Url" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm card-hover">
+                                <div class="card-header bg-purple text-white py-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold">@study.Date.ToString("yyyy년 M월")</span>
+                                        @if (study.Videos.Any())
+                                        {
+                                            <span class="badge bg-danger">
+                                                <i class="bi bi-play-circle me-1"></i>영상
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-3">@study.Title.Replace("월간닷넷 ", "").Replace($"{study.Year}년 ", "").Replace($" - ", ": ")</h5>
+                                    <p class="text-muted small mb-0">
+                                        @study.Description?.Split('\n').Skip(2).FirstOrDefault()?.Substring(0, Math.Min(80, study.Description?.Split('\n').Skip(2).FirstOrDefault()?.Length ?? 0))...
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                    <span class="btn btn-outline-purple btn-sm w-100">
+                                        <i class="bi bi-arrow-right me-1"></i>자세히 보기
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- 후원사 -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4">
+            <i class="bi bi-heart text-danger me-2"></i>후원사
+        </h2>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <p class="mb-3">
+                    월간닷넷은 다음의 후원사 분들과 함께 이벤트를 개최하고 있습니다. 
+                    커뮤니티 이벤트 개최에 도움을 주셔서 대단히 감사드립니다.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="https://turingapple.com/" target="_blank" class="btn btn-outline-primary">
+                        <i class="bi bi-box-arrow-up-right me-1"></i>튜링의사과
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 돌아가기 -->
+<section class="py-4">
+    <div class="container">
+        <a asp-page="/StudyList" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>스터디 목록으로 돌아가기
+        </a>
+    </div>
+</section>

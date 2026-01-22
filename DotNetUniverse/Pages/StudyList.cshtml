@@ -1,0 +1,133 @@
+@page
+@model DotNetUniverse.Pages.StudyListModel
+@{
+    ViewData["Title"] = "스터디 모임";
+    ViewData["OgDescription"] = "함께 영상을 시청하고 토론하는 학습 모임";
+}
+
+<!-- 히어로 섹션 -->
+<section class="hero-section" style="background: linear-gradient(135deg, #0078d4 0%, #512BD4 100%);">
+    <div class="container py-5">
+        <div class="row align-items-center" style="min-height: 40vh;">
+            <div class="col-lg-8 text-white">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-light text-dark fs-6 px-3 py-2">
+                        <i class="bi bi-book me-1"></i>Study & Watch Party
+                    </span>
+                </div>
+                <h1 class="display-3 fw-bold mb-4">스터디 모임</h1>
+                <p class="lead mb-4 opacity-90">
+                    함께 영상을 시청하고 토론하는 학습 모임입니다.<br />
+                    Microsoft Build, .NET Conf 등 주요 컨퍼런스 영상을 함께 시청하고 네트워킹합니다.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 시리즈 섹션 -->
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <h2 class="fw-bold mb-4">
+            <i class="bi bi-collection text-purple me-2"></i>스터디 시리즈
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <a href="/study/monthly-dotnet" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm card-hover">
+                        <div class="card-header bg-purple text-white py-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">정기 밋업</span>
+                                <span class="badge bg-white text-purple">
+                                    <i class="bi bi-calendar-month me-1"></i>매월
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-2">월간닷넷</h5>
+                            <p class="text-muted small mb-3">
+                                닷넷의 기본 클래스 라이브러리를 깊이 있게 배우고 실습하는 커뮤니티 밋업
+                            </p>
+                            <div class="d-flex align-items-center text-muted small">
+                                <i class="bi bi-person me-1"></i>
+                                <span>진행: 남정현</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                            <span class="btn btn-outline-purple btn-sm w-100">
+                                <i class="bi bi-arrow-right me-1"></i>시리즈 보기
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 스터디 목록 -->
+<section class="py-5">
+    <div class="container py-4">
+        @if (Model.Studies.Any())
+        {
+            <div class="row g-4">
+                @foreach (var studyData in Model.Studies)
+                {
+                    var study = studyData.Study;
+                    <div class="col-md-6 col-lg-4">
+                        <a href="@studyData.Url" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm card-hover">
+                                <div class="card-header bg-@studyData.ThemeColorClass text-white py-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold">@study.Year</span>
+                                        <span class="badge bg-white text-@studyData.ThemeColorClass">
+                                            <i class="bi bi-camera-video me-1"></i>@study.Format
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-2">@study.Title</h5>
+                                    <p class="text-muted small mb-3">
+                                        <i class="bi bi-calendar3 me-1"></i>@study.Date.ToString("yyyy년 M월 d일")
+                                    </p>
+                                    <p class="text-muted small mb-3">
+                                        @study.Description?.Split('\n').FirstOrDefault()?.Substring(0, Math.Min(80, study.Description?.Split('\n').FirstOrDefault()?.Length ?? 0))...
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-1 mb-3">
+                                        @foreach (var video in study.Videos.Take(2))
+                                        {
+                                            <span class="badge bg-light text-dark small">
+                                                <i class="bi bi-play-circle me-1"></i>@(video.Title.Length > 20 ? video.Title.Substring(0, 20) + "..." : video.Title)
+                                            </span>
+                                        }
+                                        @if (study.Videos.Count > 2)
+                                        {
+                                            <span class="badge bg-secondary small">+@(study.Videos.Count - 2)</span>
+                                        }
+                                    </div>
+                                    <div class="d-flex align-items-center text-muted small">
+                                        <i class="bi bi-person me-1"></i>
+                                        <span>진행: @study.Organizer</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                    <span class="btn btn-outline-@studyData.ThemeColorClass btn-sm w-100">
+                                        <i class="bi bi-arrow-right me-1"></i>상세 보기
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-calendar-x display-1 text-muted mb-4"></i>
+                <h4 class="text-muted">아직 등록된 스터디가 없습니다.</h4>
+                <p class="text-muted">새로운 스터디가 등록되면 이곳에 표시됩니다.</p>
+            </div>
+        }
+    </div>
+</section>

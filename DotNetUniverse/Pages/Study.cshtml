@@ -1,0 +1,244 @@
+@page "/study/{slug}"
+@model DotNetUniverse.Pages.StudyModel
+@{
+    var study = Model.StudyData?.Study;
+    ViewData["Title"] = study?.Title ?? "스터디";
+    ViewData["OgDescription"] = study?.Description?.Split('\n').FirstOrDefault() ?? "스터디 상세 정보";
+}
+
+@if (study == null)
+{
+    <div class="container py-5">
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            스터디를 찾을 수 없습니다.
+        </div>
+        <a asp-page="/Index" class="btn btn-primary">
+            <i class="bi bi-house me-2"></i>홈으로 돌아가기
+        </a>
+    </div>
+}
+else
+{
+    <!-- 히어로 섹션 -->
+    <section class="hero-section" style="background: linear-gradient(135deg, @Model.StudyData!.ThemeColor 0%, #512BD4 100%);">
+        <div class="hero-overlay" style="background: rgba(0,0,0,0.3);"></div>
+        <div class="container position-relative">
+            <div class="row min-vh-75 align-items-center py-5">
+                <div class="col-lg-8 text-white">
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <span class="badge bg-light text-dark fs-6 px-3 py-2">
+                            <i class="bi bi-book me-1"></i>스터디
+                        </span>
+                        <span class="badge bg-white bg-opacity-25 fs-6 px-3 py-2">
+                            <i class="bi bi-calendar-event me-1"></i>@study.Date.ToString("yyyy년 M월 d일")
+                        </span>
+                        <span class="badge bg-white bg-opacity-25 fs-6 px-3 py-2">
+                            <i class="bi bi-clock me-1"></i>@study.Date.ToString("HH:mm") ~ @study.EndTime?.ToString("HH:mm")
+                        </span>
+                    </div>
+                    <h1 class="display-4 fw-bold mb-4">@study.Title</h1>
+                    <p class="lead mb-4 opacity-90">
+                        @study.Description?.Split('\n').FirstOrDefault()
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            <span>@study.Format @(study.Platform != null ? $"({study.Platform})" : "")</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person me-2"></i>
+                            <span>진행: @study.Organizer @(study.OrganizerTitle != null ? $"({study.OrganizerTitle})" : "")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 스터디 소개 -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-4">
+                        <i class="bi bi-info-circle text-primary me-2"></i>스터디 소개
+                    </h2>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            @foreach (var paragraph in study.Description?.Split('\n', StringSplitOptions.RemoveEmptyEntries) ?? [])
+                            {
+                                <p class="mb-3">@paragraph.Trim()</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm sticky-top" style="top: 100px;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3">행사 정보</h5>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2">
+                                    <i class="bi bi-calendar3 text-primary me-2"></i>
+                                    <strong>일시:</strong> @study.Date.ToString("yyyy년 M월 d일 (ddd)")
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-clock text-primary me-2"></i>
+                                    <strong>시간:</strong> @study.Date.ToString("HH:mm") ~ @study.EndTime?.ToString("HH:mm")
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-geo-alt text-primary me-2"></i>
+                                    <strong>형태:</strong> @study.Format @(study.Platform != null ? $"({study.Platform})" : "")
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-currency-dollar text-primary me-2"></i>
+                                    <strong>참가비:</strong> @(study.IsFree ? "무료" : $"{study.Fee:N0}원")
+                                </li>
+                            </ul>
+                            @if (!string.IsNullOrEmpty(study.ContactEmail))
+                            {
+                                <div class="mt-3 pt-3 border-top">
+                                    <h6 class="fw-bold mb-2">문의</h6>
+                                    <a href="mailto:@study.ContactEmail" class="text-decoration-none">
+                                        <i class="bi bi-envelope me-2"></i>@study.ContactEmail
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 시청 영상 목록 -->
+    @if (study.Videos.Any())
+    {
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="fw-bold mb-4">
+                    <i class="bi bi-play-circle text-danger me-2"></i>시청 영상
+                </h2>
+                <div class="row g-4">
+                    @foreach (var video in study.Videos.OrderBy(v => v.Order))
+                    {
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="badge bg-danger me-2">영상 @video.Order</span>
+                                    </div>
+                                    <h5 class="card-title fw-bold mb-3">@video.Title</h5>
+                                    <a href="@video.Url" target="_blank" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i>영상 보기
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- 세션/발표 목록 -->
+    @if (study.Sessions.Any())
+    {
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="fw-bold mb-4">
+                    <i class="bi bi-calendar-check text-primary me-2"></i>발표 내용
+                </h2>
+                <div class="table-responsive">
+                    <table class="table table-hover bg-white shadow-sm rounded">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 150px;">시간</th>
+                                <th>주제</th>
+                                @if (study.Sessions.Any(s => !string.IsNullOrEmpty(s.Speaker)))
+                                {
+                                    <th style="width: 150px;">발표자</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var session in study.Sessions.OrderBy(s => s.Order))
+                            {
+                                <tr>
+                                    <td class="text-muted">
+                                        @session.StartTime?.ToString("HH:mm") ~ @session.EndTime?.ToString("HH:mm")
+                                    </td>
+                                    <td class="fw-semibold">@session.Title</td>
+                                    @if (study.Sessions.Any(s => !string.IsNullOrEmpty(s.Speaker)))
+                                    {
+                                        <td>@(session.Speaker ?? "-")</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- 대상 참가자 & 사전 준비 -->
+    @if (study.TargetAudience.Any() || study.Prerequisites.Any())
+    {
+        <section class="py-5">
+            <div class="container">
+                <div class="row g-4">
+                    @if (study.TargetAudience.Any())
+                    {
+                        <div class="col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-3">
+                                        <i class="bi bi-people text-success me-2"></i>참가 대상
+                                    </h5>
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach (var audience in study.TargetAudience)
+                                        {
+                                            <li class="mb-2">
+                                                <i class="bi bi-check-circle text-success me-2"></i>@audience
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (study.Prerequisites.Any())
+                    {
+                        <div class="col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-3">
+                                        <i class="bi bi-gear text-warning me-2"></i>사전 준비 사항
+                                    </h5>
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach (var prereq in study.Prerequisites)
+                                        {
+                                            <li class="mb-2">
+                                                <i class="bi bi-arrow-right-circle text-warning me-2"></i>@prereq
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- 돌아가기 -->
+    <section class="py-4">
+        <div class="container">
+            <a asp-page="/StudyList" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>스터디 목록으로 돌아가기
+            </a>
+        </div>
+    </section>
+}
