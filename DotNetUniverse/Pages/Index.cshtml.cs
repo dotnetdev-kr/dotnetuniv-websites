@@ -31,6 +31,11 @@ namespace DotNetUniverse.Pages
         /// </summary>
         public IReadOnlyList<IStudyData> Studies { get; private set; } = [];
 
+        /// <summary>
+        /// 랜덤 추천 세션 (영상이 있는 세션)
+        /// </summary>
+        public IReadOnlyList<(IEventData Event, Session Session)> FeaturedSessions { get; private set; } = [];
+
         public void OnGet()
         {
             // 현재 모집 중인 행사들
@@ -46,6 +51,9 @@ namespace DotNetUniverse.Pages
 
             // 스터디 목록 (최신순)
             Studies = _studyDataService.AllStudies;
+
+            // 랜덤 추천 세션 (영상이 있는 세션 중 3개)
+            FeaturedSessions = _eventDataService.GetRandomSessionsWithVideo(3).ToList();
         }
     }
 }

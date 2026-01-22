@@ -1,3 +1,5 @@
+using DotNetUniverse.Models;
+
 namespace DotNetUniverse.Services.EventData;
 
 /// <summary>
@@ -89,6 +91,34 @@ public class EventDataService
     /// 가장 최근 행사 데이터 조회
     /// </summary>
     public IEventData? GetLatestEvent() => _allEvents.FirstOrDefault();
+
+    /// <summary>
+    /// 영상이 있는 모든 세션 조회 (최신 행사 순)
+    /// </summary>
+    public IEnumerable<(IEventData Event, Session Session)> GetAllSessionsWithVideo()
+    {
+        return _allEvents
+            .Where(e => !e.Event.IsUpcoming)
+            .SelectMany(e => e.Event.Venues
+                .SelectMany(v => v.Tracks)
+                .SelectMany(t => t.Sessions)
+                .Where(s => s.IsYouTubeVideo && s.IsPresentationSession)
+                .Select(s => (Event: e, Session: s)));
+    }
+
+    /// <summary>
+    /// 영상이 있는 세션 중 임의로 지정된 개수만큼 조회
+    /// </summary>
+    public IEnumerable<(IEventData Event, Session Session)> GetRandomSessionsWithVideo(int count)
+    {
+        var sessionsWithVideo = GetAllSessionsWithVideo().ToList();
+        if (sessionsWithVideo.Count <= count)
+            return sessionsWithVideo;
+
+        return sessionsWithVideo
+            .OrderBy(_ => Random.Shared.Next())
+            .Take(count);
+    }
 
     /// <summary>
     /// 이전 행사 데이터 조회 (날짜순)

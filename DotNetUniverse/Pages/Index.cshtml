@@ -6,6 +6,7 @@
     
     var registrationEvents = Model.RegistrationEvents;
     var hasRegistrationEvents = registrationEvents.Any();
+    var featuredSessions = Model.FeaturedSessions;
 }
 
 <!-- 히어로 섹션 - 심플한 CTA -->
@@ -52,3 +53,52 @@
         </div>
     </div>
 </section>
+
+<!-- 추천 세션 영상 섹션 -->
+@if (featuredSessions.Count > 0)
+{
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="badge bg-purple text-white mb-3">Featured Sessions</span>
+            <h2 class="fw-bold display-6 mb-3">지난 컨퍼런스 다시 보기</h2>
+            <p class="text-muted">역대 .NET Universe 컨퍼런스의 인기 세션들을 만나보세요</p>
+        </div>
+        <div class="row g-4">
+            @foreach (var (eventData, session) in featuredSessions)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-16x9">
+                            <iframe src="@session.YouTubeEmbedUrl" 
+                                    title="@session.Title" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen
+                                    loading="lazy"></iframe>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="badge bg-purple me-2">@eventData.Event.Title</span>
+                            </div>
+                            <h5 class="card-title fw-bold mb-2">@session.Title</h5>
+                            <p class="card-text text-muted small mb-2">
+                                <i class="bi bi-person me-1"></i>@session.PrimarySpeaker.Name
+                                @if (!string.IsNullOrEmpty(session.PrimarySpeaker.Company))
+                                {
+                                    <span class="text-muted">(@session.PrimarySpeaker.Company)</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="text-center mt-4">
+            <a asp-page="/Archive" class="btn btn-outline-purple">
+                <i class="bi bi-collection-play me-2"></i>더 많은 세션 보기
+            </a>
+        </div>
+    </div>
+</section>
+}
