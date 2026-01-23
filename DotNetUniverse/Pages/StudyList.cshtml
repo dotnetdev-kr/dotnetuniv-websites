@@ -68,58 +68,71 @@
 <!-- 스터디 목록 -->
 <section class="py-5">
     <div class="container py-4">
-        @if (Model.Studies.Any())
+        @if (Model.AvailableYears.Any())
         {
-            <div class="row g-4">
-                @foreach (var studyData in Model.Studies)
-                {
-                    var study = studyData.Study;
-                    <div class="col-md-6 col-lg-4">
-                        <a href="@studyData.Url" class="text-decoration-none">
-                            <div class="card h-100 border-0 shadow-sm card-hover">
-                                <div class="card-header bg-@studyData.ThemeColorClass text-white py-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-bold">@study.Year</span>
-                                        <span class="badge bg-white text-@studyData.ThemeColorClass">
-                                            <i class="bi bi-camera-video me-1"></i>@study.Format
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="card-body p-4">
-                                    <h5 class="fw-bold mb-2">@study.Title</h5>
-                                    <p class="text-muted small mb-3">
-                                        <i class="bi bi-calendar3 me-1"></i>@study.Date.ToString("yyyy년 M월 d일")
-                                    </p>
-                                    <p class="text-muted small mb-3">
-                                        @study.Description?.Split('\n').FirstOrDefault()?.Substring(0, Math.Min(80, study.Description?.Split('\n').FirstOrDefault()?.Length ?? 0))...
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-1 mb-3">
-                                        @foreach (var video in study.Videos.Take(2))
-                                        {
-                                            <span class="badge bg-light text-dark small">
-                                                <i class="bi bi-play-circle me-1"></i>@(video.Title.Length > 20 ? video.Title.Substring(0, 20) + "..." : video.Title)
-                                            </span>
-                                        }
-                                        @if (study.Videos.Count > 2)
-                                        {
-                                            <span class="badge bg-secondary small">+@(study.Videos.Count - 2)</span>
-                                        }
-                                    </div>
-                                    <div class="d-flex align-items-center text-muted small">
-                                        <i class="bi bi-person me-1"></i>
-                                        <span>진행: @study.Organizer</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer bg-transparent border-0 p-4 pt-0">
-                                    <span class="btn btn-outline-@studyData.ThemeColorClass btn-sm w-100">
-                                        <i class="bi bi-arrow-right me-1"></i>상세 보기
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
+            @foreach (var year in Model.AvailableYears)
+            {
+                var yearStudies = Model.StudiesByYear[year];
+                
+                <div class="year-section mb-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <h2 class="display-6 fw-bold text-purple mb-0">@year</h2>
+                        <hr class="flex-grow-1 ms-3 border-purple opacity-25" />
+                        <span class="badge bg-purple ms-3">@(yearStudies.Count)개 스터디</span>
                     </div>
-                }
-            </div>
+                    
+                    <div class="row g-4">
+                        @foreach (var studyData in yearStudies.OrderByDescending(s => s.Study.Date))
+                        {
+                            var study = studyData.Study;
+                            <div class="col-md-6 col-lg-4">
+                                <a href="@studyData.Url" class="text-decoration-none">
+                                    <div class="card h-100 border-0 shadow-sm card-hover">
+                                        <div class="card-header bg-@studyData.ThemeColorClass text-white py-3">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="fw-bold">@study.Year</span>
+                                                <span class="badge bg-white text-@studyData.ThemeColorClass">
+                                                    <i class="bi bi-camera-video me-1"></i>@study.Format
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-4">
+                                            <h5 class="fw-bold mb-2">@study.Title</h5>
+                                            <p class="text-muted small mb-3">
+                                                <i class="bi bi-calendar3 me-1"></i>@study.Date.ToString("yyyy년 M월 d일")
+                                            </p>
+                                            <p class="text-muted small mb-3">
+                                                @study.Description?.Split('\n').FirstOrDefault()?.Substring(0, Math.Min(80, study.Description?.Split('\n').FirstOrDefault()?.Length ?? 0))...
+                                            </p>
+                                            <div class="d-flex flex-wrap gap-1 mb-3">
+                                                @foreach (var video in study.Videos.Take(2))
+                                                {
+                                                    <span class="badge bg-light text-dark small">
+                                                        <i class="bi bi-play-circle me-1"></i>@(video.Title.Length > 20 ? video.Title.Substring(0, 20) + "..." : video.Title)
+                                                    </span>
+                                                }
+                                                @if (study.Videos.Count > 2)
+                                                {
+                                                    <span class="badge bg-secondary small">+@(study.Videos.Count - 2)</span>
+                                                }
+                                            </div>
+                                            <div class="d-flex align-items-center text-muted small">
+                                                <i class="bi bi-person me-1"></i>
+                                                <span>진행: @study.Organizer</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                            <span class="btn btn-outline-@studyData.ThemeColorClass btn-sm w-100">
+                                                <i class="bi bi-arrow-right me-1"></i>상세 보기
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
         }
         else
         {

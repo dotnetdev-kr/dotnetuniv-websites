@@ -13,12 +13,20 @@ public class StudyListModel : PageModel
     }
 
     /// <summary>
-    /// 스터디 목록
+    /// 사용 가능한 연도 목록 (최신순)
     /// </summary>
-    public IReadOnlyList<IStudyData> Studies { get; private set; } = [];
+    public IReadOnlyList<int> AvailableYears { get; private set; } = [];
+
+    /// <summary>
+    /// 연도별 스터디 목록
+    /// </summary>
+    public Dictionary<int, IReadOnlyList<IStudyData>> StudiesByYear { get; private set; } = [];
 
     public void OnGet()
     {
-        Studies = _studyDataService.AllStudies;
+        AvailableYears = _studyDataService.AvailableYears;
+        StudiesByYear = AvailableYears.ToDictionary(
+            year => year,
+            year => _studyDataService.GetStudiesByYear(year));
     }
 }

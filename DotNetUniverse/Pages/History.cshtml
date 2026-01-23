@@ -27,7 +27,7 @@
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <h1 class="display-4 fw-bold mb-3">
-                    <i class="bi bi-archive me-3"></i>지난 행사 아카이브
+                    <i class="bi bi-archive me-3"></i>.NET Universe 역사
                 </h1>
                 <p class="lead opacity-90">
                     .NET Universe의 역대 행사 기록을 돌아보세요.<br />
@@ -42,81 +42,94 @@
 <section class="py-5">
     <div class="container py-4">
         @{ var index = 0; }
-        @foreach (var eventData in Model.Events)
+        @foreach (var year in Model.AvailableYears)
         {
-            var evt = eventData.Event;
-            var sessionCount = evt.Venues.SelectMany(v => v.Tracks).SelectMany(t => t.Sessions).Count();
-            var speakerCount = eventData.Speakers.Count;
+            var yearEvents = Model.EventsByYear[year];
+            
+            <div class="year-section mb-5">
+                <div class="d-flex align-items-center mb-4">
+                    <h2 class="display-6 fw-bold text-purple mb-0">@year</h2>
+                    <hr class="flex-grow-1 ms-3 border-purple opacity-25" />
+                    <span class="badge bg-purple ms-3">@(yearEvents.Count)개 행사</span>
+                </div>
+                
+                @foreach (var eventData in yearEvents.OrderByDescending(e => e.Event.Date))
+                {
+                    var evt = eventData.Event;
+                    var sessionCount = evt.Venues.SelectMany(v => v.Tracks).SelectMany(t => t.Sessions).Count();
+                    var speakerCount = eventData.Speakers.Count;
 
-            <a href="@eventData.Url" class="text-decoration-none">
-                <div class="event-card card border-0 shadow-lg mb-5 overflow-hidden">
-                    <div class="row g-0">
-                        <div class="col-md-4 @GetGradientClass(index) d-flex align-items-center justify-content-center p-5" style="background: linear-gradient(135deg, @eventData.ThemeColor 0%, @eventData.ThemeColor 100%) !important;">
-                            <div class="text-center text-white">
-                                <span class="year-badge text-white">@evt.Year</span>
-                                <h3 class="fw-bold mt-2">@evt.Title</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body p-5">
-                                <div class="d-flex flex-wrap gap-2 mb-3">
-                                    @Html.Raw(GetEventTypeBadge(evt.Type))
-                                    @if (!string.IsNullOrEmpty(evt.Venues.FirstOrDefault()?.Address))
-                                    {
-                                        <span class="badge bg-secondary">서울</span>
-                                    }
-                                </div>
-                                @if (!string.IsNullOrEmpty(evt.Theme))
-                                {
-                                    <h4 class="fw-bold mb-3 text-dark">@evt.Theme</h4>
-                                }
-                                <p class="text-muted mb-4">
-                                    @evt.Description
-                                </p>
-                                <div class="row g-3 mb-4">
-                                    @if (evt.AttendeeCount > 0)
-                                    {
-                                        <div class="col-6 col-lg-3">
-                                            <div class="text-center">
-                                                <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@evt.AttendeeCount+</div>
-                                                <small class="text-muted">참가자</small>
-                                            </div>
-                                        </div>
-                                    }
-                                    @if (sessionCount > 0)
-                                    {
-                                        <div class="col-6 col-lg-3">
-                                            <div class="text-center">
-                                                <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@sessionCount</div>
-                                                <small class="text-muted">세션</small>
-                                            </div>
-                                        </div>
-                                    }
-                                    @if (speakerCount > 0)
-                                    {
-                                        <div class="col-6 col-lg-3">
-                                            <div class="text-center">
-                                                <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@speakerCount</div>
-                                                <small class="text-muted">연사</small>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="col-6 col-lg-3">
-                                        <div class="text-center">
-                                            <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@evt.Date.ToString("yyyy.MM.dd")</div>
-                                            <small class="text-muted">개최일</small>
-                                        </div>
+                    <a href="@eventData.Url" class="text-decoration-none">
+                        <div class="event-card card border-0 shadow-lg mb-4 overflow-hidden">
+                            <div class="row g-0">
+                                <div class="col-md-4 @GetGradientClass(index) d-flex align-items-center justify-content-center p-5" style="background: linear-gradient(135deg, @eventData.ThemeColor 0%, @eventData.ThemeColor 100%) !important;">
+                                    <div class="text-center text-white">
+                                        <span class="year-badge text-white">@evt.Year</span>
+                                        <h3 class="fw-bold mt-2">@evt.Title</h3>
                                     </div>
                                 </div>
-                                <span class="btn btn-@eventData.ThemeColorClass">
-                                    <i class="bi bi-arrow-right me-2"></i>자세히 보기
-                                </span>
+                                <div class="col-md-8">
+                                    <div class="card-body p-5">
+                                        <div class="d-flex flex-wrap gap-2 mb-3">
+                                            @Html.Raw(GetEventTypeBadge(evt.Type))
+                                            @if (!string.IsNullOrEmpty(evt.Venues.FirstOrDefault()?.Address))
+                                            {
+                                                <span class="badge bg-secondary">서울</span>
+                                            }
+                                        </div>
+                                        @if (!string.IsNullOrEmpty(evt.Theme))
+                                        {
+                                            <h4 class="fw-bold mb-3 text-dark">@evt.Theme</h4>
+                                        }
+                                        <p class="text-muted mb-4">
+                                            @evt.Description
+                                        </p>
+                                        <div class="row g-3 mb-4">
+                                            @if (evt.AttendeeCount > 0)
+                                            {
+                                                <div class="col-6 col-lg-3">
+                                                    <div class="text-center">
+                                                        <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@evt.AttendeeCount+</div>
+                                                        <small class="text-muted">참가자</small>
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (sessionCount > 0)
+                                            {
+                                                <div class="col-6 col-lg-3">
+                                                    <div class="text-center">
+                                                        <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@sessionCount</div>
+                                                        <small class="text-muted">세션</small>
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (speakerCount > 0)
+                                            {
+                                                <div class="col-6 col-lg-3">
+                                                    <div class="text-center">
+                                                        <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@speakerCount</div>
+                                                        <small class="text-muted">연사</small>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="col-6 col-lg-3">
+                                                <div class="text-center">
+                                                    <div class="fs-3 fw-bold" style="color: @eventData.ThemeColor">@evt.Date.ToString("yyyy.MM.dd")</div>
+                                                    <small class="text-muted">개최일</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="btn btn-@eventData.ThemeColorClass">
+                                            <i class="bi bi-arrow-right me-2"></i>자세히 보기
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </a>
-            index++;
+                    </a>
+                    index++;
+                }
+            </div>
         }
     </div>
 </section>
