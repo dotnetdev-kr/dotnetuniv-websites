@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using DotNetUniverse.Models;
 using DotNetUniverse.Services.EventData;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace DotNetUniverse.Pages.Events;
 /// <summary>
 /// 행사 페이지 모델 (Slug 또는 연도 기반 라우팅 지원)
 /// </summary>
-public class EventModel : PageModel
+public partial class EventModel : PageModel
 {
     private readonly EventDataService _yearDataService;
 
@@ -94,6 +95,9 @@ public class EventModel : PageModel
                 ViewData["OgDescription"] = sessionInfo.Description;
                 ViewData["OgType"] = "article";
                 ViewData["OgUrl"] = $"{eventUrl}?session={session}";
+                ViewData["OgImage"] = GetYouTubeThumbnail(sessionInfo.VideoUrl) 
+                    ?? EventData.Event.SocialImageUrl 
+                    ?? "/card.jpg";
             }
         }
         else if (!string.IsNullOrEmpty(speaker))
@@ -106,10 +110,9 @@ public class EventModel : PageModel
                 ViewData["OgDescription"] = speakerInfo.Bio ?? $"{speakerInfo.Name} - {EventData.Event.Title} 연사";
                 ViewData["OgType"] = "profile";
                 ViewData["OgUrl"] = $"{eventUrl}?speaker={speaker}";
-                if (!string.IsNullOrEmpty(speakerInfo.ImageUrl))
-                {
-                    ViewData["OgImage"] = speakerInfo.ImageUrl;
-                }
+                ViewData["OgImage"] = speakerInfo.ImageUrl 
+                    ?? EventData.Event.SocialImageUrl 
+                    ?? "/card.jpg";
             }
         }
         else
@@ -117,11 +120,32 @@ public class EventModel : PageModel
             ViewData["Title"] = EventData.Event.Title;
             ViewData["OgTitle"] = EventData.Event.Title;
             ViewData["OgDescription"] = EventData.Event.SocialDescription;
-            ViewData["OgImage"] = EventData.Event.SocialImageUrl;
+            ViewData["OgImage"] = EventData.Event.SocialImageUrl ?? "/card.jpg";
             ViewData["OgType"] = "website";
             ViewData["OgUrl"] = eventUrl;
         }
 
         return Page();
+    }
+
+    private static partial class YouTubeRegex
+    {
+        [GeneratedRegex(@"(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})")]
+        public static partial Regex VideoIdPattern();
+    }
+
+    private static string? GetYouTubeThumbnail(string? videoUrl)
+    {
+        if (string.IsNullOrEmpty(videoUrl))
+            return null;
+
+        var match = YouTubeRegex.VideoIdPattern().Match(videoUrl);
+        if (match.Success)
+        {
+            var videoId = match.Groups[1].Value;
+            return $"https://img.youtube.com/vi/{videoId}/maxresdefault.jpg";
+        }
+
+        return null;
     }
 }

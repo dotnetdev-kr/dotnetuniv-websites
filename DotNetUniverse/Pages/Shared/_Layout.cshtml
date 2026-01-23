@@ -8,7 +8,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>@ViewData["Title"] - .NET Universe</title>
-<meta name="description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스. .NET Dev(닷넷데브) 주최")" />
+<meta name="description" content="@Html.Raw(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스. .NET Dev(닷넷데브) 주최")" />
     
 <!-- SEO Meta Tags -->
 <meta name="keywords" content="닷넷, .NET, C#, ASP.NET, Blazor, MAUI, 개발자, 컨퍼런스, 닷넷데브, .NET Dev, .NET Universe" />
@@ -49,29 +49,19 @@
 <meta name="theme-color" content="#6f42c1" />
     
 <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="@(ViewData["OgType"] ?? "website")" />
-    <meta property="og:title" content="@(ViewData["OgTitle"] ?? ViewData["Title"]) - .NET Universe" />
-    <meta property="og:description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스")" />
-    <meta property="og:url" content="@(ViewData["OgUrl"] ?? Context.Request.GetDisplayUrl())" />
-    @if (ViewData["OgImage"] != null)
-    {
-        <meta property="og:image" content="@ViewData["OgImage"]" />
-    }
-    else
-    {
-        <meta property="og:image" content="/images/og-default.png" />
-    }
-    <meta property="og:site_name" content=".NET Universe" />
-    <meta property="og:locale" content="ko_KR" />
+<meta property="og:type" content="@(ViewData["OgType"] ?? "website")" />
+<meta property="og:title" content="@Html.Raw(ViewData["OgTitle"] ?? ViewData["Title"]) - .NET Universe" />
+<meta property="og:description" content="@Html.Raw(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스")" />
+<meta property="og:url" content="@(ViewData["OgUrl"] ?? Context.Request.GetDisplayUrl())" />
+<meta property="og:image" content="@(ViewData["OgImage"] ?? "/card.jpg")" />
+<meta property="og:site_name" content=".NET Universe" />
+<meta property="og:locale" content="ko_KR" />
     
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="@(ViewData["OgTitle"] ?? ViewData["Title"]) - .NET Universe" />
-    <meta name="twitter:description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스")" />
-    @if (ViewData["OgImage"] != null)
-    {
-        <meta name="twitter:image" content="@ViewData["OgImage"]" />
-    }
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="@Html.Raw(ViewData["OgTitle"] ?? ViewData["Title"]) - .NET Universe" />
+<meta name="twitter:description" content="@Html.Raw(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스")" />
+<meta name="twitter:image" content="@(ViewData["OgImage"] ?? "/card.jpg")" />
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
