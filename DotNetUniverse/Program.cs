@@ -1,8 +1,16 @@
 using DotNetUniverse.Services;
 using DotNetUniverse.Services.EventData;
 using DotNetUniverse.Services.StudyData;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<SessionDisplayService>();
 builder.Services.AddSingleton<EventDataService>();
@@ -26,6 +34,7 @@ if (duplicateSlugs.Count > 0)
 
 if (!app.Environment.IsDevelopment())
 {
+    app.UseForwardedHeaders();
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
