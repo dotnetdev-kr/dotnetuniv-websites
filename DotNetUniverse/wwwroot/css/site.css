@@ -23,7 +23,7 @@ body {
 }
 
 main {
-    padding-top: 76px;
+    min-height: calc(100vh - 200px);
 }
 
 /* 네비게이션 */
@@ -50,14 +50,11 @@ main {
     background: linear-gradient(135deg, var(--purple-primary) 0%, #1a1a2e 100%);
     position: relative;
     overflow: hidden;
-    margin-top: -76px;
-    padding-top: 76px;
 }
 
-/* 페이지 헤더 섹션 (아카이브 등) */
+/* 페이지 헤더 섹션 (아카이브 등) - sticky navbar와 자연스럽게 연결 */
 .bg-purple.py-5:first-child {
-    margin-top: -76px;
-    padding-top: calc(76px + 3rem);
+    /* sticky navbar 사용으로 margin 조정 불필요 */
 }
 
 .hero-section::before {
