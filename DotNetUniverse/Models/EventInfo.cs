@@ -198,6 +198,49 @@ public record EventInfo
     /// </summary>
     public SessionCollection SharedSessions { get; init; } = [];
 
+    #region 경품 안내
+
+    /// <summary>
+    /// 경품 목록 (경품명, 수량, 제공자)
+    /// </summary>
+    public (string Name, int? Quantity, string? Provider)[]? Prizes { get; init; }
+
+    /// <summary>
+    /// 경품 안내 추가 설명
+    /// </summary>
+    public string? PrizesDescription { get; init; }
+
+    /// <summary>
+    /// 경품 정보가 있는지 여부
+    /// </summary>
+    public bool HasPrizes => Prizes is { Length: > 0 };
+
+    #endregion
+
+    #region 문의 안내
+
+    /// <summary>
+    /// 문의 이메일
+    /// </summary>
+    public string? ContactEmail { get; init; }
+
+    /// <summary>
+    /// 문의 안내 설명
+    /// </summary>
+    public string? ContactDescription { get; init; }
+
+    /// <summary>
+    /// 문의 가능 항목 목록
+    /// </summary>
+    public string[]? ContactTopics { get; init; }
+
+    /// <summary>
+    /// 문의 정보가 있는지 여부
+    /// </summary>
+    public bool HasContact => !string.IsNullOrEmpty(ContactEmail);
+
+    #endregion
+
     /// <summary>
     /// 트레일러가 있는지 여부
     /// </summary>

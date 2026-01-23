@@ -244,7 +244,7 @@
                             @if (evt.IsCallForSponsorsOpen)
                             {
                                 <a href="@evt.CallForSponsorsUrl" class="btn btn-outline-success" target="_blank">
-                                    <i class="bi bi-briefcase-fill me-2"></i>후원사 문의하기
+                                    <i class="bi bi-briefcase-fill me-2"></i>후원사 참여 신청하기
                                 </a>
                             }
                             
@@ -390,7 +390,7 @@
                 <div class="card border-0 bg-light h-100">
                     <div class="card-body p-4">
                         <div class="display-4 fw-bold text-@themeColorClass mb-2">@speakers.Count</div>
-                        <p class="text-muted mb-0">연사</p>
+                        <p class="text-muted mb-0">스피커</p>
                     </div>
                 </div>
             </div>
@@ -796,8 +796,8 @@
 <section class="py-5" id="speakers">
     <div class="container py-4">
         <div class="text-center mb-5">
-            <h2 class="fw-bold display-5 mb-3">연사진</h2>
-            <p class="text-muted lead">@(evt.IsUpcoming ? "함께할 연사들" : "국내외 .NET 전문가들이 함께했습니다")</p>
+            <h2 class="fw-bold display-5 mb-3">스피커</h2>
+            <p class="text-muted lead">@(evt.IsUpcoming ? "함께할 스피커들" : "국내외 .NET 전문가들이 함께했습니다")</p>
         </div>
         <div class="row g-4 justify-content-center">
             @foreach (var speaker in speakers.Take(8))
@@ -1052,6 +1052,22 @@
                             <i class="bi bi-building text-@themeColorClass me-2"></i>@venue.Name
                         </h4>
                     }
+                    
+                    @if (venue.HasImportantNotice)
+                    {
+                        <div class="alert alert-warning border-warning shadow-sm mb-4" role="alert">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-exclamation-triangle-fill fs-3 text-warning me-3 flex-shrink-0"></i>
+                                <div>
+                                    <h5 class="alert-heading fw-bold mb-2">
+                                        행사장 방문 시 주의사항
+                                    </h5>
+                                    <p class="mb-0">@Html.Raw(venue.ImportantNotice)</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    
                     <div class="row g-4">
                         <div class="col-lg-6">
                             <div class="card border-0 shadow-sm h-100">
@@ -1105,19 +1121,126 @@
                                 </div>
                             }
                         </div>
-                        
-                        @if (venue.HasParkingInfo)
-                        {
-                            <div class="col-12">
-                                <div class="card border-0 shadow-sm bg-light">
-                                    <div class="card-body p-4">
-                                        <h5 class="fw-bold mb-3"><i class="bi bi-p-circle text-@themeColorClass me-2"></i>주차 안내</h5>
-                                        <p class="text-muted mb-0" style="white-space: pre-line;">@venue.ParkingInfo!.Trim()</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
                     </div>
+                    
+                    @if (venue.HasTransportSection)
+                    {
+                        <div class="card border-0 shadow-sm mt-4">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-4">
+                                    <i class="bi bi-geo-alt-fill text-danger me-2"></i>오시는 길, 대중 교통, 인근 유료 주차장 안내
+                                </h5>
+                                
+                                @if (venue.HasMapLinks)
+                                {
+                                    <div class="mb-3">
+                                        @if (!string.IsNullOrEmpty(venue.NaverMapUrl))
+                                        {
+                                            <a href="@venue.NaverMapUrl" target="_blank" class="text-decoration-none me-2">네이버 지도</a><span class="text-muted">|</span>
+                                        }
+                                        @if (!string.IsNullOrEmpty(venue.KakaoMapUrl))
+                                        {
+                                            <a href="@venue.KakaoMapUrl" target="_blank" class="text-decoration-none mx-2">카카오맵</a><span class="text-muted">|</span>
+                                        }
+                                        @if (!string.IsNullOrEmpty(venue.GoogleMapUrl))
+                                        {
+                                            <a href="@venue.GoogleMapUrl" target="_blank" class="text-decoration-none ms-2">Google Map</a>
+                                        }
+                                    </div>
+                                }
+                                
+                                <ul class="list-unstyled mb-0">
+                                    @if (venue.HasTransportNotices)
+                                    {
+                                        @foreach (var notice in venue.TransportNotices!)
+                                        {
+                                            <li class="mb-2">
+                                                <i class="bi bi-exclamation-triangle text-warning me-2"></i>
+                                                <span>@Html.Raw(notice)</span>
+                                            </li>
+                                        }
+                                    }
+                                    
+                                    @if (venue.HasSubwayInfo)
+                                    {
+                                        @foreach (var subway in venue.SubwayInfo!)
+                                        {
+                                            <li class="mb-2">
+                                                <span class="text-muted">지하철 —</span> @Html.Raw(subway)
+                                            </li>
+                                        }
+                                    }
+                                    
+                                    @if (venue.HasBusInfo)
+                                    {
+                                        <li class="mb-2">
+                                            <details>
+                                                <summary class="fw-semibold" style="cursor: pointer;">버스 — 정류장 및 노선 정보 보기</summary>
+                                                <ul class="mt-2 ps-3">
+                                                    @foreach (var bus in venue.BusInfo!)
+                                                    {
+                                                        <li class="mb-1 text-muted">@Html.Raw(bus)</li>
+                                                    }
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    }
+                                    
+                                    @if (venue.HasParkingLots)
+                                    {
+                                        <li class="mt-3">
+                                            <details>
+                                                <summary class="fw-semibold" style="cursor: pointer;">인근 유료 주차장 안내</summary>
+                                                <ul class="mt-2 ps-3">
+                                                    @foreach (var lot in venue.ParkingLots!)
+                                                    {
+                                                        <li class="mb-1">
+                                                            @if (!string.IsNullOrEmpty(lot.Description))
+                                                            {
+                                                                <span class="text-muted">@lot.Description |</span>
+                                                            }
+                                                            @if (!string.IsNullOrEmpty(lot.Url))
+                                                            {
+                                                                <a href="@lot.Url" target="_blank" class="text-decoration-none">
+                                                                    <i class="bi bi-geo-alt text-danger me-1"></i>카카오맵
+                                                                </a>
+                                                            }
+                                                            <span class="ms-1">@lot.Name</span>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    }
+                                    else if (venue.HasParkingInfo)
+                                    {
+                                        <li class="mt-3">
+                                            <i class="bi bi-p-circle text-@themeColorClass me-2"></i>
+                                            <span class="text-muted" style="white-space: pre-line;">@venue.ParkingInfo!.Trim()</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    
+                    @if (venue.HasNearbyPlaces)
+                    {
+                        <div class="card border-0 shadow-sm mt-4">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-3">
+                                    <i class="bi bi-cup-hot text-warning me-2"></i>인근 식당 및 카페 안내
+                                </h5>
+                                @if (!string.IsNullOrEmpty(venue.NearbyPlacesDescription))
+                                {
+                                    <p class="text-muted mb-3">@venue.NearbyPlacesDescription</p>
+                                }
+                                <a href="@venue.NearbyPlacesUrl" target="_blank" class="btn btn-outline-success">
+                                    <i class="bi bi-map me-1"></i>네이버 지도에서 보기
+                                </a>
+                            </div>
+                        </div>
+                    }
                 </div>
             }
         </div>
@@ -1149,15 +1272,15 @@
                     };
                     var logoHeight = tier switch
                     {
-                        SponsorTier.Platinum => "80px",
-                        SponsorTier.Gold => "60px",
-                        _ => "50px"
+                        SponsorTier.Platinum => "120px",
+                        SponsorTier.Gold => "100px",
+                        _ => "80px"
                     };
                     var colSize = tier switch
                     {
-                        SponsorTier.Platinum => "col-md-6 col-lg-4",
-                        SponsorTier.Gold => "col-md-4 col-lg-3",
-                        _ => "col-6 col-md-3 col-lg-2"
+                        SponsorTier.Platinum => "col-md-6 col-lg-5",
+                        SponsorTier.Gold => "col-md-5 col-lg-4",
+                        _ => "col-6 col-md-4 col-lg-3"
                     };
                     <div class="mb-5">
                         <div class="text-center mb-4">
@@ -1168,7 +1291,7 @@
                             {
                                 <div class="@colSize text-center">
                                     <a href="@sponsor.WebsiteUrl" target="_blank" class="text-decoration-none">
-                                        <div class="card border-0 shadow-sm p-4 h-100 card-hover d-flex flex-column justify-content-center align-items-center" style="min-height: 120px;">
+                                        <div class="card border-0 shadow-sm p-4 h-100 card-hover d-flex flex-column justify-content-center align-items-center" style="min-height: 160px;">
                                             <div class="sponsor-logo-wrapper d-flex align-items-center justify-content-center" style="width: 100%; height: @logoHeight;">
                                                 <img src="@sponsor.ResolvedLogoUrl" 
                                                      alt="@sponsor.Name" 
@@ -1185,6 +1308,86 @@
                     </div>
                 }
             }
+        </div>
+    </section>
+}
+
+<!-- 경품 안내 -->
+@if (evt.HasPrizes && evt.IsUpcoming)
+{
+    <section class="py-5" id="prizes">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold display-5 mb-3"><i class="bi bi-gift text-@themeColorClass me-2"></i>경품 안내</h2>
+                @if (!string.IsNullOrEmpty(evt.PrizesDescription))
+                {
+                    <p class="text-muted lead">@evt.PrizesDescription</p>
+                }
+            </div>
+            
+            <div class="row justify-content-center g-4">
+                @foreach (var prize in evt.Prizes!)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-4 text-center">
+                                <i class="bi bi-box-seam fs-1 text-@themeColorClass mb-3"></i>
+                                <h5 class="fw-bold mb-2">@prize.Name</h5>
+                                @if (prize.Quantity.HasValue)
+                                {
+                                    <span class="badge bg-@themeColorClass mb-2">@(prize.Quantity)개</span>
+                                }
+                                @if (!string.IsNullOrEmpty(prize.Provider))
+                                {
+                                    <p class="text-muted small mb-0">제공: @prize.Provider</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- 문의 안내 -->
+@if (evt.HasContact && evt.IsUpcoming)
+{
+    <section class="py-5 bg-light" id="contact">
+        <div class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold display-6 mb-3"><i class="bi bi-envelope text-@themeColorClass me-2"></i>상세 문의</h2>
+                                @if (!string.IsNullOrEmpty(evt.ContactDescription))
+                                {
+                                    <p class="text-muted">@evt.ContactDescription</p>
+                                }
+                            </div>
+                            
+                            @if (evt.ContactTopics is { Length: > 0 })
+                            {
+                                <ul class="list-unstyled mb-4">
+                                    @foreach (var topic in evt.ContactTopics)
+                                    {
+                                        <li class="mb-2">
+                                            <i class="bi bi-check-circle text-success me-2"></i>@topic
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            
+                            <div class="text-center">
+                                <a href="mailto:@evt.ContactEmail" class="btn btn-@themeColorClass btn-lg px-5">
+                                    <i class="bi bi-envelope me-2"></i>@evt.ContactEmail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 }

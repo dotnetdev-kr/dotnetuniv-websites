@@ -43,9 +43,44 @@ public record VenueInfo
     public string[]? Directions { get; init; }
 
     /// <summary>
+    /// 교통 관련 주의사항 (HTML 지원)
+    /// </summary>
+    public string[]? TransportNotices { get; init; }
+
+    /// <summary>
+    /// 중요 공지사항 (강조 표시용)
+    /// </summary>
+    public string? ImportantNotice { get; init; }
+
+    /// <summary>
+    /// 지하철 안내 (HTML 지원)
+    /// </summary>
+    public string[]? SubwayInfo { get; init; }
+
+    /// <summary>
+    /// 버스 안내 (HTML 지원)
+    /// </summary>
+    public string[]? BusInfo { get; init; }
+
+    /// <summary>
     /// 주차 안내
     /// </summary>
     public string? ParkingInfo { get; init; }
+
+    /// <summary>
+    /// 주차장 목록 (이름, URL 쌍)
+    /// </summary>
+    public (string Name, string? Url, string? Description)[]? ParkingLots { get; init; }
+
+    /// <summary>
+    /// 인근 식당/카페 안내 URL
+    /// </summary>
+    public string? NearbyPlacesUrl { get; init; }
+
+    /// <summary>
+    /// 인근 식당/카페 안내 설명
+    /// </summary>
+    public string? NearbyPlacesDescription { get; init; }
 
     /// <summary>
     /// 이 장소의 트랙 목록 (TrackCollection으로 관리)
@@ -105,7 +140,42 @@ public record VenueInfo
     public bool HasDirections => Directions is { Length: > 0 };
 
     /// <summary>
+    /// 교통 관련 주의사항이 있는지 여부
+    /// </summary>
+    public bool HasTransportNotices => TransportNotices is { Length: > 0 };
+
+    /// <summary>
+    /// 중요 공지사항이 있는지 여부
+    /// </summary>
+    public bool HasImportantNotice => !string.IsNullOrEmpty(ImportantNotice);
+
+    /// <summary>
+    /// 지하철 정보가 있는지 여부
+    /// </summary>
+    public bool HasSubwayInfo => SubwayInfo is { Length: > 0 };
+
+    /// <summary>
+    /// 버스 정보가 있는지 여부
+    /// </summary>
+    public bool HasBusInfo => BusInfo is { Length: > 0 };
+
+    /// <summary>
     /// 주차 정보가 있는지 여부
     /// </summary>
     public bool HasParkingInfo => !string.IsNullOrEmpty(ParkingInfo);
+
+    /// <summary>
+    /// 주차장 목록이 있는지 여부
+    /// </summary>
+    public bool HasParkingLots => ParkingLots is { Length: > 0 };
+
+    /// <summary>
+    /// 인근 식당/카페 안내가 있는지 여부
+    /// </summary>
+    public bool HasNearbyPlaces => !string.IsNullOrEmpty(NearbyPlacesUrl);
+
+    /// <summary>
+    /// 교통 안내 섹션 표시 여부
+    /// </summary>
+    public bool HasTransportSection => HasDirections || HasTransportNotices || HasSubwayInfo || HasBusInfo || HasParkingInfo || HasParkingLots;
 }
