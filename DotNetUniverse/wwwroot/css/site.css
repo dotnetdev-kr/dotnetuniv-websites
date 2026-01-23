@@ -344,6 +344,42 @@ main {
     background-color: var(--purple-primary);
 }
 
+/* 통계 카드 */
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.stat-icon {
+    opacity: 0.9;
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* 세션 카드 링크 */
+.session-card-link {
+    transition: all 0.3s ease;
+}
+
+.session-card-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(81, 43, 212, 0.15) !important;
+}
+
+.session-card-link .card-body:hover .card-title {
+    color: var(--purple-primary);
+}
+
 /* 아카이브 페이지 */
 .event-card {
     transition: all 0.3s;

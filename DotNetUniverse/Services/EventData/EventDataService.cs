@@ -144,6 +144,53 @@ public class EventDataService
     }
 
     /// <summary>
+    /// 행사 통계 조회
+    /// </summary>
+    public EventStatistics GetStatistics()
+    {
+        var completedEvents = _allEvents.Where(e => !e.Event.IsUpcoming).ToList();
+        var conferences = completedEvents.Where(e => e.Event.Scale == EventScale.Conference).ToList();
+        
+        // 연도 계산 (첫 행사부터 현재까지)
+        var firstYear = completedEvents.Min(e => e.Event.Date.Year);
+        var yearsOfHistory = DateTime.Now.Year - firstYear + 1;
+        
+        // 총 참가자 수
+        var totalAttendees = completedEvents
+            .Where(e => e.Event.AttendeeCount.HasValue)
+            .Sum(e => e.Event.AttendeeCount!.Value);
+        
+        // 총 세션 수
+        var totalSessions = completedEvents
+            .SelectMany(e => e.Event.Venues)
+            .SelectMany(v => v.Tracks)
+            .SelectMany(t => t.Sessions)
+            .Count(s => s.IsPresentationSession);
+        
+        // 총 연사 수 (중복 제거)
+        var totalSpeakers = completedEvents
+            .SelectMany(e => e.Speakers)
+            .DistinctBy(s => s.Id)
+            .Count();
+        
+        // 총 후원사 수 (중복 제거)
+        var totalSponsors = GetAllSponsors().Count;
+        
+        // 총 컨퍼런스 개최 횟수
+        var totalConferences = conferences.Count;
+        
+        return new EventStatistics
+        {
+            YearsOfHistory = yearsOfHistory,
+            TotalAttendees = totalAttendees,
+            TotalSessions = totalSessions,
+            TotalSpeakers = totalSpeakers,
+            TotalSponsors = totalSponsors,
+            TotalConferences = totalConferences
+        };
+    }
+
+    /// <summary>
     /// 이전 행사 데이터 조회 (날짜순)
     /// </summary>
     public IEventData? GetPreviousEvent(string slug)
@@ -256,4 +303,40 @@ public record EventTimelineItem
     public required string Description { get; init; }
     public required string ThemeColorClass { get; init; }
     public bool IsUpcoming { get; init; }
+}
+
+/// <summary>
+/// 행사 통계 정보
+/// </summary>
+public record EventStatistics
+{
+    /// <summary>
+    /// 역사 (년)
+    /// </summary>
+    public int YearsOfHistory { get; init; }
+    
+    /// <summary>
+    /// 총 참가자 수
+    /// </summary>
+    public int TotalAttendees { get; init; }
+    
+    /// <summary>
+    /// 총 세션 수
+    /// </summary>
+    public int TotalSessions { get; init; }
+    
+    /// <summary>
+    /// 총 연사 수 (중복 제거)
+    /// </summary>
+    public int TotalSpeakers { get; init; }
+    
+    /// <summary>
+    /// 총 후원사 수 (중복 제거)
+    /// </summary>
+    public int TotalSponsors { get; init; }
+    
+    /// <summary>
+    /// 총 컨퍼런스 개최 횟수
+    /// </summary>
+    public int TotalConferences { get; init; }
 }

@@ -39,7 +39,7 @@
                 <div class="d-flex flex-wrap gap-3">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
-                        <span>무료 참가</span>
+                        <span>커뮤니티 주도</span>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
@@ -204,6 +204,124 @@
         </div>
     </div>
 </section>
+
+<!-- 통계 섹션 -->
+<section class="py-5 bg-dark text-white">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="badge bg-warning text-dark mb-3">Our Impact</span>
+            <h2 class="fw-bold display-6 mb-3">.NET Universe의 발자취</h2>
+            <p class="text-white-50">2019년부터 이어온 국내 최대 .NET 개발자 컨퍼런스</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="text-center stat-card p-4 rounded-4 h-100">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-calendar-check text-warning fs-1"></i>
+                    </div>
+                    <div class="display-5 fw-bold text-warning mb-2">@Model.Statistics.YearsOfHistory</div>
+                    <div class="text-white-50 small">년의 역사</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="text-center stat-card p-4 rounded-4 h-100">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-flag text-info fs-1"></i>
+                    </div>
+                    <div class="display-5 fw-bold text-info mb-2">@Model.Statistics.TotalConferences</div>
+                    <div class="text-white-50 small">회 컨퍼런스</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="text-center stat-card p-4 rounded-4 h-100">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-people-fill text-success fs-1"></i>
+                    </div>
+                    <div class="display-5 fw-bold text-success mb-2">@Model.Statistics.TotalAttendees.ToString("N0")+</div>
+                    <div class="text-white-50 small">누적 참가자</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="text-center stat-card p-4 rounded-4 h-100">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-mic-fill text-primary fs-1"></i>
+                    </div>
+                    <div class="display-5 fw-bold text-primary mb-2">@Model.Statistics.TotalSessions+</div>
+                    <div class="text-white-50 small">누적 세션</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="text-center stat-card p-4 rounded-4 h-100">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-person-badge text-danger fs-1"></i>
+                    </div>
+                    <div class="display-5 fw-bold text-danger mb-2">@Model.Statistics.TotalSpeakers+</div>
+                    <div class="text-white-50 small">연사</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="text-center stat-card p-4 rounded-4 h-100">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-building text-light fs-1"></i>
+                    </div>
+                    <div class="display-5 fw-bold text-light mb-2">@Model.Statistics.TotalSponsors+</div>
+                    <div class="text-white-50 small">후원사</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 역대 후원사 섹션 -->
+@if (Model.AllSponsors.Count > 0)
+{
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="badge bg-warning text-dark mb-3">Our Sponsors</span>
+            <h2 class="fw-bold display-6 mb-3">역대 후원사</h2>
+            <p class="text-muted">.NET Universe와 함께해 주신 소중한 후원사들입니다</p>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+            @foreach (var sponsor in Model.AllSponsors)
+            {
+                @if (!string.IsNullOrEmpty(sponsor.WebsiteUrl))
+                {
+                    <a href="@sponsor.WebsiteUrl" target="_blank" rel="noopener noreferrer" 
+                       class="sponsor-item text-decoration-none" title="@sponsor.Name">
+                        <img src="@sponsor.ResolvedLogoUrl" 
+                             alt="@sponsor.Name" 
+                             class="sponsor-logo-img"
+                             loading="lazy"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="sponsor-fallback" style="display: none;">
+                            <span class="fw-bold text-muted">@sponsor.Name</span>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="sponsor-item" title="@sponsor.Name">
+                        <img src="@sponsor.ResolvedLogoUrl" 
+                             alt="@sponsor.Name" 
+                             class="sponsor-logo-img"
+                             loading="lazy"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="sponsor-fallback" style="display: none;">
+                            <span class="fw-bold text-muted">@sponsor.Name</span>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="text-center mt-5">
+            <a asp-page="/Sponsorship" class="btn btn-outline-purple">
+                <i class="bi bi-heart me-2"></i>후원 안내 보기
+            </a>
+        </div>
+    </div>
+</section>
+}
 
 <!-- 문의 섹션 -->
 <section class="py-5 bg-purple text-white">
