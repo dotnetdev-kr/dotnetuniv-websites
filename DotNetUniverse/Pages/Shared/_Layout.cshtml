@@ -78,6 +78,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/StudyList">스터디</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50" href="https://forum.dotnetdev.kr/" target="_blank" rel="noopener noreferrer">포럼 <i class="bi bi-box-arrow-up-right small"></i></a>
+                        </li>
                     </ul>
                     <form class="d-flex" method="get" asp-page="/Search">
                         <div class="input-group">
@@ -100,47 +103,48 @@
     <footer class="footer-dark py-5">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <h5 class="text-white mb-3">
-                        <i class="bi bi-stars me-2"></i>.NET Universe
-                    </h5>
-                    <p class="text-white-50">
-                        .NET Dev(닷넷데브)가 주최하는<br />
-                        대한민국 최대 규모의 .NET 개발자 컨퍼런스
+                <!-- 왼쪽: 닷넷데브 정보 -->
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <h5 class="text-white fw-bold mb-3">닷넷데브</h5>
+                    <p class="text-white-50 small mb-2">
+                        <a href="mailto:contact@dotnetdev.kr" class="text-white-50 text-decoration-none">contact@dotnetdev.kr</a> | 사업자등록번호: 504-82-89269
                     </p>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <h6 class="text-white mb-3">바로가기</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/Index">홈</a></li>
-                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/History">지난 행사</a></li>
-                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/Sponsorship">후원 안내</a></li>
-                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/About">소개</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <h6 class="text-white mb-3">법적 고지</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/Privacy">개인정보처리방침</a></li>
-                        <li class="mb-2"><a class="text-white-50 text-decoration-none" asp-page="/CodeOfConduct">행동 강령</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4">
-                    <h6 class="text-white mb-3">소셜 미디어</h6>
-                    <div class="social-links">
-                        <a href="https://github.com/dotnetdev-kr" target="_blank" rel="noopener noreferrer" class="text-white-50 me-3 fs-4"><i class="bi bi-github"></i></a>
-                        <a href="https://www.youtube.com/channel/UCIoGwsb2m9p9GjXdLOTbsNg" target="_blank" rel="noopener noreferrer" class="text-white-50 me-3 fs-4"><i class="bi bi-youtube"></i></a>
-                        <a href="https://www.facebook.com/groups/dotnetdev.kr" target="_blank" rel="noopener noreferrer" class="text-white-50 fs-4"><i class="bi bi-facebook"></i></a>
+                    <p class="text-white-50 small mb-3">
+                        (06193) 서울특별시 강남구 테헤란로 70길 12, H타워 402호 D220, 닷넷데브
+                    </p>
+                    <div class="mt-3">
+                        <a href="https://forum.dotnetdev.kr/" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none small me-3">닷넷데브 공시</a>
+                        <a asp-page="/Sponsorship" class="text-white-50 text-decoration-none small">닷넷데브 후원</a>
                     </div>
                 </div>
-            </div>
-            <hr class="my-4 border-secondary" />
-            <div class="row align-items-center">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="text-white-50 mb-0">&copy; @DateTime.Now.Year .NET Dev(닷넷데브). All rights reserved.</p>
+
+                <!-- 중간: 닷넷데브 링크 -->
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h6 class="text-white fw-bold mb-3">닷넷데브</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="https://forum.dotnetdev.kr/" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none">닷넷데브 홈페이지</a></li>
+                        <li class="mb-2"><a asp-page="/Index" class="text-white-50 text-decoration-none">.NET Universe 홈페이지</a></li>
+                    </ul>
                 </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="text-white-50 mb-0">Built with <i class="bi bi-heart-fill text-danger"></i> and ASP.NET Core</p>
+
+                <!-- 오른쪽: 닷넷 리소스 -->
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h6 class="text-white fw-bold mb-3">닷넷 리소스</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="https://dot.net/" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none">닷넷 홈페이지</a></li>
+                        <li class="mb-2"><a href="https://dotnetfoundation.org/" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none">닷넷 파운데이션</a></li>
+                        <li class="mb-2"><a href="https://learn.microsoft.com/dotnet/" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none">Microsoft Docs</a></li>
+                    </ul>
+                </div>
+
+                <!-- 소셜 아이콘 -->
+                <div class="col-lg-2 col-md-12 text-lg-end">
+                    <div class="social-links d-flex justify-content-lg-end justify-content-start gap-3 fs-4">
+                        <a href="https://www.linkedin.com/company/96143755" target="_blank" rel="noopener noreferrer" class="text-white-50" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="https://www.youtube.com/@@dotnetdevkr" target="_blank" rel="noopener noreferrer" class="text-white-50" title="YouTube"><i class="bi bi-youtube"></i></a>
+                        <a href="https://blog.dotnetdev.kr" target="_blank" rel="noopener noreferrer" class="text-white-50" title="Medium"><i class="bi bi-medium"></i></a>
+                        <a href="https://github.com/dotnetdev-kr" target="_blank" rel="noopener noreferrer" class="text-white-50" title="GitHub"><i class="bi bi-github"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
