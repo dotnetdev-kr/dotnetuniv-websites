@@ -174,9 +174,9 @@ public class Year2026Data : IEventData
         .AddTimeSlot(new TimeOnly(9, 40), 20, slot => slot
             .At(0, new Session { Id = "keynote-dotnetdev", Title = "키노트 / 닷넷데브", Abstract = "", Format = SessionFormat.Keynote, Duration = TimeSpan.FromMinutes(20), Speakers = [nam_jeonghyun] }))
 
-        // 10:00 ~ 10:30 키노트 / 골드 후원사
-        .AddTimeSlot(new TimeOnly(10, 0), 30, slot => slot
-            .At(0, new Session { Id = "keynote-sponsor", Title = "키노트 / 골드 후원사", Abstract = "", Format = SessionFormat.Keynote, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
+        // 10:00 ~ 10:20 키노트 / 골드 후원사
+        .AddTimeSlot(new TimeOnly(10, 0), 20, slot => slot
+            .At(0, new Session { Id = "keynote-sponsor", Title = "키노트 / 골드 후원사", Abstract = "", Format = SessionFormat.Keynote, Duration = TimeSpan.FromMinutes(20), Speakers = [] }))
 
         // 10:30 ~ 11:00 Breakout 1
         .AddTimeSlot(new TimeOnly(10, 30), 30, slot => slot
@@ -186,49 +186,49 @@ public class Year2026Data : IEventData
         .AddTimeSlot(new TimeOnly(11, 0), 30, slot => slot
             .At(0, new Session { Id = "breakout-2", Title = "Breakout 2", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 11:30 ~ 13:00 점심 식사
-        .AddTimeSlot(new TimeOnly(11, 30), 90, slot => slot
-            .At(0, new Session { Id = "lunch", Title = "점심 식사", Abstract = "", Format = SessionFormat.Lunch, Duration = TimeSpan.FromMinutes(90), Speakers = [] }))
+        // 11:30 ~ 12:30 점심 식사
+        .AddTimeSlot(new TimeOnly(11, 30), 60, slot => slot
+            .At(0, new Session { Id = "lunch", Title = "점심 식사", Abstract = "", Format = SessionFormat.Lunch, Duration = TimeSpan.FromMinutes(60), Speakers = [] }))
 
-        // 13:00 ~ 13:30 Breakout 3
-        .AddTimeSlot(new TimeOnly(13, 0), 30, slot => slot
+        // 12:30 ~ 13:00 Breakout 3
+        .AddTimeSlot(new TimeOnly(12, 30), 30, slot => slot
             .At(0, new Session { Id = "breakout-3", Title = "Breakout 3", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 13:30 ~ 14:00 Breakout 4
-        .AddTimeSlot(new TimeOnly(13, 30), 30, slot => slot
+        // 13:00 ~ 13:30 Breakout 4
+        .AddTimeSlot(new TimeOnly(13, 0), 30, slot => slot
             .At(0, new Session { Id = "breakout-4", Title = "Breakout 4", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 14:00 ~ 14:30 Breakout 5
-        .AddTimeSlot(new TimeOnly(14, 0), 30, slot => slot
+        // 13:40 ~ 14:10 Breakout 5
+        .AddTimeSlot(new TimeOnly(13, 40), 30, slot => slot
             .At(0, new Session { Id = "breakout-5", Title = "Breakout 5", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 14:30 ~ 15:00 Breakout 6
-        .AddTimeSlot(new TimeOnly(14, 30), 30, slot => slot
+        // 14:10 ~ 14:40 Breakout 6
+        .AddTimeSlot(new TimeOnly(14, 10), 30, slot => slot
             .At(0, new Session { Id = "breakout-6", Title = "Breakout 6", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 15:00 ~ 15:30 휴식
-        .AddTimeSlot(new TimeOnly(15, 0), 30, slot => slot
-            .At(0, new Session { Id = "break", Title = "휴식", Abstract = "", Format = SessionFormat.Break, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
-
-        // 15:30 ~ 16:00 Breakout 7
-        .AddTimeSlot(new TimeOnly(15, 30), 30, slot => slot
+        // 14:50 ~ 15:20 Breakout 7
+        .AddTimeSlot(new TimeOnly(14, 50), 30, slot => slot
             .At(0, new Session { Id = "breakout-7", Title = "Breakout 7", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 16:00 ~ 16:30 Breakout 8
-        .AddTimeSlot(new TimeOnly(16, 0), 30, slot => slot
-            .At(0, new Session { Id = "breakout-8", Title = "Breakout 8", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
+        // 15:20 ~ 16:00 Breakout 8
+        .AddTimeSlot(new TimeOnly(15, 20), 40, slot => slot
+            .At(0, new Session { Id = "breakout-8", Title = "Breakout 8", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(40), Speakers = [] }))
 
-        // 16:30 ~ 17:00 Breakout 9
-        .AddTimeSlot(new TimeOnly(16, 30), 30, slot => slot
+        // 16:10 ~ 16:40 Breakout 9
+        .AddTimeSlot(new TimeOnly(16, 10), 30, slot => slot
             .At(0, new Session { Id = "breakout-9", Title = "Breakout 9", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 17:00 ~ 17:30 Breakout 10
-        .AddTimeSlot(new TimeOnly(17, 0), 30, slot => slot
+        // 16:40 ~ 17:10 Breakout 10
+        .AddTimeSlot(new TimeOnly(16, 40), 30, slot => slot
             .At(0, new Session { Id = "breakout-10", Title = "Breakout 10", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
 
-        // 17:30 ~ 18:00 경품 추첨 및 폐회
-        .AddTimeSlot(new TimeOnly(17, 30), 30, slot => slot
-            .At(0, new Session { Id = "closing", Title = "경품 추첨 및 폐회", Abstract = "", Format = SessionFormat.PrizeDrawing, Duration = TimeSpan.FromMinutes(30), Speakers = [nam_jeonghyun] }))
+        // 17:10 ~ 17:40 Breakout 11
+        .AddTimeSlot(new TimeOnly(17, 10), 30, slot => slot
+            .At(0, new Session { Id = "breakout-11", Title = "Breakout 11", Abstract = "", Format = SessionFormat.Breakout, Duration = TimeSpan.FromMinutes(30), Speakers = [] }))
+
+        // 17:40 ~ 18:00 경품 추첨 및 폐회
+        .AddTimeSlot(new TimeOnly(17, 40), 20, slot => slot
+            .At(0, new Session { Id = "closing", Title = "경품 추첨 및 폐회", Abstract = "", Format = SessionFormat.PrizeDrawing, Duration = TimeSpan.FromMinutes(20), Speakers = [nam_jeonghyun] }))
 
         .Build();
 }
