@@ -1,0 +1,154 @@
+@page
+@using DotNetUniverse.Services.EventData
+@model DotNetUniverse.Pages.SearchModel
+@{
+    ViewData["Title"] = string.IsNullOrWhiteSpace(Model.Query) ? "검색" : $"'{Model.Query}' 검색 결과";
+}
+
+<section class="py-5 bg-purple text-white">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold text-center mb-4">
+                    <i class="bi bi-search me-2"></i>검색
+                </h1>
+                <form method="get" asp-page="/Search">
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" name="Query" 
+                               value="@Model.Query" 
+                               placeholder="세션, 발표자, 행사를 검색하세요..."
+                               aria-label="검색어" />
+                        <button class="btn btn-light" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        @if (!string.IsNullOrWhiteSpace(Model.Query))
+        {
+            @if (Model.Results.Count > 0)
+            {
+                <div class="mb-4">
+                    <p class="text-muted">
+                        총 <strong>@Model.Results.Count</strong>개의 결과를 찾았습니다.
+                        @if (Model.SessionCount > 0)
+                        {
+                            <span class="badge bg-primary ms-2">세션 @Model.SessionCount</span>
+                        }
+                        @if (Model.SpeakerCount > 0)
+                        {
+                            <span class="badge bg-success ms-2">발표자 @Model.SpeakerCount</span>
+                        }
+                        @if (Model.EventCount > 0)
+                        {
+                            <span class="badge bg-purple ms-2">행사 @Model.EventCount</span>
+                        }
+                    </p>
+                </div>
+
+                <div class="row">
+                    @foreach (var result in Model.Results)
+                    {
+                        <div class="col-lg-6 mb-4">
+                            <div class="card h-100 shadow-sm hover-lift">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        @if (result.Type == SearchResultType.Speaker && !string.IsNullOrEmpty(result.ImageUrl))
+                                        {
+                                            <img src="@result.ImageUrl" alt="@result.Title" 
+                                                 class="rounded-circle me-3" 
+                                                 style="width: 60px; height: 60px; object-fit: cover;" 
+                                                 onerror="this.style.display='none'" />
+                                        }
+                                        <div class="flex-grow-1">
+                                            <div class="mb-2">
+                                                @switch (result.Type)
+                                                {
+                                                    case SearchResultType.Event:
+                                                        <span class="badge bg-purple">행사</span>
+                                                        break;
+                                                    case SearchResultType.Session:
+                                                        <span class="badge bg-primary">세션</span>
+                                                        break;
+                                                    case SearchResultType.Speaker:
+                                                        <span class="badge bg-success">발표자</span>
+                                                        break;
+                                                }
+                                                @if (result.Date.HasValue)
+                                                {
+                                                    <small class="text-muted ms-2">@result.Date.Value.ToString("yyyy년 M월")</small>
+                                                }
+                                            </div>
+                                            <h5 class="card-title mb-2">
+                                                <a href="@result.Url" class="text-decoration-none text-dark stretched-link">
+                                                    @result.Title
+                                                </a>
+                                            </h5>
+                                            @if (!string.IsNullOrEmpty(result.Description))
+                                            {
+                                                <p class="card-text text-muted small mb-2">@result.Description</p>
+                                            }
+                                            @if (result.Type == SearchResultType.Session)
+                                            {
+                                                @if (!string.IsNullOrEmpty(result.SpeakerName))
+                                                {
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-person me-1"></i>@result.SpeakerName
+                                                    </small>
+                                                }
+                                                @if (!string.IsNullOrEmpty(result.EventTitle))
+                                                {
+                                                    <small class="text-muted ms-3">
+                                                        <i class="bi bi-calendar-event me-1"></i>@result.EventTitle
+                                                    </small>
+                                                }
+                                            }
+                                            @if (result.Tags is { Length: > 0 })
+                                            {
+                                                <div class="mt-2">
+                                                    @foreach (var tag in result.Tags.Take(3))
+                                                    {
+                                                        <span class="badge bg-light text-dark me-1">@tag</span>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-search display-1 text-muted mb-4"></i>
+                    <h3 class="text-muted">검색 결과가 없습니다</h3>
+                    <p class="text-muted">다른 키워드로 검색해 보세요.</p>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-lightbulb display-1 text-muted mb-4"></i>
+                <h3 class="text-muted">검색어를 입력하세요</h3>
+                <p class="text-muted">세션 제목, 발표자 이름, 행사명 등으로 검색할 수 있습니다.</p>
+                <div class="mt-4">
+                    <p class="text-muted small">검색 예시:</p>
+                    <a href="/Search?Query=Blazor" class="btn btn-outline-primary btn-sm me-2 mb-2">Blazor</a>
+                    <a href="/Search?Query=Azure" class="btn btn-outline-primary btn-sm me-2 mb-2">Azure</a>
+                    <a href="/Search?Query=MAUI" class="btn btn-outline-primary btn-sm me-2 mb-2">MAUI</a>
+                    <a href="/Search?Query=AI" class="btn btn-outline-primary btn-sm me-2 mb-2">AI</a>
+                </div>
+            </div>
+        }
+    </div>
+</section>

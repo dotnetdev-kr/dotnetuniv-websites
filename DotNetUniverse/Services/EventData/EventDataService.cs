@@ -275,6 +275,135 @@ public class EventDataService
             IsUpcoming = data.Event.IsUpcoming
         });
     }
+
+    /// <summary>
+    /// 키워드로 세션 검색
+    /// </summary>
+    public IEnumerable<SearchResult> Search(string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+            return [];
+
+        var keywords = query.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var results = new List<SearchResult>();
+
+        foreach (var eventData in _allEvents)
+        {
+            // 행사 검색
+            if (MatchesKeywords(eventData.Event.Title, keywords) ||
+                MatchesKeywords(eventData.Event.Theme, keywords))
+            {
+                results.Add(new SearchResult
+                {
+                    Type = SearchResultType.Event,
+                    Title = eventData.Event.Title,
+                    Description = eventData.Event.Theme,
+                    Url = $"/{eventData.Slug}",
+                    EventSlug = eventData.Slug,
+                    Date = eventData.Event.Date
+                });
+            }
+
+            // 세션 검색
+            foreach (var venue in eventData.Event.Venues)
+            {
+                foreach (var track in venue.Tracks)
+                {
+                    foreach (var session in track.Sessions)
+                    {
+                        if (!session.IsPresentationSession)
+                            continue;
+
+                        if (MatchesKeywords(session.Title, keywords) ||
+                            MatchesKeywords(session.Abstract, keywords) ||
+                            (session.Tags?.Any(t => MatchesKeywords(t, keywords)) ?? false))
+                        {
+                            var shortDesc = session.Abstract.Length > 100 
+                                ? session.Abstract[..100] + "..." 
+                                : session.Abstract;
+                            results.Add(new SearchResult
+                            {
+                                Type = SearchResultType.Session,
+                                Title = session.Title,
+                                Description = shortDesc,
+                                Url = $"/{eventData.Slug}?session={session.Id}",
+                                EventSlug = eventData.Slug,
+                                EventTitle = eventData.Event.Title,
+                                Date = eventData.Event.Date,
+                                SpeakerName = session.PrimarySpeaker.Name,
+                                Tags = session.Tags
+                            });
+                        }
+                    }
+                }
+            }
+
+            // 발표자 검색
+            foreach (var speaker in eventData.Speakers)
+            {
+                if (MatchesKeywords(speaker.Name, keywords) ||
+                    MatchesKeywords(speaker.Company, keywords) ||
+                    MatchesKeywords(speaker.Title, keywords))
+                {
+                    // 중복 발표자 제외
+                    if (!results.Any(r => r.Type == SearchResultType.Speaker && r.Title == speaker.Name))
+                    {
+                        results.Add(new SearchResult
+                        {
+                            Type = SearchResultType.Speaker,
+                            Title = speaker.Name,
+                            Description = string.IsNullOrEmpty(speaker.Company) 
+                                ? speaker.Title 
+                                : $"{speaker.Company} - {speaker.Title}",
+                            Url = $"/{eventData.Slug}?speaker={speaker.Id}",
+                            EventSlug = eventData.Slug,
+                            ImageUrl = speaker.ResolvedImageUrl
+                        });
+                    }
+                }
+            }
+        }
+
+        return results
+            .OrderByDescending(r => r.Date ?? DateTime.MinValue)
+            .ThenBy(r => r.Type);
+    }
+
+    private static bool MatchesKeywords(string? text, string[] keywords)
+    {
+        if (string.IsNullOrEmpty(text))
+            return false;
+
+        var lowerText = text.ToLower();
+        return keywords.All(k => lowerText.Contains(k));
+    }
+}
+
+/// <summary>
+/// 검색 결과 유형
+/// </summary>
+public enum SearchResultType
+{
+    Event,
+    Session,
+    Speaker
+}
+
+/// <summary>
+/// 검색 결과
+/// </summary>
+public record SearchResult
+{
+    public required SearchResultType Type { get; init; }
+    public required string Title { get; init; }
+    public string? Description { get; init; }
+    public required string Url { get; init; }
+    public string? EventSlug { get; init; }
+    public string? EventTitle { get; init; }
+    public DateTime? Date { get; init; }
+    public string? SpeakerName { get; init; }
+    public string[]? Tags { get; init; }
+    public string? ImageUrl { get; init; }
 }
 
 /// <summary>
