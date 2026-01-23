@@ -36,6 +36,11 @@ namespace DotNetUniverse.Pages
         /// </summary>
         public IReadOnlyList<(IEventData Event, Session Session)> FeaturedSessions { get; private set; } = [];
 
+        /// <summary>
+        /// 역대 후원사 목록 (중복 제거, 가나다순)
+        /// </summary>
+        public IReadOnlyList<Sponsor> AllSponsors { get; private set; } = [];
+
         public void OnGet()
         {
             // 현재 모집 중인 행사들
@@ -54,6 +59,9 @@ namespace DotNetUniverse.Pages
 
             // 랜덤 추천 세션 (영상이 있는 세션 중 3개)
             FeaturedSessions = _eventDataService.GetRandomSessionsWithVideo(3).ToList();
+
+            // 역대 후원사 목록
+            AllSponsors = _eventDataService.GetAllSponsors();
         }
     }
 }

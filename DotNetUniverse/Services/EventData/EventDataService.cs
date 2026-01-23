@@ -121,6 +121,29 @@ public class EventDataService
     }
 
     /// <summary>
+    /// 역대 모든 후원사 목록 조회 (중복 제거, 가나다순 정렬)
+    /// </summary>
+    public IReadOnlyList<Sponsor> GetAllSponsors()
+    {
+        return _allEvents
+            .Where(e => !e.Event.IsUpcoming)
+            .SelectMany(e => e.Event.Sponsors)
+            .DistinctBy(s => s.Id)
+            .OrderBy(s => s.Name, StringComparer.CurrentCulture)
+            .ToList();
+    }
+
+    /// <summary>
+    /// 역대 후원사 목록을 등급별로 그룹화하여 조회 (중복 제거, 가나다순 정렬)
+    /// </summary>
+    public IEnumerable<IGrouping<SponsorTier, Sponsor>> GetAllSponsorsByTier()
+    {
+        return GetAllSponsors()
+            .GroupBy(s => s.Tier)
+            .OrderBy(g => g.Key);
+    }
+
+    /// <summary>
     /// 이전 행사 데이터 조회 (날짜순)
     /// </summary>
     public IEventData? GetPreviousEvent(string slug)

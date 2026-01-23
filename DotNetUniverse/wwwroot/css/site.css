@@ -231,6 +231,119 @@ main {
     transform: scale(1.05);
 }
 
+/* 역대 후원사 로고 */
+.sponsor-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.sponsor-item:hover {
+    transform: scale(1.1);
+}
+
+.sponsor-logo-img {
+    max-height: 80px;
+    max-width: 220px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: filter 0.3s, opacity 0.3s;
+}
+
+.sponsor-item:hover .sponsor-logo-img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.sponsor-fallback {
+    width: 220px;
+    height: 80px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* 후원사 캐러셀 */
+.sponsor-carousel {
+    position: relative;
+}
+
+.sponsor-carousel .carousel-inner {
+    padding: 1rem 0;
+}
+
+.sponsor-carousel .carousel-item {
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+.sponsor-carousel .sponsor-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 4rem;
+    min-height: 150px;
+}
+
+.sponsor-carousel .carousel-control-prev,
+.sponsor-carousel .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+.sponsor-carousel .carousel-control-prev {
+    left: 0;
+}
+
+.sponsor-carousel .carousel-control-next {
+    right: 0;
+}
+
+.sponsor-carousel .carousel-control-prev:hover,
+.sponsor-carousel .carousel-control-next:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+.sponsor-carousel .carousel-control-prev-icon,
+.sponsor-carousel .carousel-control-next-icon {
+    background-color: var(--purple-primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-size: 40%;
+}
+
+.sponsor-carousel .carousel-indicators {
+    bottom: -2.5rem;
+    margin-bottom: 0;
+}
+
+.sponsor-carousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: none;
+    margin: 0 6px;
+    transition: background-color 0.3s;
+}
+
+.sponsor-carousel .carousel-indicators button.active {
+    background-color: var(--purple-primary);
+}
+
 /* 아카이브 페이지 */
 .event-card {
     transition: all 0.3s;

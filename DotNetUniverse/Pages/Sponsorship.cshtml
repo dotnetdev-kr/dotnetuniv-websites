@@ -233,6 +233,53 @@
     </div>
 </section>
 
+<!-- 역대 후원사 섹션 -->
+@if (Model.AllSponsors.Count > 0)
+{
+<section class="py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold display-6 mb-3">
+                <i class="bi bi-trophy me-2"></i>역대 후원사 / Past Sponsors
+            </h2>
+            <p class="text-muted">.NET Universe와 함께해 주신 소중한 후원사들입니다</p>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+            @foreach (var sponsor in Model.AllSponsors)
+            {
+                @if (!string.IsNullOrEmpty(sponsor.WebsiteUrl))
+                {
+                    <a href="@sponsor.WebsiteUrl" target="_blank" rel="noopener noreferrer" 
+                       class="sponsor-item text-decoration-none" title="@sponsor.Name">
+                        <img src="@sponsor.ResolvedLogoUrl" 
+                             alt="@sponsor.Name" 
+                             class="sponsor-logo-img"
+                             loading="lazy"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="sponsor-fallback" style="display: none;">
+                            <span class="fw-bold text-muted">@sponsor.Name</span>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="sponsor-item" title="@sponsor.Name">
+                        <img src="@sponsor.ResolvedLogoUrl" 
+                             alt="@sponsor.Name" 
+                             class="sponsor-logo-img"
+                             loading="lazy"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="sponsor-fallback" style="display: none;">
+                            <span class="fw-bold text-muted">@sponsor.Name</span>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+}
+
 <!-- 문의하기 섹션 -->
 <section class="py-5 bg-light">
     <div class="container py-4">
