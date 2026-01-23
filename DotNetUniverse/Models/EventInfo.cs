@@ -258,9 +258,9 @@ public record EventInfo
     public string ResolvedHeroImageUrl => HeroImageUrl ?? $"/images/events/{Year}-hero.webp";
 
     /// <summary>
-    /// 소셜 공유용 이미지 URL (히어로 이미지 또는 기본 이미지)
+    /// 소셜 공유용 이미지 URL (히어로 이미지가 있을 때만 반환, 없으면 null)
     /// </summary>
-    public string SocialImageUrl => HeroImageUrl ?? $"/images/events/{Year}-og.webp";
+    public string? SocialImageUrl => HeroImageUrl;
 
     /// <summary>
     /// 소셜 공유용 설명 (기본값: 테마)
