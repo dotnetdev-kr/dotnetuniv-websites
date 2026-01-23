@@ -5,12 +5,50 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - .NET Universe</title>
-    <meta name="description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스. .NET Dev(닷넷데브) 주최")" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@ViewData["Title"] - .NET Universe</title>
+<meta name="description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스. .NET Dev(닷넷데브) 주최")" />
     
-    <!-- Open Graph / Facebook -->
+<!-- SEO Meta Tags -->
+<meta name="keywords" content="닷넷, .NET, C#, ASP.NET, Blazor, MAUI, 개발자, 컨퍼런스, 닷넷데브, .NET Dev, .NET Universe" />
+<meta name="author" content=".NET Dev" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<link rel="canonical" href="@(ViewData["CanonicalUrl"] ?? Context.Request.GetDisplayUrl())" />
+    
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" href="/apple-icon.png" />
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="apple-touch-icon-precomposed" href="/apple-icon-precomposed.png" />
+    
+<!-- Android/Chrome -->
+<link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
+<link rel="manifest" href="/manifest.json" />
+    
+<!-- Microsoft Tiles -->
+<meta name="msapplication-TileColor" content="#6f42c1" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="msapplication-config" content="/browserconfig.xml" />
+    
+<!-- Theme Color -->
+<meta name="theme-color" content="#6f42c1" />
+    
+<!-- Open Graph / Facebook -->
     <meta property="og:type" content="@(ViewData["OgType"] ?? "website")" />
     <meta property="og:title" content="@(ViewData["OgTitle"] ?? ViewData["Title"]) - .NET Universe" />
     <meta property="og:description" content="@(ViewData["OgDescription"] ?? ".NET Universe - 닷넷 개발자를 위한 최대 규모의 컨퍼런스")" />
