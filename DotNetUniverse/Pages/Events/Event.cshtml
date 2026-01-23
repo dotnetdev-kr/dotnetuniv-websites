@@ -79,6 +79,33 @@
     </div>
 </section>
 
+<!-- 행동 강령 안내 -->
+<div class="bg-dark text-white py-3">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-shield-check fs-4 text-warning me-3"></i>
+                <div>
+                    <strong>본 행사에는 커뮤니티 행동 강령이 적용됩니다.</strong>
+                    <span class="d-none d-lg-inline text-white-50 ms-2">모든 참여자는 상호 존중하며 안전한 환경을 만들어 주세요.</span>
+                </div>
+            </div>
+            @if (evt.Type == EventType.Online)
+            {
+                <a href="https://dotnetdev.kr/coc/online" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm flex-shrink-0">
+                    <i class="bi bi-file-text me-1"></i>행동 강령 보기
+                </a>
+            }
+            else
+            {
+                <a asp-page="/CodeOfConduct" class="btn btn-outline-light btn-sm flex-shrink-0">
+                    <i class="bi bi-file-text me-1"></i>행동 강령 보기
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
 @if (evt.IsUpcoming)
 {
 <!-- 예정된 행사 정보 섹션 -->
