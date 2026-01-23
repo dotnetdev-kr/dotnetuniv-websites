@@ -1,0 +1,25 @@
+# Robots.txt for .NET Universe
+# https://dotnetuniverse.kr
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://dotnetuniverse.kr/sitemap.xml
+
+# Disallow error and internal pages
+Disallow: /Error
+Disallow: /NotFound
+
+# Allow search engines to crawl all content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
