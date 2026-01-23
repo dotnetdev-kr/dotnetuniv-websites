@@ -1,0 +1,191 @@
+@page "/sponsorship/en"
+@model DotNetUniverse.Pages.Sponsorship.EnModel
+@{
+    ViewData["Title"] = "Sponsorship Guide";
+}
+
+<!-- 페이지 헤더 -->
+<section class="py-5 bg-purple text-white">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-heart-fill me-3"></i>.NET Universe Sponsorship Guide
+                </h1>
+                <p class="lead opacity-90">
+                    Become a partner growing with .NET Universe.<br />
+                    Your sponsorship enriches the .NET ecosystem.
+                </p>
+                <div class="mt-4">
+                    <a href="/sponsorship/ko" class="btn btn-outline-light">
+                        <i class="bi bi-translate me-2"></i>한국어 버전
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Our Community -->
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-8">
+                <h2 class="fw-bold display-6 mb-4">About Our Community</h2>
+                <p class="text-muted mb-4">
+                    .NET Dev is a developer community for .NET developers in Korea. 
+                    Our community regularly organizes meetings, conferences, and seminars for .NET developers. 
+                    We also operate a forum website to provide an opportunity for .NET developers to communicate.
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="bg-gradient-purple rounded-4 p-4 text-white text-center">
+                    <i class="bi bi-people-fill display-3 mb-3"></i>
+                    <h4 class="fw-bold">.NET Dev</h4>
+                    <p class="opacity-75 mb-0">Community</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- .NET Universe 2026 Sponsor Guide -->
+        <div class="card border-0 shadow-lg mb-5">
+            <div class="card-header bg-primary text-white py-4">
+                <h3 class="fw-bold mb-0">
+                    <i class="bi bi-file-earmark-pdf-fill me-2"></i>.NET Universe 2026 Sponsor Guide
+                </h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="ratio ratio-16x9">
+                    <iframe src="/docs/sponsorship/dotnet-univ-2026-sponsorship-en.pdf" type="application/pdf" title=".NET Universe 2026 Sponsor Guide"></iframe>
+                </div>
+            </div>
+            <div class="card-footer bg-light py-3">
+                <a href="/docs/sponsorship/dotnet-univ-2026-sponsorship-en.pdf" class="btn btn-primary" download>
+                    <i class="bi bi-download me-2"></i>Download PDF
+                </a>
+                <a href="/docs/sponsorship/dotnet-univ-2026-sponsorship-en.pdf" class="btn btn-outline-primary ms-2" target="_blank">
+                    <i class="bi bi-box-arrow-up-right me-2"></i>Open in New Tab
+                </a>
+            </div>
+        </div>
+
+        <!-- Archive Section -->
+        <div class="mb-5">
+            <h3 class="fw-bold mb-4">
+                <i class="bi bi-archive me-2"></i>Archive
+            </h3>
+            <p class="text-muted mb-4">
+                Below are the sponsor guides from our previous events. You can download them to learn more about our past sponsorship opportunities and event details.
+            </p>
+
+            <div class="row g-4">
+                <!-- .NET Conf 2025 x Seoul -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">
+                                <i class="bi bi-file-earmark-pdf text-danger me-2"></i>.NET Conf 2025 x Seoul Sponsor Guide
+                            </h5>
+                            <p class="card-text text-muted small">Sponsorship guide for .NET Conf x Seoul 2025</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <a href="/docs/sponsorship/eng-dotnetconf-2025-sponsorship-guide.pdf" class="btn btn-sm btn-outline-primary" download>
+                                <i class="bi bi-download me-1"></i>Download
+                            </a>
+                            <a href="/docs/sponsorship/eng-dotnetconf-2025-sponsorship-guide.pdf" class="btn btn-sm btn-outline-secondary ms-2" target="_blank">
+                                <i class="bi bi-eye me-1"></i>Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- .NET Conf 2024 x Seoul -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">
+                                <i class="bi bi-file-earmark-pdf text-danger me-2"></i>.NET Conf 2024 x Seoul Sponsor Guide
+                            </h5>
+                            <p class="card-text text-muted small">Sponsorship guide for .NET Conf x Seoul 2024</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <a href="/docs/sponsorship/eng-dotnetconf-2024-sponsorship-guide.pdf" class="btn btn-sm btn-outline-primary" download>
+                                <i class="bi bi-download me-1"></i>Download
+                            </a>
+                            <a href="/docs/sponsorship/eng-dotnetconf-2024-sponsorship-guide.pdf" class="btn btn-sm btn-outline-secondary ms-2" target="_blank">
+                                <i class="bi bi-eye me-1"></i>Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Past Sponsors Section -->
+@if (Model.AllSponsors.Count > 0)
+{
+<section class="py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold display-6 mb-3">
+                <i class="bi bi-trophy me-2"></i>Past Sponsors
+            </h2>
+            <p class="text-muted">Our valued sponsors who have supported .NET Universe</p>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+            @foreach (var sponsor in Model.AllSponsors)
+            {
+                @if (!string.IsNullOrEmpty(sponsor.WebsiteUrl))
+                {
+                    <a href="@sponsor.WebsiteUrl" target="_blank" rel="noopener noreferrer" 
+                       class="sponsor-item text-decoration-none" title="@sponsor.Name">
+                        <img src="@sponsor.ResolvedLogoUrl" 
+                             alt="@sponsor.Name" 
+                             class="sponsor-logo-img"
+                             loading="lazy"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="sponsor-fallback" style="display: none;">
+                            <span class="fw-bold text-muted">@sponsor.Name</span>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="sponsor-item" title="@sponsor.Name">
+                        <img src="@sponsor.ResolvedLogoUrl" 
+                             alt="@sponsor.Name" 
+                             class="sponsor-logo-img"
+                             loading="lazy"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="sponsor-fallback" style="display: none;">
+                            <span class="fw-bold text-muted">@sponsor.Name</span>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+}
+
+<!-- Contact Section -->
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold display-6 mb-4">
+                    <i class="bi bi-envelope-heart me-2"></i>Contact Us
+                </h2>
+                <p class="lead text-muted mb-4">
+                    If you're interested in sponsoring .NET Universe or have any questions, please feel free to reach out to us.<br />
+                    Our team will promptly respond with detailed information tailored to your needs.
+                </p>
+                <a href="mailto:contact@dotnetdev.kr" class="btn btn-primary btn-lg">
+                    <i class="bi bi-envelope-fill me-2"></i>contact@dotnetdev.kr
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

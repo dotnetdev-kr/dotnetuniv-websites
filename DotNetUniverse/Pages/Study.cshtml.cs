@@ -21,8 +21,7 @@ public class StudyModel : PageModel
     public IActionResult OnGet(string slug)
     {
         // slug를 사용해 스터디 데이터 조회
-        var fullSlug = $"study/{slug}";
-        StudyData = _studyDataService.GetBySlug(fullSlug);
+        StudyData = _studyDataService.GetBySlug(slug);
 
         if (StudyData == null)
         {

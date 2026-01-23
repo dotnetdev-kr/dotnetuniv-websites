@@ -7,7 +7,7 @@ namespace DotNetUniverse.Services.StudyData;
 /// </summary>
 public class MonthlyDotnet2311Data : IStudyData
 {
-    public string Slug => "study/monthly-dotnet-2311";
+    public string Slug => "monthly/202311";
     public int Year => 2023;
     public string ThemeColor => "#512BD4";
     public string ThemeColorClass => "purple";

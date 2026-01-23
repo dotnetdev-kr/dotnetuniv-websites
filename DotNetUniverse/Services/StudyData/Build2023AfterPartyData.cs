@@ -7,7 +7,7 @@ namespace DotNetUniverse.Services.StudyData;
 /// </summary>
 public class Build2023AfterPartyData : IStudyData
 {
-    public string Slug => "study/build-2023-after-party";
+    public string Slug => "build2023";
     public int Year => 2023;
     public string ThemeColor => "#0078d4";
     public string ThemeColorClass => "primary";

@@ -8,7 +8,7 @@ namespace DotNetUniverse.Services.EventData;
 /// </summary>
 public class BusanEdition2512Data : IEventData
 {
-    public string Slug => "universe/busan-2512";
+    public string Slug => "xyz/busan-2512";
     public int Year => 2025;
     public string ThemeColor => "#198754";
     public string ThemeColorClass => "success";

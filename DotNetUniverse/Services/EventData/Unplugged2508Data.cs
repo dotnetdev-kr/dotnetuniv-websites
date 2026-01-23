@@ -8,7 +8,7 @@ namespace DotNetUniverse.Services.EventData;
 /// </summary>
 public class Unplugged2508Data : IEventData
 {
-    public string Slug => "unplugged/2508";
+    public string Slug => "unplugged/202508";
     public int Year => 2025;
     public string ThemeColor => "#6f42c1";
     public string ThemeColorClass => "purple";

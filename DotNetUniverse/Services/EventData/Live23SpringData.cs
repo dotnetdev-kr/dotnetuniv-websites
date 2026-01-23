@@ -8,7 +8,7 @@ namespace DotNetUniverse.Services.EventData;
 /// </summary>
 public class Live23SpringData : IEventData
 {
-    public string Slug => "live/2305";
+    public string Slug => "live/2023/spring";
     public int Year => 2023;
     public string ThemeColor => "#6f42c1";
     public string ThemeColorClass => "purple";

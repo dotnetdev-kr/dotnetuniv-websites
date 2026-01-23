@@ -8,7 +8,7 @@ namespace DotNetUniverse.Services.EventData;
 /// </summary>
 public class CloudBroEditionData : IEventData
 {
-    public string Slug => "universe/cloudbro";
+    public string Slug => "xyz/cloudbro";
     public int Year => 2025;
     public string ThemeColor => "#0d6efd";
     public string ThemeColorClass => "primary";

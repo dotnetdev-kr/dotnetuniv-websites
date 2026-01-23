@@ -7,7 +7,7 @@ namespace DotNetUniverse.Services.StudyData;
 /// </summary>
 public class CSharpBackendForeachMeetup2503Data : IStudyData
 {
-    public string Slug => "study/csharp-backend-foreach-meetup-2503";
+    public string Slug => "monthly/202503";
     public int Year => 2025;
     public string ThemeColor => "#68217A";
     public string ThemeColorClass => "purple";

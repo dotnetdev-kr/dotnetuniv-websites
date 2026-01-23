@@ -1,0 +1,186 @@
+@page
+@using DotNetUniverse.Models
+@model DotNetUniverse.Pages.Events.SeriesModel
+@{
+    ViewData["Title"] = Model.SeriesTitle;
+
+    string GetEventTypeBadge(EventType type) => type switch
+    {
+        EventType.Offline => "<span class=\"badge bg-primary\">오프라인</span>",
+        EventType.Online => "<span class=\"badge bg-info\">온라인</span>",
+        EventType.Hybrid => "<span class=\"badge bg-warning text-dark\">하이브리드</span>",
+        _ => ""
+    };
+
+    string GetStatusBadge(EventStatus status) => status switch
+    {
+        EventStatus.Preparing => "<span class=\"badge bg-secondary\">준비 중</span>",
+        EventStatus.CallForParticipation => "<span class=\"badge bg-warning text-dark\">모집 중</span>",
+        EventStatus.Registration => "<span class=\"badge bg-success\">참가 신청 중</span>",
+        EventStatus.RegistrationClosed => "<span class=\"badge bg-dark\">모집 마감</span>",
+        EventStatus.InProgress => "<span class=\"badge bg-danger\">진행 중</span>",
+        EventStatus.Completed => "<span class=\"badge bg-secondary\">종료</span>",
+        _ => ""
+    };
+}
+
+<!-- 페이지 헤더 -->
+<section class="py-5 bg-purple text-white">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/" class="text-white-50">홈</a></li>
+                        <li class="breadcrumb-item"><a href="/history" class="text-white-50">지난 행사</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">@Model.SeriesTitle</li>
+                    </ol>
+                </nav>
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-collection me-3"></i>@Model.SeriesTitle
+                </h1>
+                <p class="lead opacity-90">
+                    @Model.SeriesDescription
+                </p>
+                <div class="mt-3">
+                    <span class="badge bg-light text-dark fs-6">
+                        <i class="bi bi-calendar-event me-1"></i>총 @(Model.Events.Count)개 행사
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 이벤트 목록 -->
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row g-4">
+            @foreach (var eventData in Model.Events)
+            {
+                var evt = eventData.Event;
+                var sessionCount = evt.Venues.SelectMany(v => v.Tracks).SelectMany(t => t.Sessions).Count(s => s.IsPresentationSession);
+                var speakerCount = eventData.Speakers.Count;
+
+                <div class="col-md-6 col-lg-4">
+                    <a href="@eventData.Url" class="text-decoration-none">
+                        <div class="card h-100 border-0 shadow-sm hover-lift">
+                            <div class="card-header text-white py-4" style="background: linear-gradient(135deg, @eventData.ThemeColor 0%, @(eventData.ThemeColor)cc 100%);">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <span class="badge bg-white text-dark">@evt.Date.ToString("yyyy.MM.dd")</span>
+                                    @Html.Raw(GetStatusBadge(evt.Status))
+                                </div>
+                                <h5 class="card-title fw-bold mb-0">@evt.Title</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap gap-2 mb-3">
+                                    @Html.Raw(GetEventTypeBadge(evt.Type))
+                                    @if (evt.Scale != EventScale.Conference)
+                                    {
+                                        <span class="badge bg-light text-dark">@evt.Scale</span>
+                                    }
+                                </div>
+                                @if (!string.IsNullOrEmpty(evt.Theme))
+                                {
+                                    <p class="card-text text-muted small mb-3">@evt.Theme</p>
+                                }
+                                <div class="d-flex gap-3 text-muted small">
+                                    @if (speakerCount > 0)
+                                    {
+                                        <span><i class="bi bi-person me-1"></i>@(speakerCount)명</span>
+                                    }
+                                    @if (sessionCount > 0)
+                                    {
+                                        <span><i class="bi bi-mic me-1"></i>@(sessionCount)개 세션</span>
+                                    }
+                                    @if (evt.AttendeeCount > 0)
+                                    {
+                                        <span><i class="bi bi-people me-1"></i>@(evt.AttendeeCount)명</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pb-3">
+                                <span class="btn btn-sm btn-outline-@eventData.ThemeColorClass w-100">
+                                    <i class="bi bi-arrow-right me-1"></i>자세히 보기
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- 다른 시리즈 보기 -->
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <h3 class="fw-bold mb-4">
+            <i class="bi bi-grid me-2"></i>다른 시리즈 보기
+        </h3>
+        <div class="row g-3">
+            @if (Model.Prefix != "mini")
+            {
+                <div class="col-md-3">
+                    <a href="/mini" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm hover-lift">
+                            <div class="card-body text-center py-4">
+                                <i class="bi bi-lightning-charge text-info fs-2 mb-2"></i>
+                                <h6 class="fw-bold mb-0">.NET Conf Mini</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            @if (Model.Prefix != "live")
+            {
+                <div class="col-md-3">
+                    <a href="/live" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm hover-lift">
+                            <div class="card-body text-center py-4">
+                                <i class="bi bi-broadcast text-purple fs-2 mb-2"></i>
+                                <h6 class="fw-bold mb-0">.NET L!VE</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            @if (Model.Prefix != "unplugged")
+            {
+                <div class="col-md-3">
+                    <a href="/unplugged" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm hover-lift">
+                            <div class="card-body text-center py-4">
+                                <i class="bi bi-music-note-beamed text-success fs-2 mb-2"></i>
+                                <h6 class="fw-bold mb-0">Unplugged</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            @if (Model.Prefix != "edition")
+            {
+                <div class="col-md-3">
+                    <a href="/edition" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm hover-lift">
+                            <div class="card-body text-center py-4">
+                                <i class="bi bi-geo-alt text-danger fs-2 mb-2"></i>
+                                <h6 class="fw-bold mb-0">Edition</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            <div class="col-md-3">
+                <a href="/history" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm hover-lift">
+                        <div class="card-body text-center py-4">
+                            <i class="bi bi-archive text-secondary fs-2 mb-2"></i>
+                            <h6 class="fw-bold mb-0">전체 행사</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DotNetUniverse.Pages;
 
-public class ArchiveModel(EventDataService EventDataService) : PageModel
+public class HistoryModel(EventDataService EventDataService) : PageModel
 {
     public IReadOnlyList<IEventData> Events { get; private set; } = [];
 

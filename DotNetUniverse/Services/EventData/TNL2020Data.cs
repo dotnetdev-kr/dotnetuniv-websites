@@ -8,7 +8,7 @@ namespace DotNetUniverse.Services.EventData;
 /// </summary>
 public class TNL2020Data : IEventData
 {
-    public string Slug => "tnl/2020";
+    public string Slug => "mini/2020";
     public int Year => 2020;
     public string ThemeColor => "#512BD4";
     public string ThemeColorClass => "purple";

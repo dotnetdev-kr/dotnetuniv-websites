@@ -8,7 +8,7 @@ namespace DotNetUniverse.Services.EventData;
 /// </summary>
 public class Live23FallData : IEventData
 {
-    public string Slug => "live/2310";
+    public string Slug => "live/2023/fall";
     public int Year => 2023;
     public string ThemeColor => "#ff6b35";
     public string ThemeColorClass => "warning";
