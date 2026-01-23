@@ -1,19 +1,10 @@
 # .NET Universe 🌌
 
-국내 최대 .NET 개발자 컨퍼런스 **.NET Universe** 공식 웹사이트입니다.
+**.NET Universe** 공식 웹사이트 저장소입니다.
 
-> 🔗 **GitHub**: [dotnetdev-kr/dotnetuniv-websites](https://github.com/dotnetdev-kr/dotnetuniv-websites)
-
-## 📖 소개
-
-.NET Universe는 2019년부터 시작된 국내 최대 .NET 개발자 컨퍼런스입니다. AI 시대를 선도하며 오픈소스와 함께 성장하는 개발자들의 축제로, 매년 다양한 주제의 세션과 워크샵을 제공합니다.
-
-### 🏆 행사 실적
-
-- **7년** 역사 (2019 ~ 현재)
-- **2,000+** 누적 참가자
-- **150+** 누적 세션
-- **100+** 연사
+> 🔗 **라이브 사이트**: [https://dotnetuniverse.net/](https://dotnetuniverse.net/)
+>
+> 최신 행사 정보, 스터디, 컨퍼런스 일정 등은 라이브 웹사이트에서 확인하세요.
 
 ## 🛠️ 기술 스택
 
@@ -21,51 +12,12 @@
 - **Docker** 지원
 - **Bootstrap** (UI 프레임워크)
 
-## 📁 프로젝트 구조
-
-```
-DotNetUniverse/
-├── Models/                          # 도메인 모델
-│   ├── Collections/                 # 컬렉션 클래스
-│   │   ├── SessionCollection.cs
-│   │   ├── SpeakerCollection.cs
-│   │   ├── SponsorCollection.cs
-│   │   ├── TrackCollection.cs
-│   │   └── VenueCollection.cs
-│   ├── EventInfo.cs                 # 행사 정보
-│   ├── Session.cs                   # 세션 정보
-│   ├── Speaker.cs                   # 연사 정보
-│   ├── Sponsor.cs                   # 스폰서 정보
-│   ├── Track.cs                     # 트랙 정보
-│   ├── ScheduleGrid.cs              # 스케줄 그리드
-│   └── ...
-├── Pages/                           # Razor Pages
-│   ├── Index.cshtml                 # 메인 페이지
-│   ├── Archive.cshtml               # 아카이브 페이지
-│   ├── About.cshtml                 # 소개 페이지
-│   ├── Years/                       # 연도별 행사 페이지
-│   │   └── Event.cshtml
-│   └── Shared/
-│       └── _Layout.cshtml           # 공통 레이아웃
-├── Services/                        # 서비스 계층
-│   ├── SessionDisplayService.cs     # 세션 표시 서비스
-│   └── YearData/                    # 연도별 행사 데이터
-│       ├── IYearData.cs             # 행사 데이터 인터페이스
-│       ├── YearDataService.cs       # 행사 데이터 서비스
-│       ├── Year2019Data.cs
-│       ├── Year2021Data.cs
-│       ├── Year2022Data.cs
-│       ├── Year2023Data.cs
-│       ├── Year2024Data.cs
-│       └── Year2025Data.cs
-└── Program.cs                       # 애플리케이션 진입점
-```
-
-## 🚀 시작하기
+## 🚀 개발 환경 설정
 
 ### 필수 요구사항
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- (선택) [Docker](https://www.docker.com/)
 
 ### 로컬 실행
 
@@ -78,26 +30,33 @@ cd dotnetuniv-websites
 dotnet run --project DotNetUniverse
 ```
 
+브라우저에서 `https://localhost:5001` 또는 `http://localhost:5000`으로 접속합니다.
+
 ### Docker 실행
 
 ```bash
-# Docker 이미지 빌드
-docker build -t dotnetuniverse .
+# Docker Compose 사용
+docker-compose up --build
 
-# 컨테이너 실행
+# 또는 직접 빌드 및 실행
+docker build -t dotnetuniverse .
 docker run -p 8080:80 dotnetuniverse
 ```
 
-## 📅 행사 연혁
+### 프로젝트 구조
 
-| 연도 | 행사명 | 규모 |
-|------|--------|------|
-| 2025 | .NET Universe 2025 | Conference |
-| 2024 | .NET Universe 2024 | Conference |
-| 2023 | .NET Universe 2023 | Conference |
-| 2022 | .NET Universe 2022 | Conference |
-| 2021 | .NET Universe 2021 | Conference |
-| 2019 | .NET Universe 2019 | Conference |
+```
+DotNetUniverse/
+├── Models/              # 도메인 모델
+├── Pages/               # Razor Pages
+├── Services/            # 서비스 계층 (행사/스터디 데이터)
+├── wwwroot/             # 정적 파일 (CSS, JS, 이미지)
+└── Program.cs           # 애플리케이션 진입점
+```
+
+## 📄 라이선스
+
+이 프로젝트는 MIT 라이선스를 따릅니다.
 
 ## 🏗️ 아키텍처
 
