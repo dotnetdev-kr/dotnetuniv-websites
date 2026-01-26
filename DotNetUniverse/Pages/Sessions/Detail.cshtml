@@ -1,0 +1,369 @@
+@page "/Sessions/{id}"
+@using DotNetUniverse.Models
+@using DotNetUniverse.Services.EventData
+@model DotNetUniverse.Pages.Sessions.DetailModel
+@{
+    ViewData["Title"] = Model.Session.Title;
+    ViewData["OgTitle"] = Model.Session.Title;
+    ViewData["OgDescription"] = Model.Session.Description;
+    ViewData["OgType"] = "video.other";
+    
+    var videoId = GetYouTubeVideoId(Model.Session.VideoUrl);
+    if (!string.IsNullOrEmpty(videoId))
+    {
+        ViewData["OgImage"] = $"https://img.youtube.com/vi/{videoId}/maxresdefault.jpg";
+    }
+}
+
+<div class="bg-dark">
+    <div class="container-fluid px-lg-5">
+        <div class="row">
+            <!-- 메인 콘텐츠 영역 -->
+            <div class="col-lg-8 col-xl-9">
+                <!-- 영상 플레이어 -->
+                <div class="ratio ratio-16x9 bg-black">
+                    @if (Model.Session.IsYouTubeVideo && !string.IsNullOrEmpty(Model.Session.YouTubeEmbedUrl))
+                    {
+                        <iframe src="@Model.Session.YouTubeEmbedUrl" 
+                                title="@Model.Session.Title"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen>
+                        </iframe>
+                    }
+                    else
+                    {
+                        <div class="d-flex align-items-center justify-content-center bg-purple">
+                            <div class="text-center text-white">
+                                <i class="bi bi-film display-1 mb-3"></i>
+                                <p>영상을 불러올 수 없습니다.</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- 사이드바: 관련 세션 -->
+            <div class="col-lg-4 col-xl-3 d-none d-lg-block">
+                <div class="bg-dark text-white p-3" style="max-height: calc(56.25vw * 0.75); overflow-y: auto;">
+                    <h6 class="fw-bold mb-3">
+                        <i class="bi bi-collection-play me-2"></i>관련 세션
+                    </h6>
+                    @if (Model.RelatedSessions.Count == 0)
+                    {
+                        <p class="text-white-50 small">관련 세션이 없습니다.</p>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.RelatedSessions)
+                        {
+                            <a href="/Sessions/@item.Session.Id" class="d-flex mb-3 text-decoration-none">
+                                <div class="flex-shrink-0 position-relative" style="width: 120px;">
+                                    @if (item.Session.IsYouTubeVideo)
+                                    {
+                                        var relatedVideoId = GetYouTubeVideoId(item.Session.VideoUrl!);
+                                        <img src="https://img.youtube.com/vi/@relatedVideoId/mqdefault.jpg" 
+                                             alt="@item.Session.Title" 
+                                             class="rounded"
+                                             style="width: 120px; height: 68px; object-fit: cover;"
+                                             loading="lazy" />
+                                    }
+                                    <span class="badge bg-dark position-absolute bottom-0 end-0 m-1" style="font-size: 0.65rem;">
+                                        @item.Session.Duration.ToString(@"h\:mm")
+                                    </span>
+                                </div>
+                                <div class="ms-2 flex-grow-1">
+                                    <p class="text-white small mb-1 line-clamp-2">@item.Session.Title</p>
+                                    <small class="text-white-50">@item.Session.PrimarySpeaker.Name</small>
+                                </div>
+                            </a>
+                        }
+                    }
+                    
+                    <hr class="border-secondary" />
+                    <a href="/Sessions" class="btn btn-outline-light btn-sm w-100">
+                        <i class="bi bi-grid me-1"></i>전체 세션 보기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- 세션 정보 -->
+            <div class="col-lg-8">
+                <!-- 세션 제목 및 메타 정보 -->
+                <div class="mb-4">
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <a href="/@Model.Event.Slug" class="badge bg-@Model.Event.ThemeColorClass text-decoration-none fs-6">
+                            @Model.Event.Event.Title
+                        </a>
+                        @if (Model.Session.Topic.HasValue)
+                        {
+                            <span class="badge bg-light text-dark fs-6">@GetTopicDisplayName(Model.Session.Topic.Value)</span>
+                        }
+                        <span class="badge bg-secondary fs-6">
+                            <i class="bi bi-clock me-1"></i>@Model.Session.Duration.ToString(@"h\:mm")
+                        </span>
+                        @switch (Model.Session.Format)
+                        {
+                            case SessionFormat.Keynote:
+                                <span class="badge bg-warning text-dark fs-6">키노트</span>
+                                break;
+                            case SessionFormat.Workshop:
+                            case SessionFormat.HandsOnLab:
+                                <span class="badge bg-success fs-6">워크샵</span>
+                                break;
+                            case SessionFormat.Lightning:
+                                <span class="badge bg-info fs-6">라이트닝 토크</span>
+                                break;
+                            case SessionFormat.Panel:
+                                <span class="badge bg-primary fs-6">패널</span>
+                                break;
+                        }
+                    </div>
+                    
+                    <h1 class="display-6 fw-bold mb-3">@Model.Session.Title</h1>
+                    
+                    <div class="text-muted mb-4">
+                        <i class="bi bi-calendar me-1"></i>
+                        @Model.Event.Event.Date.ToString("yyyy년 M월 d일")
+                    </div>
+                </div>
+
+                <!-- 링크 버튼 -->
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    @if (!string.IsNullOrEmpty(Model.Session.VideoUrl))
+                    {
+                        <a href="@Model.Session.VideoUrl" target="_blank" rel="noopener noreferrer" class="btn btn-danger">
+                            <i class="bi bi-youtube me-1"></i>YouTube에서 보기
+                        </a>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Session.SlidesUrl))
+                    {
+                        <a href="@Model.Session.SlidesUrl" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary">
+                            <i class="bi bi-file-earmark-slides me-1"></i>발표 자료
+                        </a>
+                    }
+                    <a href="/@Model.Event.Slug" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>행사 페이지
+                    </a>
+                </div>
+
+                <!-- 세션 설명 -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>세션 소개</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" style="white-space: pre-line;">@Model.Session.Abstract</p>
+                        
+                        @if (Model.Session.Tags is { Length: > 0 })
+                        {
+                            <div class="mt-3">
+                                @foreach (var tag in Model.Session.Tags)
+                                {
+                                    <span class="badge bg-light text-dark me-1">#@tag</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @if (Model.Session.HasPrerequisites)
+                {
+                    <div class="card shadow-sm mb-4 border-warning">
+                        <div class="card-header bg-warning bg-opacity-10">
+                            <h5 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>사전 요구 사항</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text mb-0">@Model.Session.Prerequisites</p>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Session.HasLabModules)
+                {
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>실습 모듈</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var module in Model.Session.LabModules!)
+                            {
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <strong>@module.Title</strong>
+                                            @if (!string.IsNullOrEmpty(module.Description))
+                                            {
+                                                <br /><small class="text-muted">@module.Description</small>
+                                            }
+                                        </div>
+                                        @if (!string.IsNullOrEmpty(module.Url))
+                                        {
+                                            <a href="@module.Url" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary ms-2">
+                                                <i class="bi bi-box-arrow-up-right"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+
+            <!-- 발표자 정보 -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-lg-top" style="top: 80px;">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="bi bi-person-circle me-2"></i>발표자</h5>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var speaker in Model.Session.Speakers)
+                        {
+                            <div class="d-flex mb-3 @(speaker != Model.Session.Speakers.Last() ? "pb-3 border-bottom" : "")">
+                            <div class="position-relative me-3" style="width: 64px; height: 64px;">
+                                <img src="@speaker.ResolvedImageUrl" 
+                                     alt="@speaker.Name" 
+                                     class="rounded-circle"
+                                     style="width: 64px; height: 64px; object-fit: cover;"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                <div class="rounded-circle bg-secondary text-white align-items-center justify-content-center" 
+                                     style="width: 64px; height: 64px; display: none; position: absolute; top: 0; left: 0;">
+                                    <i class="bi bi-person-fill" style="font-size: 28px;"></i>
+                                </div>
+                            </div>
+                                <div>
+                                    <h6 class="mb-1">@speaker.Name</h6>
+                                    @if (!string.IsNullOrEmpty(speaker.Company) || !string.IsNullOrEmpty(speaker.Title))
+                                    {
+                                        <small class="text-muted d-block mb-2">
+                                            @if (!string.IsNullOrEmpty(speaker.Company))
+                                            {
+                                                @speaker.Company
+                                                @if (!string.IsNullOrEmpty(speaker.Title))
+                                                {
+                                                    <text> - </text>
+                                                }
+                                            }
+                                            @speaker.Title
+                                        </small>
+                                    }
+                                    @if (speaker.HasSocialLinks)
+                                    {
+                                        <div class="d-flex gap-2">
+                                            @if (!string.IsNullOrEmpty(speaker.GitHubUrl))
+                                            {
+                                                <a href="@speaker.GitHubUrl" target="_blank" rel="noopener noreferrer" class="text-muted" title="GitHub">
+                                                    <i class="bi bi-github"></i>
+                                                </a>
+                                            }
+                                            @if (!string.IsNullOrEmpty(speaker.TwitterUrl))
+                                            {
+                                                <a href="@speaker.TwitterUrl" target="_blank" rel="noopener noreferrer" class="text-muted" title="Twitter">
+                                                    <i class="bi bi-twitter-x"></i>
+                                                </a>
+                                            }
+                                            @if (!string.IsNullOrEmpty(speaker.LinkedInUrl))
+                                            {
+                                                <a href="@speaker.LinkedInUrl" target="_blank" rel="noopener noreferrer" class="text-muted" title="LinkedIn">
+                                                    <i class="bi bi-linkedin"></i>
+                                                </a>
+                                            }
+                                            @if (!string.IsNullOrEmpty(speaker.WebsiteUrl))
+                                            {
+                                                <a href="@speaker.WebsiteUrl" target="_blank" rel="noopener noreferrer" class="text-muted" title="웹사이트">
+                                                    <i class="bi bi-globe"></i>
+                                                </a>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 모바일용 관련 세션 -->
+        @if (Model.RelatedSessions.Count > 0)
+        {
+            <div class="d-lg-none mt-5">
+                <h4 class="fw-bold mb-4"><i class="bi bi-collection-play me-2"></i>관련 세션</h4>
+                <div class="row g-3">
+                    @foreach (var item in Model.RelatedSessions)
+                    {
+                        <div class="col-6">
+                            <a href="/Sessions/@item.Session.Id" class="card h-100 text-decoration-none shadow-sm">
+                                <div class="position-relative">
+                                    @if (item.Session.IsYouTubeVideo)
+                                    {
+                                        var relatedVideoId = GetYouTubeVideoId(item.Session.VideoUrl!);
+                                        <img src="https://img.youtube.com/vi/@relatedVideoId/mqdefault.jpg" 
+                                             alt="@item.Session.Title" 
+                                             class="card-img-top"
+                                             style="aspect-ratio: 16/9; object-fit: cover;"
+                                             loading="lazy" />
+                                    }
+                                </div>
+                                <div class="card-body p-2">
+                                    <p class="card-text small text-dark mb-1 line-clamp-2">@item.Session.Title</p>
+                                    <small class="text-muted">@item.Session.PrimarySpeaker.Name</small>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section Styles {
+<style>
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .bg-black {
+        background-color: #000;
+    }
+</style>
+}
+
+@functions {
+    string GetTopicDisplayName(SessionTopic topic) => topic switch
+    {
+        SessionTopic.Cloud => "☁️ 클라우드",
+        SessionTopic.Web => "🌐 웹",
+        SessionTopic.AI => "🤖 AI",
+        SessionTopic.Mobile => "📱 모바일",
+        SessionTopic.Desktop => "🖥️ 데스크톱",
+        SessionTopic.DevOps => "🔧 DevOps",
+        SessionTopic.Performance => "⚡ 성능",
+        SessionTopic.Security => "🔒 보안",
+        SessionTopic.Data => "💾 데이터",
+        SessionTopic.Gaming => "🎮 게임",
+        SessionTopic.General => "📚 일반",
+        _ => topic.ToString()
+    };
+
+    string? GetYouTubeVideoId(string? url)
+    {
+        if (string.IsNullOrEmpty(url)) return null;
+        if (url.Contains("watch?v="))
+            return url.Split("watch?v=")[1].Split('&')[0];
+        if (url.Contains("youtu.be/"))
+            return url.Split("youtu.be/")[1].Split('?')[0];
+        return null;
+    }
+}

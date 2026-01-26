@@ -54,6 +54,15 @@ app.Use(async (context, next) =>
         return;
     }
     
+    // Razor Pages 경로는 바로 통과 (Sessions, Events, Study 등 기존 페이지)
+    var reservedPrefixes = new[] { "Sessions", "Events", "About", "Sponsors", "NotFound", "Error", "Search" };
+    if (reservedPrefixes.Any(prefix => path.Equals(prefix, StringComparison.OrdinalIgnoreCase) 
+        || path.StartsWith($"{prefix}/", StringComparison.OrdinalIgnoreCase)))
+    {
+        await next();
+        return;
+    }
+    
     // 이벤트 Slug 매칭 확인
     var eventService = context.RequestServices.GetRequiredService<EventDataService>();
     var eventData = eventService.GetBySlug(path);

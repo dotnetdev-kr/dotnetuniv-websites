@@ -377,7 +377,104 @@ public class EventDataService
         var lowerText = text.ToLower();
         return keywords.All(k => lowerText.Contains(k));
     }
+
+    /// <summary>
+    /// 영상이 있는 모든 세션 개수 조회
+    /// </summary>
+    public int GetSessionsWithVideoCount()
+    {
+        return GetAllSessionsWithVideo().Count();
+    }
+
+    /// <summary>
+    /// 영상이 있는 세션을 주제별로 그룹화하여 조회
+    /// </summary>
+    public IEnumerable<IGrouping<SessionTopic?, SessionWithEvent>> GetSessionsWithVideoByTopic()
+    {
+        return GetAllSessionsWithVideo()
+            .Select(x => new SessionWithEvent(x.Event, x.Session))
+            .GroupBy(x => x.Session.Topic)
+            .OrderBy(g => g.Key);
+    }
+
+    /// <summary>
+    /// 영상이 있는 세션을 연도별로 그룹화하여 조회
+    /// </summary>
+    public IEnumerable<IGrouping<int, SessionWithEvent>> GetSessionsWithVideoByYear()
+    {
+        return GetAllSessionsWithVideo()
+            .Select(x => new SessionWithEvent(x.Event, x.Session))
+            .GroupBy(x => x.Event.Year)
+            .OrderByDescending(g => g.Key);
+    }
+
+    /// <summary>
+    /// 특정 세션 ID로 세션과 행사 정보 조회
+    /// </summary>
+    public SessionWithEvent? GetSessionById(string sessionId)
+    {
+        foreach (var eventData in _allEvents)
+        {
+            foreach (var venue in eventData.Event.Venues)
+            {
+                foreach (var track in venue.Tracks)
+                {
+                    var session = track.Sessions.FirstOrDefault(s => s.Id == sessionId);
+                    if (session != null)
+                        return new SessionWithEvent(eventData, session);
+                }
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 특정 세션의 관련 세션 조회 (같은 주제 또는 같은 발표자, 부족하면 랜덤으로 채움)
+    /// </summary>
+    public IEnumerable<SessionWithEvent> GetRelatedSessions(Session session, int count = 4)
+    {
+        var allSessions = GetAllSessionsWithVideo()
+            .Where(x => x.Session.Id != session.Id)
+            .Select(x => new SessionWithEvent(x.Event, x.Session))
+            .ToList();
+
+        // 같은 주제의 세션
+        var relatedByTopic = session.Topic.HasValue
+            ? allSessions.Where(x => x.Session.Topic == session.Topic).ToList()
+            : [];
+
+        // 같은 발표자의 세션
+        var relatedBySpeaker = allSessions
+            .Where(x => x.Session.Speakers.Any(s => session.Speakers.Any(ss => ss.Id == s.Id)))
+            .ToList();
+
+        // 관련 세션 합치기 (중복 제거)
+        var relatedSessions = relatedByTopic
+            .Concat(relatedBySpeaker)
+            .DistinctBy(x => x.Session.Id)
+            .Take(count)
+            .ToList();
+
+        // 관련 세션이 부족하면 랜덤 세션으로 채움
+        if (relatedSessions.Count < count)
+        {
+            var excludeIds = relatedSessions.Select(x => x.Session.Id).Append(session.Id).ToHashSet();
+            var randomSessions = allSessions
+                .Where(x => !excludeIds.Contains(x.Session.Id))
+                .OrderBy(_ => Random.Shared.Next())
+                .Take(count - relatedSessions.Count);
+            
+            relatedSessions.AddRange(randomSessions);
+        }
+
+        return relatedSessions;
+    }
 }
+
+/// <summary>
+/// 세션과 행사 정보를 함께 담는 레코드
+/// </summary>
+public record SessionWithEvent(IEventData Event, Session Session);
 
 /// <summary>
 /// 검색 결과 유형
