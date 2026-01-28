@@ -20,6 +20,10 @@ public class StudyDataService
             new MonthlyDotnet2308Data(),
             new MonthlyDotnet2310Data(),
             new MonthlyDotnet2311Data(),
+            new DotNetDevPodcast2512Data(),
+            new DotNetDevPodcast2512_2Data(),
+            new DotNetDevPodcast2601Data(),
+            new DotNetDevPodcast2601_2Data(),
         };
 
         _slugMap = studyDataList.ToDictionary(d => d.Slug, StringComparer.OrdinalIgnoreCase);
